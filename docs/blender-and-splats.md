@@ -3,8 +3,8 @@
 Photolipsia · ZHdK · MA Interaction Design · HS 2026
 
 An **MCP** gives your agent hands in another app. With the Blender MCP, the agent can see your
-Blender scene, run Python inside Blender and look at the viewport. This page is what slides 24
-to 26 of deck 1 show: set up the Blender MCP, clean up a scan in Blender, and train splats from
+Blender scene, run Python inside Blender and look at the viewport. This page is what slides 31
+to 36 of deck 1 show: set up the Blender MCP, clean up a scan in Blender, and train splats from
 your own Blender scene.
 
 Every step works the same way: **plan first, then go, then check.** Commands are shown for
