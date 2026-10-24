@@ -5,6 +5,8 @@ The app is not the point. The loop is: **plan → build → introspect → fix �
 
 Our run with GLM-5.3 Flash (24 October 2026): all six prompts in 2.7 minutes of agent time, for
 $0.05. Its first tests expected the wrong numbers; `npm test` caught that before any page existed.
+Same prompts on our own plans: Claude Code with Claude Opus 5.5 took 12.5 minutes, Codex with
+GPT-6 Astra 5.8 minutes; both ended with passing checks.
 
 Every prompt ends the same way: the agent runs `npm test` and `npm run check`,
 reads `.check/report.json`, looks at `.check/screenshot.png` and tells you what it sees.
@@ -20,7 +22,7 @@ Go.
 
 Keep two terminal windows or tabs open in your project folder:
 
-- **Agent terminal:** runs `opencode` (or `codex`, `claude`). You type prompts here.
+- **Agent terminal:** runs your agent: `opencode`, `claude` or `codex`. You type prompts here.
 - **Your terminal:** your own commands: `git`, `npm run dev`, opening files.
   New tab: **Cmd+T** in Mac Terminal, **Ctrl+Shift+T** in Windows Terminal.
 
@@ -46,19 +48,24 @@ npm run check
 (about 300 MB, once per laptop). `npm run check` should then say **FAILED: Nothing rendered yet**,
 followed by a few `npm error` lines. That is correct: there is no page yet.
 
-Now open your agent terminal (a new tab) and start the agent in the same folder (the same on Mac
-and Windows):
+Now open your agent terminal (a new tab) and go to the same folder (the same on Mac and Windows):
 
 ```bash
 cd ~/photolipsia-agentic-kit/01-text-stats
-opencode
 ```
 
-Always start the agent inside `01-text-stats`, never in the main kit folder or your home folder:
-the rules and locks are in the project folder. (Codex: `codex`, Claude Code: `claude`.)
+Start your agent there and check what it uses:
 
-In OpenCode, type `/models` and check that **GLM-5.3-Flash** is selected (not FlashX, not Prime:
-the course key blocks them).
+- **OpenCode** (most of you): `opencode`. Type `/models` and check that **GLM-5.3-Flash** is
+  selected (not FlashX, not Prime: the course key blocks them).
+- **Claude Code:** `claude`. Type `/status`: it shows your plan, or the course key if you set
+  Claude Code up for it.
+- **Codex:** `codex`. The first time, it asks "Do you trust this folder?": answer **yes**, or
+  `npm run check` can't run. Type `/status` to see the account and model.
+
+Always start the agent inside `01-text-stats`, never in the main kit folder or your home folder:
+the rules and deny rules are in the project folder. The few commands that differ between the tools
+are in [the setup guide](../docs/student-setup.md#commands-in-each-tool).
 
 ## Prompt 1: plan
 
@@ -219,7 +226,8 @@ The rules and the strategy file only matter if they survive a new session. Try i
    Then open `ai/strategy.md`: under `## Next` there must be a real step. Write it yourself, for
    example `- Apply my new rule to the page.` In our run `## Next` was empty, so the fresh session
    found nothing to do and never used the new rule.
-2. Quit the agent (`/exit`, or Ctrl+C) and start it again. It now remembers nothing.
+2. Quit the agent with `/exit` (the same in all three tools) and start it again. It now
+   remembers nothing.
 3. Ask:
 
 ```text
@@ -240,7 +248,7 @@ The rules in `AGENTS.md` are there because of mistakes like these:
   tests".
 - **It knows an old version of a library.** That is why Example 2 has `ai/spark-facts.md`.
 - **It goes in circles or gets slow in long sessions.** Stop it, commit what works, start a new
-  session.
+  session (`/new` in OpenCode and Codex, `/clear` in Claude Code).
 
 What went wrong in our own runs: [docs/blender-and-splats.md](../docs/blender-and-splats.md#5-what-went-wrong-when-we-tried-it).
 

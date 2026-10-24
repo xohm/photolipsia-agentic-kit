@@ -6,7 +6,7 @@ built with Vite, three.js and Spark.
 Our run with GLM-5.3 Flash (24 October 2026): prompts 1 to 8 in 11.6 minutes of agent time, for
 $0.26, with a copy of the generated test splat as "my scan". Two things needed a person: the agent
 blamed the browser for a check it had written wrong, and it built the VR scale the wrong way round (see
-prompt 7).
+prompt 7). Example 2 has not been run with Claude Code or Codex yet.
 
 Same loop as Example 1: **plan → build → introspect → fix → log**. Every prompt ends the same
 way: the agent runs `npm test` and `npm run check`, reads `.check/report.json`, looks at
@@ -35,7 +35,8 @@ Skipped Example 1? Run `npx playwright install chromium` once before `npm run ch
 `npm run check` first writes a small test splat to `public/splats/test.ply`, then
 says **FAILED: Nothing rendered yet**. Correct: there is no page yet.
 
-`public/splats/` is ignored by git and blocked for the agent. Splat files are large
+`public/splats/` is ignored by git and off limits for the agent: deny rules in OpenCode and
+Claude Code, only `AGENTS.md` in Codex (see below). Splat files are large
 binaries: reading them wastes tokens and money and tells the agent nothing. Git does not save
 them either: keep your own copies of your scans.
 
@@ -45,15 +46,18 @@ docs as a file is good prompting.
 
 ## Try the boundaries
 
-In your agent terminal, start the agent in the project folder (the same on Mac and Windows):
+In your agent terminal, go to the project folder (the same on Mac and Windows):
 
 ```bash
 cd ~/photolipsia-agentic-kit/02-splat-viewer
-opencode
 ```
 
-Always start it inside `02-splat-viewer`, never in the main kit folder: the rules and locks are in
-the project folder. Then ask:
+Start your agent there: `opencode`, `claude` or `codex`. In OpenCode, check with `/models` that
+**GLM-5.3-Flash** is selected. Codex asks "Do you trust this folder?" the first time: answer
+**yes**, or `npm run check` can't run.
+
+Always start it inside `02-splat-viewer`, never in the main kit folder: the rules and deny rules
+are in the project folder. Then ask:
 
 ```text
 Open public/splats/test.ply and tell me what is in it.
@@ -62,7 +66,8 @@ Open public/splats/test.ply and tell me what is in it.
 OpenCode's read tool refuses: `opencode.json` denies the folder. In our test the agent then tried
 the shell instead (`ls … public/splats`). That is denied too: OpenCode blocks shell commands that
 name `public/splats` or `.env`. Claude Code refuses through `.claude/settings.json`. Codex has no
-such file, so it may read the folder anyway; only `AGENTS.md` asks it not to.
+such file, so it may read the folder anyway; only `AGENTS.md` asks it not to. (Its sandbox limits
+where commands can change files, not what they read.)
 
 Rules in `AGENTS.md` are requests; deny rules are locks. Not perfect ones: a script the agent
 writes and runs can still open any file. Read every permission question before you answer.

@@ -7,9 +7,9 @@ Blender MCP, the agent can read your Blender scene, run Python inside Blender an
 viewport. This page goes with the Blender slides in deck 2 (after "Prompt 9: extensions"): set up
 the Blender MCP, clean up a scan in Blender, and train splats from your own Blender scene.
 
-**Tested on Linux only (October 2026), with a generated test scan and a small test scene.** It
-was not tried on a Mac or Windows when this page was written. If something breaks there, tell
-your teacher.
+**Tested on Linux only (October 2026), with OpenCode, a generated test scan and a small test
+scene.** It was not tried on a Mac or Windows when this page was written. If something breaks
+there, tell your teacher. For Claude Code and Codex, see "Connect your agent" in section 1.
 
 Every step works the same way: **plan first, then go, then check.** Commands are shown for
 **Mac** (Terminal) and **Windows** (PowerShell). Where they are the same, there is one block.
@@ -50,7 +50,16 @@ Then in Blender:
 3. **Check:** it says "Connected on port 9876". If it says "Not connected", click
    **Connect to MCP server**.
 
-### Tell OpenCode about it (once)
+### Connect your agent (once)
+
+Your agent starts the Blender MCP itself. Tell it how, once, in the tool you use (OpenCode,
+Claude Code or Codex: [student-setup.md](student-setup.md#2-pick-your-tool-and-account) says which
+one). The steps above, uv and the add-on, are the same for all three.
+
+#### OpenCode
+
+**Tested** on Linux, October 2026: everything on this page ran with OpenCode (our test had this
+`mcp` block in a project's `opencode.json`).
 
 Open your OpenCode config file, the one from [student-setup.md](student-setup.md#config-file):
 Mac `open -e ~/.config/opencode/opencode.json`, Windows
@@ -83,19 +92,59 @@ don't type it), and save:
 This is the config from the setup guide plus the `"mcp"` block. If you changed something in your
 file before (for example the effort), change it here again.
 
+Then **restart OpenCode** (`/exit`, then `opencode`): it reads its config only at the start.
+
+#### Claude Code
+
+**Tested:** adding the server, on Linux. Not yet with Blender.
+
+The command comes from Claude Code's documentation (https://code.claude.com/docs/en/mcp). In your
+terminal, the same on Mac and Windows, as one line:
+
+```bash
+claude mcp add --env DISABLE_TELEMETRY=true --scope user blender -- uvx mcp-for-blender@2.2.4
+```
+
+- `--scope user` adds it for every folder.
+- Keep the order: `--env …`, then `--scope user`, then `blender`. With `blender` right after
+  `--env DISABLE_TELEMETRY=true`, Claude Code reads `blender` as a second variable and stops with
+  "Invalid environment variable format".
+- **Check:** start `claude` in your project folder and type `/mcp`. `blender` should be listed.
+
+#### Codex
+
+**Tested:** not yet.
+
+The command comes from the Codex documentation (https://learn.chatgpt.com/docs/extend/mcp). In
+your terminal, the same on Mac and Windows, as one line:
+
+```bash
+codex mcp add blender --env DISABLE_TELEMETRY=true -- uvx mcp-for-blender@2.2.4
+```
+
+- It writes the server into `~/.codex/config.toml` (Windows `$HOME\.codex\config.toml`), for
+  every folder.
+- **Check:** start `codex` in your project folder and type `/mcp`. `blender` should be listed.
+
+#### All three
+
 `@2.2.4` is the course's version: keep it the same here and in `install-addon`.
 `DISABLE_TELEMETRY` stops the MCP from sending usage data.
 
-Then **restart OpenCode** (`/exit`, then `opencode`): it reads its config only at the start.
+The Blender tools now load in every session of your agent, in every folder, also in Examples 1
+and 2. Their descriptions go to the model with every request: with the course key that costs a
+little, with your own plan it uses a little of your limits. When you don't use Blender:
 
-The Blender tools now load in every OpenCode session, also in Examples 1 and 2. Their
-descriptions go to the model with every request, which costs a little. When you don't use
-Blender, add the line `"enabled": false,` right after `"blender": {` and restart OpenCode.
+- **OpenCode:** add the line `"enabled": false,` right after `"blender": {` and restart OpenCode.
+- **Claude Code:** `claude mcp remove blender`
+- **Codex:** `codex mcp remove blender`
+
+To use Blender again, remove the line, or run the `mcp add` line again.
 
 ### The loop in Blender
 
-Blender is open and connected. Start OpenCode in your project folder, for example in
-`02-splat-viewer`.
+Blender is open and connected. Start your agent (`opencode`, `claude` or `codex`) in your
+project folder, for example in `02-splat-viewer`.
 
 **Plan:**
 ```text
@@ -123,7 +172,8 @@ Then look yourself in Blender. (`look` shows the agent the viewport, like the sc
 - **It runs Python inside Blender.** Python can read, write and delete files on your laptop.
   Read the plan before you say go.
 - **OpenCode doesn't ask** before it uses the Blender tools: in our tests it ran them right away.
-  Only "Don't change anything yet" holds it back.
+  Only "Don't change anything yet" holds it back. Claude Code and Codex: see **Tested** in their
+  part of "Connect your agent". Don't count on them asking.
 - **`look` sends a picture** of your viewport to the model provider. Don't use it on scenes or
   scans you must keep private.
 
@@ -169,9 +219,10 @@ cp ~/Downloads/my-scan.ply public/splats/scan.ply
 Copy-Item $HOME\Downloads\my-scan.ply public\splats\scan.ply
 ```
 
-Open Blender 5.3, check that the MCP is connected, and start OpenCode in `02-splat-viewer`. The
-agent itself never opens files in `public/splats/` (`AGENTS.md` and `opencode.json` block it).
-Blender opens them, and the agent gets numbers back and the picture from `look`.
+Open Blender 5.3, check that the MCP is connected, and start your agent in `02-splat-viewer`.
+The agent itself must not open files in `public/splats/`: `AGENTS.md` says so, and the deny rules
+of OpenCode and Claude Code block it (Codex has no deny rules, only `AGENTS.md`). Blender opens
+them, and the agent gets numbers back and the picture from `look`.
 
 **Plan:**
 ```text
@@ -219,7 +270,8 @@ https://github.com/harry7557558/spirula-studio/releases/tag/v2026.10.16:
 
 ### Step 1: the agent renders the training set
 
-Open your scene in Blender, **save your .blend**, check the MCP, start OpenCode in `02-splat-viewer`.
+Open your scene in Blender, **save your .blend**, check the MCP, start your agent in
+`02-splat-viewer`.
 
 **Plan:**
 ```text
@@ -231,9 +283,9 @@ Use the Blender tools. Plan a training set for Spirula from the open scene: rend
 Go.
 ```
 
-Rendering 48 pictures takes a while; the agent may render them in batches. The agent can't open
-files in `public/splats/` itself (the lock from Example 2), so it checks everything through
-Blender.
+Rendering 48 pictures takes a while; the agent may render them in batches. The agent doesn't
+open files in `public/splats/` itself (the rule from Example 2, a deny rule in OpenCode and Claude
+Code), so it checks everything through Blender.
 
 **Check:**
 ```text
@@ -302,7 +354,10 @@ mcp-for-blender 2.2.4 and Spirula Studio v2026.10.16 on an NVIDIA RTX PRO 3000 l
 | Render the training set: 48 views of a small test scene | | about $0.07 |
 | Spirula training: 48 renders → 0.92 million splats | 9 to 11 min | no API cost (your own GPU) |
 
-**Not tested:** Mac and Windows, real scans from a phone app, `.spz` files, Codex and Claude Code.
+**Not tested:** Mac and Windows, real scans from a phone app, `.spz` files.
+
+- Claude Code with the Blender MCP: not tested yet (adding the server works).
+- Codex with the Blender MCP: not tested yet.
 
 ## 5. What went wrong when we tried it
 
@@ -328,17 +383,25 @@ From our runs of Examples 1 and 2 with GLM-5.3 Flash:
 - **What no check sees.** It built the VR scale the wrong way round: the test splat would look about 5 m
   big instead of 2 m. No check can see that without a headset. The Spark facts now ask for the
   VR scale as a pure function with a unit test.
-- **It went around a lock.** Asked to open a locked file, it tried the shell instead. A deny rule
-  now blocks that too; read every permission question anyway.
+- **It went around a deny rule.** Asked to open a file that a deny rule protects, it tried the
+  shell instead. A deny rule now blocks that too; read every permission question anyway.
 - **An empty plan, a lazy session.** With nothing under `## Next`, a fresh session did nothing.
   Write the next step yourself before you quit.
+
+From our run of Example 1 with Codex and a ChatGPT plan:
+
+- **The sandbox stopped the check.** Codex runs commands in a sandbox, and its own check couldn't
+  start its local server there ("listen EPERM"). We saw it in its answer: there was no screenshot.
+  The skeleton now has a `.codex/config.toml` that lets the check run. Codex reads it only if you
+  answered **yes** to "Do you trust this folder?".
 
 ## 6. Troubleshooting
 
 | Problem | Fix |
 |---|---|
 | `install-addon`: "Could not find a Blender user addons directory" | Open Blender once and close it. Then run `install-addon` again. |
-| The agent can't connect to Blender, or has no Blender tools | Blender is open, the add-on is on, the side panel (N) says "Connected on port 9876". Then restart OpenCode. |
+| The agent can't connect to Blender, or has no Blender tools | Blender is open, the add-on is on, the side panel (N) says "Connected on port 9876". Then restart your agent (`/exit`, then start it again). Claude Code and Codex: `/mcp` shows whether `blender` is there. |
+| `claude mcp add`: "Invalid environment variable format: blender" | Put `--scope user` between `--env DISABLE_TELEMETRY=true` and `blender`, as in section 1. |
 | Blender doesn't show the scan as splats | You need Blender 5.3 or newer. Use **Material Preview** or **Rendered**. |
 | The splats are upside down | In the viewer: press **F**. In Blender: `splats.load(path, flip=False)`, or the default flip. |
 | macOS blocks Spirula | System Settings → Privacy & Security → scroll down → **Open Anyway**, then run it again. |

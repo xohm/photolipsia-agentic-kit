@@ -8,25 +8,35 @@ runs commands and checks its own work. This page gets you from an empty laptop t
 Plan about 45 minutes. Do the steps in order. Commands are shown for **Mac** (Terminal, zsh)
 and **Windows** (PowerShell). Where they are the same, there is one block.
 
-You need only OpenCode (section 3). Codex and Claude Code (sections 4 and 5) are optional.
+You need one agent, not three. Most of you use OpenCode with the course key. If you have your
+own Claude or ChatGPT plan, you can use Claude Code or Codex with it instead. Section 2 helps you
+pick.
 
 > **How tested is this?** The kit was built and tested on Linux. The Mac and Windows commands
 > follow each tool's official instructions, but were not tried on a real Mac or Windows laptop
 > when this kit was written. Both examples were first tried with other AI models standing in for
-> GLM; our run with GLM-5.3 Flash is at the top of the Example 1 and Example 2 guides. The Blender
-> parts ran with GLM-5.3 Flash. If a step fails, tell your teacher: you are probably the first to
-> find it.
+> GLM; our run with GLM-5.3 Flash in OpenCode is at the top of the Example 1 and Example 2 guides.
+> Example 1 also ran with Claude Code on a Claude plan and with Codex on a ChatGPT plan; Example 2
+> did not.
+>
+> - Claude Code on the course key: not tested yet.
+> - Codex on the course key: not tested yet.
+>
+> The Blender parts ran with GLM-5.3 Flash in OpenCode. If a step fails, tell your teacher: you
+> are probably the first to find it.
 
 Contents
 
 1. [Prerequisites](#1-prerequisites)
-2. [Your API key](#2-your-api-key)
-3. [OpenCode (recommended)](#3-opencode-recommended)
-4. [Codex CLI (optional)](#4-codex-cli-optional)
-5. [Claude Code (optional)](#5-claude-code-optional)
-6. [Smoke test](#6-smoke-test)
-7. [The project skeleton, explained](#7-the-project-skeleton-explained)
-8. [Troubleshooting](#8-troubleshooting)
+2. [Pick your tool and account](#2-pick-your-tool-and-account)
+3. [Privacy and cost](#3-privacy-and-cost)
+4. [The course key](#4-the-course-key)
+5. [OpenCode](#5-opencode)
+6. [Claude Code](#6-claude-code)
+7. [Codex CLI](#7-codex-cli)
+8. [Smoke test](#8-smoke-test)
+9. [The project skeleton, explained](#9-the-project-skeleton-explained)
+10. [Troubleshooting](#10-troubleshooting)
 
 ---
 
@@ -96,6 +106,19 @@ Use the email of your GitHub account. It is public in every commit you push: to 
 see step 1 under "Git and GitHub" below. The third line makes `git pull` merge your teacher's
 updates into your work.
 
+### Mac only: npm says EACCES
+
+OpenCode and Codex are installed with `npm install -g`. On a Mac this can fail with "EACCES" or
+"permission denied": then npm can't write to its folder for global tools. Only if that happens,
+run these four lines once (npm's own fix; not tested on a Mac), then the install line again:
+
+```bash
+mkdir -p ~/.npm-global
+npm config set prefix ~/.npm-global
+echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
 ### VS Code (recommended)
 
 An editor to read and change what the agent writes. On a Mac, don't edit code in TextEdit: it
@@ -117,7 +140,7 @@ Every `git push` saves your progress there, and your teacher can follow it.
    **Create fork**. Now GitHub has your own copy: `https://github.com/YOUR-NAME/photolipsia-agentic-kit`,
    where `YOUR-NAME` is your GitHub user name.
    Your fork is **public**: anyone can see your code, your `ai/strategy.md` and your commit
-   messages. Never commit the key or anything private.
+   messages. Never commit a key or anything private.
 3. **Clone** your fork into your home folder, and connect it to the course repository, so you can
    get updates later. Same on both:
    ```bash
@@ -162,10 +185,170 @@ back as it was before the pull.
 
 ---
 
-## 2. Your API key
+## 2. Pick your tool and account
 
-All agents talk to one model provider, OpenRouter, through a shared course key.
-Your teacher gives you the key privately. It looks like `sk-or-v1-…`.
+The agent is a program on your laptop. The AI model it talks to runs at a company, so the agent
+needs an account there. There are two kinds:
+
+- **The course key:** a key the whole class shares and the course pays for. It reaches the model
+  GLM-5.3 Flash through OpenRouter. Most of you use this.
+- **Your own plan:** a paid Claude or ChatGPT subscription you already have. It costs you nothing
+  extra, but it counts against your plan's limits.
+
+| You have | Use | Read |
+|---|---|---|
+| No plan (most of you) | **OpenCode** with the course key | [section 4](#4-the-course-key), then [section 5](#5-opencode) |
+| A Claude plan: Pro, Max, Team or Enterprise | **Claude Code** with your plan | [section 6](#6-claude-code) |
+| A ChatGPT plan: Plus or higher | **Codex CLI** with your plan | [section 7](#7-codex-cli) |
+
+The rule of thumb: no plan, the course key with OpenCode. A Claude plan: Claude Code. A ChatGPT
+plan: Codex.
+
+- OpenCode is the main tool of the course: all course examples were run with it. Claude Code and
+  Codex are equal alternatives if you have a plan.
+- The free Claude plan does not include Claude Code. For ChatGPT Free and Go, the Codex CLI is
+  not listed: you need Plus or higher.
+- Claude Code and Codex can also run on the course key: their sections show how. OpenCode is the
+  simplest tool for it.
+- The three tools do the same job in this course. They read the same rules (`AGENTS.md`), every
+  project is set up for all three, and the guides work with any of them.
+- Whatever you pick, read section 3 before day one: where your prompts go, how to switch off
+  training on a plan, and what it costs.
+
+### Commands in each tool
+
+Your prompts are the same in every tool, and `/exit` quits all three. A few commands differ:
+
+| | OpenCode | Claude Code | Codex CLI |
+|---|---|---|---|
+| Start it, in your project folder | `opencode` | `claude` | `codex` |
+| Which account and model it uses | `/models` | `/status` | `/status` |
+| Change the model | `/models` | `/model` | `/model` |
+| New, empty session | `/new` | `/clear` | `/new` |
+| Quit | `/exit` (or Ctrl+C) | `/exit` (or Ctrl+C twice) | `/exit` |
+| What is left of your plan's limits | no plan: see [section 3](#what-it-costs) | `/usage` | `/usage` |
+
+Always start the agent inside the folder you work in. For the examples that is `01-text-stats`
+or `02-splat-viewer`, never your home folder or the main kit folder: the rules and deny rules are
+in the project folder.
+
+---
+
+## 3. Privacy and cost
+
+Read this whatever account you use.
+
+### Where your prompts go, who sees them
+
+Everything your agent sends to the model leaves your laptop: your prompts, the content of the
+files it reads, the output of commands it runs, and screenshots. Where it goes depends on your
+account.
+
+**The course key (OpenCode, or Claude Code and Codex set up for it)** sends it to
+**OpenRouter, Inc.** (USA), which passes each request to one of many companies that run
+GLM-5.3 Flash or GLM-5.3. They are chosen by price, not by country, so a request can leave
+Switzerland and the EU.
+
+- **What OpenRouter stores:** for every request the model, tokens, cost, time and API key, but no
+  content. It keeps content only if the account owner switches on input and output logging, or
+  lets OpenRouter use the content in exchange for a 1% discount. Both are off by default.
+- **Who can tell it was you:** these records show the key, not the person, and the class shares
+  one key. Whether Claude Code and Codex send anything else that names you, we didn't check.
+- **Training:** OpenRouter does not train on your data, and every company listed for these two
+  models says it doesn't either. A few keep prompts for a while (one says 30 days, the others
+  don't say how long). The course account can exclude them with "zero data retention": ask your
+  teacher whether it is on.
+- **GLM-5.3 (not Flash) reads text only.** Screenshots go only to GLM-5.3 Flash.
+
+(Facts from OpenRouter's documentation, October 2026.)
+
+**Your Claude plan (Claude Code)** sends it to **Anthropic** (USA).
+
+- **Training:** on Pro and Max, Anthropic trains its models on your chats and your Claude Code
+  sessions if the setting "Help improve Claude" is on. Team and Enterprise: we didn't check.
+- **How long it is kept** (Pro and Max): 5 years with that setting on, 30 days with it off.
+- **Switch it off:** on claude.ai, **Settings → Privacy**
+  (https://claude.ai/settings/data-privacy-controls).
+- **Who can tell it was you:** Anthropic: it is your own account.
+- **`/feedback`** in Claude Code sends your conversation to Anthropic.
+
+(Source: code.claude.com/docs/en/data-usage, October 2026.)
+
+**Your ChatGPT plan (Codex)** sends it to **OpenAI** (USA).
+
+- **Training:** on personal plans (Plus, Pro), your ChatGPT and Codex content may be used to
+  train models. On Business, Edu and Enterprise, not by default.
+- **Switch it off:** in ChatGPT, **Settings → Data controls → "Improve the model for everyone"**.
+  One switch covers ChatGPT and Codex.
+- **How long it is kept:** we found no clear answer on OpenAI's pages.
+- **Who can tell it was you:** OpenAI: it is your own account.
+- **Usage data:** Codex also sends a little anonymous usage and health data to OpenAI, by
+  default. Codex's docs say `enabled = false` under `[analytics]` in `~/.codex/config.toml`
+  switches it off (we didn't test that).
+
+(Sources: OpenAI help centre, help.openai.com/en/articles/5722486 and /7730893, and the Codex
+docs, October 2026.)
+
+**On a plan, switch training off before day one.** On the course key there is no switch for you
+to set.
+
+So, whatever the account: never give the agent passwords, keys, or other people's personal data,
+such as interview notes or photos of people who didn't agree.
+
+Two things follow from how the kit is built:
+
+- **Your splat files are kept away from the agent.** OpenCode and Claude Code have deny rules
+  for `public/splats/` (not perfect ones: see [section 9](#what-each-tool-reads-and-searches));
+  Codex is only asked not to open it, in `AGENTS.md`. Git doesn't save them, and the viewer's
+  "Open file" reads a file in the browser and uploads nothing. Pictures of your scans do leave:
+  the check's screenshot, and every `look` picture from Blender, go to the model.
+- **Two things show your laptop on the local network** while they run: `npm run dev:vr` (your
+  page, for the Quest) and Spirula's progress page on port 7007. Stop them with Ctrl+C when you
+  are done.
+
+### What it costs
+
+**The course key:** the course pays for it: you pay nothing. The whole class shares one key and
+one budget: **$40 a day for everyone together**, and $350 for the whole course.
+
+- A normal day of work with GLM-5.3 Flash costs about **$0.80 per person** (our estimate).
+- GLM-5.3 costs more: up to about ten times as much.
+- In tokens, Flash costs $0.15 per million tokens in and $0.50 per million out.
+- When the day's budget is used up, every request gets a `403` until midnight UTC (1 or 2 am in
+  Zurich), for the whole class.
+- **A leaked key costs the course, not you.** Anyone who has it can spend the budget until your
+  teacher replaces it. So keep the rules in [section 4](#4-the-course-key).
+
+**Your own plan:** no extra cost. The agent's work counts against your plan's limits: a 5-hour
+window and a weekly limit, shared with the chat app (Claude Pro and Max; ChatGPT Plus has a
+5-hour window, and weekly limits may apply). Type `/usage` to see what is left. Big models use
+the limit faster. When a limit is reached, you wait until it resets. (Claude also lets you switch
+on paid usage credits to go on: that does cost extra.)
+
+What costs the most, in money on the course key or in limits on a plan: long sessions (the agent
+sends the whole conversation again with every step, so start a new session for each new task:
+`/new` in OpenCode and Codex, `/clear` in Claude Code), a bigger model (GLM-5.3 instead of
+Flash), agents left running, and agents that read big files.
+
+### Energy
+
+We have no reliable number for the energy one request uses, through OpenRouter or on a plan, so
+we don't give one. What we know: by our estimate, a normal course day with GLM-5.3 Flash is about
+4.5 million tokens of input per person, mostly the agent reading its own session again. The habits
+that save money and limits also save computing: Flash by default, a new session for a new task,
+no big files for the agent, effort `high` (never `max`). The heaviest job in the course runs on
+your own laptop: training splats with Spirula took 9 to 11 minutes on a strong laptop GPU in our
+test.
+
+---
+
+## 4. The course key
+
+For everyone without a plan: most of you. Skip this section if you use your own Claude or
+ChatGPT plan.
+
+With the course key, your agent talks to one model provider, OpenRouter, through a key the whole
+class shares. Your teacher gives you the key privately. It looks like `sk-or-v1-…`.
 
 **Rules for the key**
 
@@ -207,70 +390,20 @@ You want: the course model answers (`200 OK`), another model is blocked (`403 OK
 line says `All good.`
 
 > **If the key changes** (your teacher hands out a new one), update it everywhere you put it:
-> the line in `~/.zshrc` (Mac) or the command above again (Windows), `ANTHROPIC_AUTH_TOKEN` in
-> `~/.claude/settings.json` if you use Claude Code, and `/connect` in OpenCode if you used it.
+> the line in `~/.zshrc` (Mac) or the command above again (Windows), `/connect` in OpenCode if
+> you used it, and `ANTHROPIC_AUTH_TOKEN` in `~/.claude/settings.json` if you use Claude Code.
 > Then open a new terminal.
 
-### Where your prompts go, who sees them
-
-Everything your agent sends to the model leaves your laptop: your prompts, the content of the
-files it reads, the output of commands it runs, and screenshots. It goes to **OpenRouter, Inc.**
-(USA), which passes each request to one of many companies that run GLM-5.3 Flash or GLM-5.3. They
-are chosen by price, not by country, so a request can leave Switzerland and the EU.
-
-- **What OpenRouter stores:** for every request the model, tokens, cost, time and API key, but no
-  content. Content is stored only if the account owner switches on input and output logging; it is
-  off by default.
-- **Who can tell it was you:** nobody, from these records. The class shares one key.
-- **Training:** every company listed for these two models says it does not train on your data.
-  A few keep prompts for a while (one says 30 days). The course account can exclude them with
-  "zero data retention": ask your teacher whether it is on.
-- **GLM-5.3 (not Flash) reads text only.** Screenshots go only to GLM-5.3 Flash.
-
-So: never give the agent passwords, keys, or other people's personal data, such as interview
-notes or photos of people who didn't agree. (Facts from OpenRouter's documentation, October 2026.)
-
-Two things follow from how the kit is built:
-
-- **Your splat files stay on your laptop.** The agent is locked out of `public/splats/`, and the
-  viewer's "Open file" reads a file in the browser and uploads nothing. Pictures of your scans do
-  leave: the check's screenshot, and every `look` picture from Blender, go to the model.
-- **Two things show your laptop on the local network** while they run: `npm run dev:vr` (your
-  page, for the Quest) and Spirula's progress page on port 7007. Stop them with Ctrl+C when you
-  are done.
-
-### What it costs
-
-The course pays for the key: you pay nothing. The whole class shares one key and one budget:
-**$40 a day for everyone together**, and $350 for the whole course. That is about $2.70 per person
-per day.
-
-- A normal day of work with GLM-5.3 Flash costs about **$0.80 per person** (our estimate).
-- GLM-5.3 costs more: up to about ten times as much.
-- In tokens, Flash costs $0.15 per million tokens in and $0.50 per million out.
-- When the day's budget is used up, every request gets a `403` until midnight UTC (1 or 2 am in
-  Zurich), for the whole class.
-- **A leaked key costs the course, not you.** Anyone who has it can spend the budget until your
-  teacher replaces it. So keep the rules above.
-
-What costs the most: long sessions (the agent sends the whole conversation again with every step,
-so start a new session for each new task), GLM-5.3 instead of Flash, agents left running, and
-agents that read big files.
-
-### Energy
-
-We have no reliable number for the energy one GLM request uses through OpenRouter, so we don't
-give one. What we know: by our estimate, a normal course day is about 4.5 million tokens of input
-per person, mostly the agent reading its own session again. The habits that save money also save
-computing: Flash by default, a new session for a new task, no big files for the agent, effort
-`high` (never `max`). The heaviest job in the course runs on your own laptop: training splats with
-Spirula took 9 to 11 minutes on a strong laptop GPU in our test.
+Next, set up OpenCode for the key: [section 5](#5-opencode). Claude Code and Codex work on the
+key too: "with the course key" in [section 6](#6-claude-code) and [section 7](#7-codex-cli).
 
 ---
 
-## 3. OpenCode (recommended)
+## 5. OpenCode
 
-Use OpenCode: all guides use it, and it is the tool we tested with GLM.
+OpenCode is the main tool of the course. Most of you use it with the course key: set that up
+first ([section 4](#4-the-course-key)). All course examples were run with it, with GLM-5.3 Flash,
+and so were the Blender parts.
 
 ### Install
 
@@ -283,15 +416,8 @@ opencode --version
 You want version 1.x: `@1` makes sure of that. The course was tested with OpenCode 1.14; `@1`
 installs the newest 1.x.
 
-**Mac: "EACCES" or "permission denied"?** Then npm can't write to its folder for global tools.
-Run these four lines once (npm's own fix; not tested on a Mac), then the install line again:
-
-```bash
-mkdir -p ~/.npm-global
-npm config set prefix ~/.npm-global
-echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
-```
+Mac: "EACCES" or "permission denied"? Use the fix in [section 1](#mac-only-npm-says-eacces), then
+the install line again.
 
 > Don't use `brew install opencode`: it installs OpenCode 2, which works differently
 > from what this course shows.
@@ -312,6 +438,8 @@ open -e ~/.config/opencode/opencode.json
 New-Item -ItemType Directory -Force "$HOME\.config\opencode"
 notepad "$HOME\.config\opencode\opencode.json"
 ```
+
+On Windows, Notepad asks whether to create the new file: click **Yes**.
 
 Paste this (don't type it) and save:
 
@@ -335,9 +463,6 @@ Paste this (don't type it) and save:
 - `small_model` is used for small background jobs such as session titles. Without it, OpenCode
   picks another model, which the course key blocks.
 - `effort: "high"` keeps thinking shorter than the default (`max`). Use `"low"` for faster answers.
-
-On Windows, Notepad asks whether to create the new file: click **Yes**. The same happens for the
-Codex and Claude Code config files below.
 
 ### Connect the key
 
@@ -363,19 +488,133 @@ and not "GLM 5.3 Prime": they look alike, but the course key blocks them. For a 
 switch to **GLM-5.3** with `/models` and switch back afterwards: it costs more (up to about ten
 times) and **cannot see images**. Quit with `/exit` or **Ctrl+C**.
 
-Always start the agent inside the folder you work in. For the examples that is `01-text-stats`
-or `02-splat-viewer`, never your home folder or the main kit folder: the rules and locks are in
-the project folder.
-
-The project's `opencode.json` makes OpenCode ask before shell commands, except the loop
+In the course projects, `opencode.json` makes OpenCode ask before shell commands, except the loop
 commands (`npm test`, `npm run check`, `node`, `git status`, `git diff`, `git log`, `ls`). Read
 what it wants to run before you allow it.
 
+Then do the smoke test, [section 8](#8-smoke-test).
+
 ---
 
-## 4. Codex CLI (optional)
+## 6. Claude Code
 
-You don't need Codex for the course. Install it only if you want to compare tools.
+Claude Code is Anthropic's agent. If you have a Claude plan, it is an equal alternative to
+OpenCode: it uses Anthropic's Claude models through your plan. It can also run on the course key.
+
+### Install
+
+**Mac**
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+**Windows**
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+Open a new terminal, then `claude --version`.
+
+On Windows, Claude Code runs commands in PowerShell. Git for Windows is optional.
+
+### Claude Code with your own plan
+
+You need Claude Pro, Max, Team or Enterprise. The free plan does not include Claude Code.
+
+There is nothing to configure. The first time you start `claude` (First run, below), it opens
+your browser: sign in with the Claude account that has your plan, then go back to the terminal.
+Type `/status`: it shows that you are logged in with your Claude account.
+
+- Before day one, switch off training: see [section 3](#where-your-prompts-go-who-sees-them).
+- `/usage` shows what is left of your plan's limits. `/model` changes the model: big models use
+  the limit faster.
+
+### Claude Code with the course key
+
+Skip this if you use your plan. Set up the key first ([section 4](#4-the-course-key)).
+
+Claude Code is built for Anthropic's models. OpenRouter supports it only with those, so with GLM
+some features may not work.
+
+**Tested:** not yet. These steps follow the official docs; we have not run Claude Code on the
+course key.
+
+Create the settings file and open it in a text editor.
+
+**Mac**
+```bash
+mkdir -p ~/.claude
+touch ~/.claude/settings.json
+open -e ~/.claude/settings.json
+```
+
+**Windows**
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.claude"
+notepad "$HOME\.claude\settings.json"
+```
+
+On Windows, Notepad asks whether to create the new file: click **Yes**.
+
+Paste and save. If the file already has content, add the `env` block to it instead.
+
+```json
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
+    "ANTHROPIC_AUTH_TOKEN": "sk-or-...",
+    "ANTHROPIC_API_KEY": "",
+    "ANTHROPIC_MODEL": "z-ai/glm-5.3-flash",
+    "ANTHROPIC_DEFAULT_FABLE_MODEL": "z-ai/glm-5.3-flash",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "z-ai/glm-5.3-flash",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "z-ai/glm-5.3-flash",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "z-ai/glm-5.3-flash",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "z-ai/glm-5.3-flash"
+  }
+}
+```
+
+- Replace `sk-or-...` with the course key. This file is in your home folder, not in a
+  project, so that is fine. Never copy it into a project.
+- `ANTHROPIC_API_KEY` must stay an empty string.
+- Every model name points to GLM-5.3 Flash, so background jobs and helpers also use it.
+- **The key beats a plan.** As long as this `env` block is in the file, Claude Code uses the
+  course key, even if you are signed in with a Claude account. If you ever signed in on this
+  laptop, type `/logout` once at the first start, quit, and start `claude` again.
+- Effort settings (`/effort`) are made for Anthropic models and probably have no effect on GLM.
+- Back to a plan later: delete the `env` block, start `claude` again and check `/status`.
+
+### First run
+
+Make an empty test folder and start Claude Code in it.
+
+**Mac**
+```bash
+mkdir -p ~/hello-agent && cd ~/hello-agent && claude
+```
+
+**Windows**
+```powershell
+New-Item -ItemType Directory -Force "$HOME\hello-agent"; cd "$HOME\hello-agent"; claude
+```
+
+- **Your plan:** the first time, sign in in the browser.
+- Type `/status`. With your plan, it shows your Claude account. With the course key, it shows
+  `Auth token: ANTHROPIC_AUTH_TOKEN` and the OpenRouter base URL, `https://openrouter.ai/api`.
+- Quit with `/exit` (or Ctrl+C twice).
+
+In the course projects, `.claude/settings.json` lets Claude Code run the loop commands without
+asking: `npm test`, `npm run check`, `git status`, `git diff`, `git log` and `ls`. For anything
+else it asks first: read what it wants to run before you allow it.
+
+Then do the smoke test, [section 8](#8-smoke-test).
+
+---
+
+## 7. Codex CLI
+
+Codex is OpenAI's agent. If you have a ChatGPT plan, it is an equal alternative to OpenCode: it
+uses OpenAI's models through your plan. It can also run on the course key.
 
 ### Install
 
@@ -385,9 +624,26 @@ npm install -g @openai/codex
 codex --version
 ```
 
-Mac: "EACCES"? Use the fix in section 3, then try again.
+Mac: "EACCES"? Use the fix in [section 1](#mac-only-npm-says-eacces), then try again.
 
-### Config file
+### Codex with your own plan
+
+You need ChatGPT Plus or higher: Plus, Pro, Business, Edu or Enterprise. For Free and Go, the
+Codex CLI is not listed.
+
+There is nothing to configure. The first time you start `codex` (First run, below), choose
+**Sign in with ChatGPT**: your browser opens, sign in, then go back to the terminal. (Or run
+`codex login` once before.) Type `/status`: it shows which account and model Codex uses.
+
+- Before day one, switch off training: see [section 3](#where-your-prompts-go-who-sees-them).
+- `/usage` shows what is left of your plan's limits. `/model` changes the model: big models use
+  the limit faster.
+
+### Codex with the course key
+
+Skip this if you use your plan. Set up the key first ([section 4](#4-the-course-key)).
+
+**Tested:** not yet. These steps follow the official docs; we have not run Codex on the course key.
 
 Codex only reads providers from your user config, never from a project folder.
 
@@ -403,6 +659,8 @@ open -e ~/.codex/config.toml
 New-Item -ItemType Directory -Force "$HOME\.codex"
 notepad "$HOME\.codex\config.toml"
 ```
+
+On Windows, Notepad asks whether to create the new file: click **Yes**.
 
 Paste and save:
 
@@ -428,123 +686,63 @@ auto_recap = false
 
 ### First run
 
-In a project folder (for example `01-text-stats`):
+Make an empty test folder and start Codex in it.
 
+**Mac**
 ```bash
-codex
+mkdir -p ~/hello-agent && cd ~/hello-agent && codex
 ```
 
-Codex asks whether you trust the folder: yes, for your project folders.
-Switch models with `/model`. Quit with `/quit` or **Ctrl+C**.
+**Windows**
+```powershell
+New-Item -ItemType Directory -Force "$HOME\hello-agent"; cd "$HOME\hello-agent"; codex
+```
 
-Codex runs commands in a **sandbox without network**. `npm install` and `npm run check`
-(it starts a local server and a browser) may need to run outside it: when Codex asks,
-approve. For `npm run check`, choose the option that stops it asking again.
+- Codex asks "Do you trust this folder?" the first time in each folder. Answer **yes** in your
+  project folders (`01-text-stats`, `02-splat-viewer`): otherwise Codex ignores the project's
+  `.codex/config.toml`, and `npm run check` can't run.
+- **Your plan:** the first time, choose **Sign in with ChatGPT**.
+- Type `/status`: it shows which account and model Codex uses.
+- Quit with `/exit`.
+
+Codex runs commands in a **sandbox**: they can change files only inside the project. In the course
+projects, `.codex/config.toml` lets `npm run check` start its local server inside the sandbox, and
+lets commands use the internet (for `npm install`). Without it, every check crashed in our test
+("listen EPERM") and the agent never saw a screenshot. When Codex asks to run something outside the
+sandbox, read what it wants to run before you allow it.
+
+Then do the smoke test, [section 8](#8-smoke-test).
 
 ---
 
-## 5. Claude Code (optional)
+## 8. Smoke test
 
-You don't need Claude Code for the course. Claude Code is built for Anthropic's models.
-OpenRouter supports it only with those, so with GLM some features may not work.
-**OpenCode is the safer choice in this course.**
-
-### Install
+Start your agent in the empty test folder from its first run. These commands also make the
+folder if it is missing.
 
 **Mac**
 ```bash
-curl -fsSL https://claude.ai/install.sh | bash
+mkdir -p ~/hello-agent && cd ~/hello-agent
 ```
 
 **Windows**
 ```powershell
-irm https://claude.ai/install.ps1 | iex
+New-Item -ItemType Directory -Force "$HOME\hello-agent"; cd "$HOME\hello-agent"
 ```
 
-Open a new terminal, then `claude --version`.
-
-### Settings file
-
-**Mac**
-```bash
-mkdir -p ~/.claude
-touch ~/.claude/settings.json
-open -e ~/.claude/settings.json
-```
-
-**Windows**
-```powershell
-New-Item -ItemType Directory -Force "$HOME\.claude"
-notepad "$HOME\.claude\settings.json"
-```
-
-Paste and save. If the file already has content, add the `env` block to it instead.
-
-```json
-{
-  "env": {
-    "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
-    "ANTHROPIC_AUTH_TOKEN": "sk-or-...",
-    "ANTHROPIC_API_KEY": "",
-    "ANTHROPIC_MODEL": "z-ai/glm-5.3-flash",
-    "ANTHROPIC_DEFAULT_FABLE_MODEL": "z-ai/glm-5.3-flash",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "z-ai/glm-5.3-flash",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "z-ai/glm-5.3-flash",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "z-ai/glm-5.3-flash",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "z-ai/glm-5.3-flash"
-  }
-}
-```
-
-- Replace `sk-or-...` with the course key. This file is in your home folder, not in a
-  project, so that is fine. Never copy it into a project.
-- `ANTHROPIC_API_KEY` must stay an empty string.
-- Every model name points to GLM-5.3 Flash, so background jobs and helpers also use it.
-
-### First run
-
-In a project folder (for example `01-text-stats`):
-
-```bash
-claude
-```
-
-- If you ever logged in with an Anthropic account: type `/logout`, quit, start `claude` again.
-- Type `/status`: it should show the OpenRouter base URL and an auth token.
-- Effort settings (`/effort`) are made for Anthropic models and probably have no effect on GLM.
-- On Windows, Claude Code runs commands in PowerShell. Git for Windows is optional.
-
-Quit with `/exit` or **Ctrl+C**.
-
----
-
-## 6. Smoke test
-
-Start your agent in the empty test folder from section 3. These commands also make the folder if
-it is missing.
-
-**Mac**
-```bash
-mkdir -p ~/hello-agent && cd ~/hello-agent && opencode
-```
-
-**Windows**
-```powershell
-New-Item -ItemType Directory -Force "$HOME\hello-agent"; cd "$HOME\hello-agent"; opencode
-```
-
-(Use `codex` or `claude` instead of `opencode` to test those.) Type:
+Then start your tool: `opencode`, `claude` or `codex`. Type:
 
 ```text
 Create hello.js that prints "Hello from GLM", then run it with node.
 ```
 
 The agent creates the file and runs `node hello.js`. Some tools ask first: allow it.
-You should see `Hello from GLM`. If that works, you're set up.
+You should see `Hello from GLM` (also on a plan, where the model is not GLM: it is only the text
+you asked for). If that works, you're set up.
 
 ---
 
-## 7. The project skeleton, explained
+## 9. The project skeleton, explained
 
 Every project in this course, however small, has the same few files. They keep the agent
 on track, keep secrets and big files away from it, and let it check its own work.
@@ -556,8 +754,9 @@ project/
 ├── ai/strategy.md         goal, plan, decisions, next step
 ├── .gitignore             what git never stores
 ├── .ignore                what agent search skips
-├── .claude/settings.json  files Claude Code may not read or edit
-├── opencode.json          files OpenCode may not read or edit
+├── opencode.json          what OpenCode may not read or edit, and may run without asking
+├── .claude/settings.json  what Claude Code may not read or edit, and may run without asking
+├── .codex/config.toml     lets Codex run the check inside its sandbox
 ├── package.json           npm run dev, npm test, npm run check
 ├── scripts/check.mjs      opens the app, reports, takes a screenshot
 ├── scripts/app-checks.mjs checks for this app only (optional)
@@ -567,8 +766,8 @@ project/
 ```
 
 **`AGENTS.md`** holds the rules, written once and read by every tool. Read the plan first,
-work in small steps, run the checks after every change, never touch secrets. Codex and
-OpenCode read it on their own.
+work in small steps, run the checks after every change, never touch secrets. OpenCode and
+Codex read it on their own.
 
 **`CLAUDE.md`** contains one line, `@AGENTS.md`. Claude Code reads `CLAUDE.md`, and the line
 imports the same rules. The rules exist once, so they can't get out of step.
@@ -584,9 +783,16 @@ starts by reading it. Read it yourself when you come back tomorrow.
 **`.ignore`** lists what the agent's search skips, even outside git. Here it also hides
 `package-lock.json`: git keeps it, but for the agent it is only noise.
 
-**`.claude/settings.json`** and **`opencode.json`** are hard rules. They deny reading and
+**`opencode.json`** and **`.claude/settings.json`** are hard rules. They deny reading and
 editing `.env*`, `node_modules/` and `public/splats/`. Rules in `AGENTS.md` are requests. The
-tool enforces these.
+tool enforces these. Both files also list the loop commands the agent may run without asking:
+`npm test`, `npm run check`, `git status`, `git diff`, `git log` and `ls`. OpenCode also allows
+`node`; Claude Code doesn't, because a `node` script can read past the deny rules.
+
+**`.codex/config.toml`** is for Codex. Codex has no file deny rules: its sandbox lets commands
+change files only inside the project. This file lets `npm run check` start its local server inside
+the sandbox, and lets commands in the project use the internet (`npm install`). Codex reads it only
+if you answered **yes** to "Do you trust this folder?".
 
 **`package.json`** has three scripts: `npm run dev` starts the local server, `npm test` runs
 the unit tests and `npm run check` checks the real page.
@@ -601,45 +807,71 @@ needs, such as "the canvas is not blank".
 
 Background for the curious. You don't need it to work.
 
-| | OpenCode | Codex CLI | Claude Code |
+| | OpenCode | Claude Code | Codex CLI |
 |---|---|---|---|
-| Rules file | `AGENTS.md` (falls back to `CLAUDE.md`) | `AGENTS.md` | `CLAUDE.md`, which imports `AGENTS.md` |
-| Search skips `.gitignore` files | Yes, inside git repositories | `@` file search: yes, inside git repositories | Grep tool and `@` file picker: yes. Glob tool: no |
-| Search skips `.ignore` files | Yes | `@` file search: yes | Grep tool: yes. Bash `grep`: no |
-| Can open an ignored file by its path | Yes, unless denied | Yes, with shell commands | Yes, unless denied |
-| Hard deny rules | `opencode.json` → `permission.read` / `edit` / `bash` | Beta "permission profiles" only, not used here | `.claude/settings.json` → `permissions.deny` |
+| Rules file | `AGENTS.md` (falls back to `CLAUDE.md`) | `CLAUDE.md`, which imports `AGENTS.md` | `AGENTS.md` |
+| Project settings | `opencode.json` | `.claude/settings.json` | `.codex/config.toml` |
+| Search skips `.gitignore` files | Yes, inside git repositories | Grep tool and `@` file picker: yes. Glob tool: no | `@` file search: yes, inside git repositories |
+| Search skips `.ignore` files | Yes | Grep tool: yes. Bash `grep`: no | `@` file search: yes |
+| Can open an ignored file by its path | Yes, unless denied | Yes, unless denied | Yes, with shell commands |
+| Hard deny rules | `opencode.json` → `permission.read` / `edit` / `bash` | `.claude/settings.json` → `permissions.deny` | None. Beta "permission profiles" exist, not used here |
 | `.env` files by default | Asks before reading | Readable | Readable |
+| Looks at screenshots | Yes with GLM-5.3 Flash; GLM-5.3 can't | Yes, on a plan | Yes, on a plan |
 
 What this means:
 
 - **Ignore files hide things from search. They don't lock anything.** The agent can still open
   an ignored file by name. That is on purpose: it must read `.check/report.json`, which git ignores.
-- **Deny rules lock files**, but only in OpenCode and Claude Code, and not perfectly. OpenCode
-  also blocks shell commands that name `.env` or `public/splats` (tested: in our run the agent
-  tried `ls … public/splats` after the read tool refused). But a script the agent writes and runs
-  can still open any file. Keep secrets out of projects altogether.
-- In OpenCode, `node` commands run without asking (they are loop commands). A `node` script can
-  open a denied file. That is one more reason the key never goes into a project.
-- **Codex** relies on `AGENTS.md`, `.gitignore` and `.ignore`, and on its sandbox.
+- **Deny rules lock files**, but only in OpenCode and Claude Code, and not perfectly.
+  - **OpenCode** also blocks shell commands that name `.env` or `public/splats` (tested: in our run
+    the agent tried `ls … public/splats` after the read tool refused). In OpenCode, `node` commands
+    run without asking (they are loop commands), and a `node` script can open a denied file.
+  - **Claude Code**'s rules block its own file tools and file commands like `cat`, `head`, `tail`
+    and `sed`, but not a script it writes. In our test it refused to open a fake `.env`, quoting
+    `AGENTS.md`.
+  - **Codex** relies on `AGENTS.md`, `.gitignore` and `.ignore`, and on its sandbox. In our test it
+    read a fake `.env` with a little script, and hid the value only because `AGENTS.md` says never
+    to print secrets.
+- **None of this is a vault.** A script the agent writes and runs can open any file. Keep secrets
+  out of project folders altogether, and never give the agent passwords, keys or other people's
+  data. That is one more reason the course key never goes into a project.
 
 ---
 
-## 8. Troubleshooting
+## 10. Troubleshooting
+
+**The course key**
 
 | Problem | Fix |
 |---|---|
 | `403` "permission denied" or a model "not allowed" | The tool asked for a model the course key doesn't allow. Check the model name in your config. OpenCode: is `small_model` set? In `/models`, pick **GLM-5.3-Flash**, not FlashX or Prime. Claude Code: are all model variables set? |
 | `403` "Budget limit exceeded" | Today's course budget is used up. It resets at midnight UTC (1 or 2 am in Zurich). Tell your teacher. |
 | `401` "User not found" or "invalid key" | Typo in the key, or the terminal doesn't see it. Windows: open a new terminal after setting the key. Mac: `source ~/.zshrc`. Run `node tools/check-openrouter.mjs`. |
-| `model_not_found`, `404` | Typo in the model name. OpenCode needs `openrouter/z-ai/glm-5.3-flash`, Codex and Claude Code need `z-ai/glm-5.3-flash`. |
+| `model_not_found`, `404` | Typo in the model name. OpenCode needs `openrouter/z-ai/glm-5.3-flash`, Claude Code and Codex need `z-ai/glm-5.3-flash`. |
 | Images are rejected or ignored | GLM-5.3 can't see images. Switch back to GLM-5.3 Flash. |
+| Claude Code still uses your Anthropic login | Is the `env` block in `~/.claude/settings.json`? Then `/logout`, quit, start again. `/status` must show `https://openrouter.ai/api` and `Auth token: ANTHROPIC_AUTH_TOKEN`. |
 | Codex: "wire_api = chat is no longer supported" | Use `wire_api = "responses"`. |
 | Codex ignores your provider | It must be in `~/.codex/config.toml` (Windows `$HOME\.codex\config.toml`), not in a project's `.codex/config.toml`. |
-| Codex: `npm run check` fails with "EPERM", "listen" or browser errors | The sandbox blocks the local server or the browser. Approve running it outside the sandbox. |
-| Claude Code still uses your Anthropic login | `/logout`, quit, start again. `/status` must show `https://openrouter.ai/api`. |
+
+**Your own plan**
+
+| Problem | Fix |
+|---|---|
+| Claude Code or Codex asks you to sign in again, or says you are not logged in | Claude Code: quit, start `claude` and sign in in the browser. Codex: `codex login`. Then check with `/status`. |
+| The agent stops because a usage limit is reached | Your plan's 5-hour window or weekly limit is used up (shared with the chat app). `/usage` shows it. Wait until it resets. To make it last: a smaller model with `/model`, and a new session for each new task. |
+| Claude Code doesn't work with your free Claude plan | The free plan does not include Claude Code. Use the course key with OpenCode: ask your teacher. |
+| Codex doesn't work with ChatGPT Free or Go | The Codex CLI needs Plus or higher. Use the course key with OpenCode: ask your teacher. |
+| Claude Code `/status` shows `Auth token` although you want your plan | The course key's `env` block is still in `~/.claude/settings.json`: the key beats a plan. Delete the block, then start `claude` again. |
+
+**Any account**
+
+| Problem | Fix |
+|---|---|
+| Codex: `npm run check` fails with "EPERM", "listen" or browser errors | Codex doesn't use the project's `.codex/config.toml`. Start Codex inside the project folder and answer **yes** to "Do you trust this folder?". If it still fails, approve running the check outside the sandbox when Codex asks. |
 | Windows: "running scripts is disabled on this system" | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force`, then a new terminal. |
 | `node` or `npm` "not recognized" / "command not found" | Open a new terminal after installing Node. Still not found: reinstall Node LTS. |
-| Mac: `npm install -g` fails with "EACCES" | See section 3, "Install". |
+| `opencode`, `claude` or `codex` "not recognized" / "command not found" | Open a new terminal after installing the tool. |
+| Mac: `npm install -g` fails with "EACCES" | See section 1, [Mac only: npm says EACCES](#mac-only-npm-says-eacces). |
 | `npm run check`: "Chromium for Playwright is missing" | `npx playwright install chromium` (about 300 MB, once). |
 | `npm run check` says FAILED and npm adds many `npm error` lines | Normal: npm reports that the check failed. Read the lines that start with `check:` and `-`. |
 | `npm run dev`: "Port 5173 is in use" | Another dev server is still running. Find its terminal and press Ctrl+C. Vite also tries 5174 by itself: read the URL it prints. |

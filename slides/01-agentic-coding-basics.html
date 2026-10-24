@@ -601,6 +601,16 @@ td:first-child {
   .slide .proof.check-mark { padding-left: 28px; }
   .slide .proof code { font-size: 0.9em; }
   .nowrap { white-space: nowrap; }
+  /* Setup slides for Claude Code and Codex: install row, two account cards, a check line. */
+  .d1-tl-os { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .d1-tl-two { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 30px; align-items: stretch; }
+  .slide .d1-tl-card { padding: 20px 26px 22px; border-radius: 16px; background: #fbfaf7; border: 2px solid #d3cfc6; }
+  .slide .d1-tl-card p { margin: 0 0 12px; font-size: 27px; line-height: 1.4; color: var(--grey); }
+  .slide .d1-tl-card p:last-child { margin-bottom: 0; }
+  .slide .d1-tl-card p.label { font-size: 22px; line-height: 1.3; }
+  .slide .d1-tl-card code, .slide .d1-tl-chk code { font-size: 0.88em; }
+  .slide .d1-tl-chk { margin: 24px 0 0; font-size: 28px; line-height: 1.42; color: var(--grey); }
+  .slide .d1-tl-chk b { color: var(--ink); font-weight: 600; }
   .d1-anim { }
   @media (prefers-reduced-motion: reduce) { .d1-anim, .d1-anim * { animation: none !important; } }
   @media print { .d1-anim, .d1-anim * { animation: none !important; } }
@@ -694,12 +704,14 @@ td:first-child {
   .d1-ag text { font-family: var(--sans); text-anchor: middle; }
   .d1-ag-card { fill: #fbfaf7; stroke: #d3cfc6; stroke-width: 2; }
   .d1-ag-h { font-size: 50px; font-weight: 600; fill: var(--ink); }
-  .d1-ag-big { font-size: 62px; font-weight: 600; fill: var(--ink); letter-spacing: -0.02em; }
+  .d1-ag-big { font-size: 46px; font-weight: 600; fill: var(--ink); letter-spacing: -0.02em; }
   .d1-ag-cap { font-size: 26px; font-weight: 600; letter-spacing: 0.14em; fill: var(--grey); }
   .d1-ag-sub { font-size: 28px; fill: var(--grey); }
   .d1-ag-code { font-family: var(--mono) !important; font-size: 30px; font-weight: 600; fill: var(--ink); }
   .d1-ag-on-dark { fill: var(--paper); }
   .d1-ag-mute { fill: var(--mute); }
+  .d1-ag-mname { font-size: 34px; font-weight: 600; fill: var(--paper); }
+  .d1-ag-macct { font-size: 26px; fill: var(--mute); }
   .d1-ag-line { fill: none; stroke: #9a968e; stroke-width: 3; }
   .d1-ag-lbl { font-size: 28px; fill: var(--grey); }
   .d1-ag-pk { fill: none; stroke-width: 20; stroke-linecap: round; stroke-dasharray: 0 200; opacity: 0; }
@@ -729,135 +741,228 @@ td:first-child {
   <h2>The model proposes.<br />The agent runs it on your laptop.</h2>
   <p class="d1-ag-lead">A chat answers. An agent opens your files, edits code, runs commands and reads what comes back.</p>
   <div class="d1-ag d1-anim">
-    <svg viewBox="0 0 1664 570" role="img" aria-label="You type a prompt. The agent, OpenCode on your laptop, sends your prompt and the files it read to the model, GLM-5.3 Flash via OpenRouter, and gets the next step back. The agent uses tools on your laptop: files, terminal, and a hidden browser through npm run check. Then it shows you the result. This repeats until the step is done.">
+    <svg viewBox="0 0 1664 570" role="img" aria-label="You type a prompt. The agent on your laptop, OpenCode, Claude Code or Codex, sends your prompt and the files it read to the model and gets the next step back. The model depends on your account: GLM-5.3 Flash via OpenRouter with the course key, Claude with your Claude plan, GPT with your ChatGPT plan. The agent uses tools on your laptop: files, terminal, and a hidden browser through npm run check. Then it shows you the result. This repeats until the step is done.">
       <defs>
         <marker id="d1-ag-arr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="18" markerHeight="18" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#9a968e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></marker>
       </defs>
-      <path class="d1-ag-line" d="M300 115 H520" marker-end="url(#d1-ag-arr)" />
-      <path class="d1-ag-line" d="M520 185 H300" marker-end="url(#d1-ag-arr)" />
-      <path class="d1-ag-line" d="M1060 115 H1344" marker-end="url(#d1-ag-arr)" />
-      <path class="d1-ag-line" d="M1344 185 H1060" marker-end="url(#d1-ag-arr)" />
-      <path class="d1-ag-line" d="M640 264 L480 416" marker-start="url(#d1-ag-arr)" marker-end="url(#d1-ag-arr)" />
-      <path class="d1-ag-line" d="M790 264 V416" marker-start="url(#d1-ag-arr)" marker-end="url(#d1-ag-arr)" />
-      <path class="d1-ag-line" d="M940 264 L1100 416" marker-start="url(#d1-ag-arr)" marker-end="url(#d1-ag-arr)" />
-      <text x="410" y="95" class="d1-ag-lbl">prompt</text>
-      <text x="410" y="228" class="d1-ag-lbl">result</text>
-      <text x="1202" y="62" class="d1-ag-lbl">your prompt and</text>
-      <text x="1202" y="97" class="d1-ag-lbl">the files it read</text>
-      <text x="1202" y="228" class="d1-ag-lbl">the next step</text>
-      <path class="d1-ag-pk d1-ag-p1" pathLength="100" d="M300 115 H520" stroke="#e8875b" />
-      <path class="d1-ag-pk d1-ag-p2" pathLength="100" d="M1060 115 H1344" stroke="#e8875b" />
-      <path class="d1-ag-pk d1-ag-p3" pathLength="100" d="M1344 185 H1060" stroke="#8a867e" />
-      <path class="d1-ag-pk d1-ag-p4" pathLength="100" d="M640 264 L480 416" stroke="#e8875b" />
-      <path class="d1-ag-pk d1-ag-p4" pathLength="100" d="M790 264 V416" stroke="#e8875b" />
-      <path class="d1-ag-pk d1-ag-p4" pathLength="100" d="M940 264 L1100 416" stroke="#e8875b" />
-      <path class="d1-ag-pk d1-ag-p5" pathLength="100" d="M480 416 L640 264" stroke="#8a867e" />
-      <path class="d1-ag-pk d1-ag-p5" pathLength="100" d="M790 416 V264" stroke="#8a867e" />
-      <path class="d1-ag-pk d1-ag-p5" pathLength="100" d="M1100 416 L940 264" stroke="#8a867e" />
-      <path class="d1-ag-pk d1-ag-p6" pathLength="100" d="M520 185 H300" stroke="#e8875b" />
+      <path class="d1-ag-line" d="M280 115 H500" marker-end="url(#d1-ag-arr)" />
+      <path class="d1-ag-line" d="M500 185 H280" marker-end="url(#d1-ag-arr)" />
+      <path class="d1-ag-line" d="M1020 115 H1264" marker-end="url(#d1-ag-arr)" />
+      <path class="d1-ag-line" d="M1264 185 H1020" marker-end="url(#d1-ag-arr)" />
+      <path class="d1-ag-line" d="M610 274 L450 416" marker-start="url(#d1-ag-arr)" marker-end="url(#d1-ag-arr)" />
+      <path class="d1-ag-line" d="M760 274 V416" marker-start="url(#d1-ag-arr)" marker-end="url(#d1-ag-arr)" />
+      <path class="d1-ag-line" d="M910 274 L1070 416" marker-start="url(#d1-ag-arr)" marker-end="url(#d1-ag-arr)" />
+      <text x="390" y="95" class="d1-ag-lbl">prompt</text>
+      <text x="390" y="228" class="d1-ag-lbl">result</text>
+      <text x="1142" y="62" class="d1-ag-lbl">your prompt and</text>
+      <text x="1142" y="97" class="d1-ag-lbl">the files it read</text>
+      <text x="1142" y="228" class="d1-ag-lbl">the next step</text>
+      <path class="d1-ag-pk d1-ag-p1" pathLength="100" d="M280 115 H500" stroke="#e8875b" />
+      <path class="d1-ag-pk d1-ag-p2" pathLength="100" d="M1020 115 H1264" stroke="#e8875b" />
+      <path class="d1-ag-pk d1-ag-p3" pathLength="100" d="M1264 185 H1020" stroke="#8a867e" />
+      <path class="d1-ag-pk d1-ag-p4" pathLength="100" d="M610 274 L450 416" stroke="#e8875b" />
+      <path class="d1-ag-pk d1-ag-p4" pathLength="100" d="M760 274 V416" stroke="#e8875b" />
+      <path class="d1-ag-pk d1-ag-p4" pathLength="100" d="M910 274 L1070 416" stroke="#e8875b" />
+      <path class="d1-ag-pk d1-ag-p5" pathLength="100" d="M450 416 L610 274" stroke="#8a867e" />
+      <path class="d1-ag-pk d1-ag-p5" pathLength="100" d="M760 416 V274" stroke="#8a867e" />
+      <path class="d1-ag-pk d1-ag-p5" pathLength="100" d="M1070 416 L910 274" stroke="#8a867e" />
+      <path class="d1-ag-pk d1-ag-p6" pathLength="100" d="M500 185 H280" stroke="#e8875b" />
       <!-- you -->
-      <rect x="0" y="60" width="280" height="180" rx="18" class="d1-ag-card" />
-      <text x="140" y="148" class="d1-ag-h">You</text>
-      <text x="140" y="192" class="d1-ag-sub">the designer</text>
-      <rect x="0" y="60" width="280" height="180" rx="18" class="d1-ag-lit d1-ag-l-you" stroke-width="4" />
-      <!-- agent -->
-      <rect x="540" y="40" width="500" height="220" rx="18" fill="#fbfaf7" stroke="#e8875b" stroke-width="3" />
-      <text x="790" y="100" class="d1-ag-cap">AGENT</text>
-      <text x="790" y="168" class="d1-ag-big">OpenCode</text>
-      <text x="790" y="216" class="d1-ag-sub">on your laptop</text>
-      <rect x="540" y="40" width="500" height="220" rx="18" class="d1-ag-lit d1-ag-l-agent" stroke-width="7" />
-      <!-- model -->
-      <rect x="1364" y="40" width="300" height="220" rx="18" fill="#171717" />
-      <text x="1514" y="100" class="d1-ag-cap d1-ag-mute">MODEL</text>
-      <text x="1514" y="160" class="d1-ag-h d1-ag-on-dark" style="font-size: 38px">GLM-5.3 Flash</text>
-      <text x="1514" y="210" class="d1-ag-sub d1-ag-mute">via OpenRouter</text>
-      <rect x="1364" y="40" width="300" height="220" rx="18" class="d1-ag-lit d1-ag-l-model" stroke-width="5" />
+      <rect x="0" y="60" width="260" height="180" rx="18" class="d1-ag-card" />
+      <text x="130" y="148" class="d1-ag-h">You</text>
+      <text x="130" y="192" class="d1-ag-sub">the designer</text>
+      <rect x="0" y="60" width="260" height="180" rx="18" class="d1-ag-lit d1-ag-l-you" stroke-width="4" />
+      <!-- agent: one of three tools -->
+      <rect x="520" y="30" width="480" height="240" rx="18" fill="#fbfaf7" stroke="#e8875b" stroke-width="3" />
+      <text x="760" y="80" class="d1-ag-cap">AGENT</text>
+      <text x="760" y="136" class="d1-ag-big">OpenCode</text>
+      <text x="760" y="188" class="d1-ag-big" style="font-size: 38px">Claude Code · Codex</text>
+      <text x="760" y="240" class="d1-ag-sub">on your laptop</text>
+      <rect x="520" y="30" width="480" height="240" rx="18" class="d1-ag-lit d1-ag-l-agent" stroke-width="7" />
+      <!-- model: depends on the account -->
+      <rect x="1284" y="30" width="380" height="380" rx="18" fill="#171717" />
+      <text x="1474" y="80" class="d1-ag-cap d1-ag-mute">MODEL</text>
+      <text x="1474" y="116" class="d1-ag-macct">depends on your account</text>
+      <path d="M1314 140 H1634" stroke="#3a3a3a" stroke-width="2" />
+      <text x="1474" y="190" class="d1-ag-mname">GLM-5.3 Flash</text>
+      <text x="1474" y="224" class="d1-ag-macct">course key, OpenRouter</text>
+      <text x="1474" y="280" class="d1-ag-mname">Claude</text>
+      <text x="1474" y="314" class="d1-ag-macct">your Claude plan</text>
+      <text x="1474" y="364" class="d1-ag-mname">GPT</text>
+      <text x="1474" y="398" class="d1-ag-macct">your ChatGPT plan</text>
+      <rect x="1284" y="30" width="380" height="380" rx="18" class="d1-ag-lit d1-ag-l-model" stroke-width="5" />
       <!-- tools -->
-      <rect x="320" y="420" width="290" height="140" rx="16" class="d1-ag-card" />
-      <text x="465" y="480" class="d1-ag-code">files</text><text x="465" y="526" class="d1-ag-sub">read · write</text>
-      <rect x="645" y="420" width="290" height="140" rx="16" class="d1-ag-card" />
-      <text x="790" y="480" class="d1-ag-code">terminal</text><text x="790" y="526" class="d1-ag-sub">runs commands</text>
-      <rect x="970" y="420" width="290" height="140" rx="16" class="d1-ag-card" />
-      <text x="1115" y="480" class="d1-ag-code">hidden browser</text><text x="1115" y="526" class="d1-ag-sub">npm run check</text>
-      <g class="d1-ag-l-tools" style="opacity: 0"><rect x="320" y="420" width="290" height="140" rx="16" fill="none" stroke="#e8875b" stroke-width="4" /><rect x="645" y="420" width="290" height="140" rx="16" fill="none" stroke="#e8875b" stroke-width="4" /><rect x="970" y="420" width="290" height="140" rx="16" fill="none" stroke="#e8875b" stroke-width="4" /></g>
+      <rect x="290" y="420" width="290" height="140" rx="16" class="d1-ag-card" />
+      <text x="435" y="480" class="d1-ag-code">files</text><text x="435" y="526" class="d1-ag-sub">read · write</text>
+      <rect x="615" y="420" width="290" height="140" rx="16" class="d1-ag-card" />
+      <text x="760" y="480" class="d1-ag-code">terminal</text><text x="760" y="526" class="d1-ag-sub">runs commands</text>
+      <rect x="940" y="420" width="290" height="140" rx="16" class="d1-ag-card" />
+      <text x="1085" y="480" class="d1-ag-code">hidden browser</text><text x="1085" y="526" class="d1-ag-sub">npm run check</text>
+      <g class="d1-ag-l-tools" style="opacity: 0"><rect x="290" y="420" width="290" height="140" rx="16" fill="none" stroke="#e8875b" stroke-width="4" /><rect x="615" y="420" width="290" height="140" rx="16" fill="none" stroke="#e8875b" stroke-width="4" /><rect x="940" y="420" width="290" height="140" rx="16" fill="none" stroke="#e8875b" stroke-width="4" /></g>
       <!-- the loop repeats -->
-      <path d="M1338 462 A28 28 0 1 1 1310 490" class="d1-ag-line" marker-end="url(#d1-ag-arr)" />
-      <text x="1384" y="478" class="d1-ag-sub" style="text-anchor: start">repeats until</text>
-      <text x="1384" y="514" class="d1-ag-sub" style="text-anchor: start">the step is done</text>
+      <path d="M1338 482 A28 28 0 1 1 1310 510" class="d1-ag-line" marker-end="url(#d1-ag-arr)" />
+      <text x="1384" y="498" class="d1-ag-sub" style="text-anchor: start">repeats until</text>
+      <text x="1384" y="534" class="d1-ag-sub" style="text-anchor: start">the step is done</text>
     </svg>
   </div>
+  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
+<!-- 3b Pick your tool and account -->
+<section class="slide light">
+  <style>
+  .d1-pk-lead { margin: -18px 0 26px; font-size: 30px; line-height: 1.4; color: var(--grey); }
+  .d1-pk svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .d1-pk text { font-family: var(--sans); text-anchor: middle; }
+  .d1-pk-head { font-size: 22px; font-weight: 600; letter-spacing: 0.14em; fill: var(--grey); }
+  .d1-pk-acct { fill: #fbfaf7; stroke: #d3cfc6; stroke-width: 2; }
+  .d1-pk-tool { fill: #fbfaf7; stroke: #e8875b; stroke-width: 3; }
+  .d1-pk-h { font-size: 38px; font-weight: 600; fill: var(--ink); }
+  .d1-pk-sub { font-size: 26px; fill: var(--grey); }
+  .d1-pk-mh { font-size: 36px; font-weight: 600; fill: var(--paper); }
+  .d1-pk-msub { font-size: 26px; fill: var(--mute); }
+  .d1-pk-line { fill: none; stroke: #9a968e; stroke-width: 3; }
+  .d1-pk-pk { fill: none; stroke: #e8875b; stroke-width: 18; stroke-linecap: round; stroke-dasharray: 0 200; opacity: 0; }
+  .d1-pk-lit { fill: none; stroke: #e8875b; stroke-width: 5; opacity: 0; }
+  @keyframes d1-pk-go { 0% { stroke-dashoffset: 0; opacity: 0; } 1% { stroke-dashoffset: 0; opacity: 1; animation-timing-function: ease-in-out; } 10% { stroke-dashoffset: -100; opacity: 1; } 12%, 100% { stroke-dashoffset: -100; opacity: 0; } }
+  @keyframes d1-pk-row { 0% { opacity: 0; } 3%, 27% { opacity: 1; } 32%, 100% { opacity: 0; } }
+  .d1-pk-pk { animation: d1-pk-go 9s linear infinite; }
+  .d1-pk-lit { animation: d1-pk-row 9s ease-in-out infinite; }
+  .d1-pk-r1b { animation-delay: 0.9s; }
+  .d1-pk-r2a, .d1-pk-r2 { animation-delay: 3s; }
+  .d1-pk-r2b { animation-delay: 3.9s; }
+  .d1-pk-r3a, .d1-pk-r3 { animation-delay: 6s; }
+  .d1-pk-r3b { animation-delay: 6.9s; }
+  .d1-pk-note { margin: 26px 0 0; font-size: 28px; line-height: 1.42; color: var(--grey); }
+  .d1-pk-note code { font-size: 0.9em; }
+  .d1-pk-same { margin: 14px 0 0; font-size: 34px; line-height: 1.3; font-weight: 600; color: var(--ink); }
+  </style>
+  <p class="eyebrow">Your setup</p>
+  <h2>Pick your tool and account.</h2>
+  <p class="d1-pk-lead">Most of you have no plan: use the course key with OpenCode. We ran every example with it.</p>
+  <div class="d1-pk d1-anim">
+    <svg viewBox="0 0 1664 452" role="img" aria-label="No plan, most of you: the course key, with OpenCode, model GLM-5.3 Flash via OpenRouter. A Claude plan, Pro, Max, Team or Enterprise: Claude Code, signed in with your plan, model Claude by Anthropic. A ChatGPT plan, Plus or higher: Codex, signed in with ChatGPT, model GPT by OpenAI.">
+      <defs>
+        <marker id="d1-pk-arr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="18" markerHeight="18" markerUnits="userSpaceOnUse" orient="auto"><path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#9a968e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></marker>
+      </defs>
+      <text x="235" y="22" class="d1-pk-head">YOUR ACCOUNT</text>
+      <text x="830" y="22" class="d1-pk-head">YOUR TOOL</text>
+      <text x="1427" y="22" class="d1-pk-head">THE MODEL</text>
+      <!-- arrows -->
+      <path class="d1-pk-line" d="M480 101 H578" marker-end="url(#d1-pk-arr)" />
+      <path class="d1-pk-line" d="M1080 101 H1178" marker-end="url(#d1-pk-arr)" />
+      <path class="d1-pk-line" d="M480 241 H578" marker-end="url(#d1-pk-arr)" />
+      <path class="d1-pk-line" d="M1080 241 H1178" marker-end="url(#d1-pk-arr)" />
+      <path class="d1-pk-line" d="M480 381 H578" marker-end="url(#d1-pk-arr)" />
+      <path class="d1-pk-line" d="M1080 381 H1178" marker-end="url(#d1-pk-arr)" />
+      <path class="d1-pk-pk" pathLength="100" d="M480 101 H576" />
+      <path class="d1-pk-pk d1-pk-r1b" pathLength="100" d="M1080 101 H1176" />
+      <path class="d1-pk-pk d1-pk-r2a" pathLength="100" d="M480 241 H576" />
+      <path class="d1-pk-pk d1-pk-r2b" pathLength="100" d="M1080 241 H1176" />
+      <path class="d1-pk-pk d1-pk-r3a" pathLength="100" d="M480 381 H576" />
+      <path class="d1-pk-pk d1-pk-r3b" pathLength="100" d="M1080 381 H1176" />
+      <!-- row 1: no plan, the course key, OpenCode -->
+      <rect x="0" y="42" width="470" height="118" rx="16" class="d1-pk-acct" />
+      <text x="235" y="94" class="d1-pk-h">No plan</text>
+      <text x="235" y="134" class="d1-pk-sub">most of you · the course key</text>
+      <rect x="590" y="42" width="480" height="118" rx="16" class="d1-pk-tool" />
+      <text x="830" y="94" class="d1-pk-h">OpenCode</text>
+      <text x="830" y="134" class="d1-pk-sub">with the course key</text>
+      <rect x="1190" y="42" width="474" height="118" rx="16" fill="#171717" />
+      <text x="1427" y="94" class="d1-pk-mh">GLM-5.3 Flash</text>
+      <text x="1427" y="134" class="d1-pk-msub">via OpenRouter</text>
+      <g class="d1-pk-lit"><rect x="0" y="42" width="470" height="118" rx="16" /><rect x="590" y="42" width="480" height="118" rx="16" /><rect x="1190" y="42" width="474" height="118" rx="16" /></g>
+      <!-- row 2: Claude plan, Claude Code -->
+      <rect x="0" y="182" width="470" height="118" rx="16" class="d1-pk-acct" />
+      <text x="235" y="234" class="d1-pk-h">Claude plan</text>
+      <text x="235" y="274" class="d1-pk-sub">Pro, Max, Team or Enterprise</text>
+      <rect x="590" y="182" width="480" height="118" rx="16" class="d1-pk-tool" />
+      <text x="830" y="234" class="d1-pk-h">Claude Code</text>
+      <text x="830" y="274" class="d1-pk-sub">signed in with your plan</text>
+      <rect x="1190" y="182" width="474" height="118" rx="16" fill="#171717" />
+      <text x="1427" y="234" class="d1-pk-mh">Claude</text>
+      <text x="1427" y="274" class="d1-pk-msub">by Anthropic</text>
+      <g class="d1-pk-lit d1-pk-r2"><rect x="0" y="182" width="470" height="118" rx="16" /><rect x="590" y="182" width="480" height="118" rx="16" /><rect x="1190" y="182" width="474" height="118" rx="16" /></g>
+      <!-- row 3: ChatGPT plan, Codex -->
+      <rect x="0" y="322" width="470" height="118" rx="16" class="d1-pk-acct" />
+      <text x="235" y="374" class="d1-pk-h">ChatGPT plan</text>
+      <text x="235" y="414" class="d1-pk-sub">Plus or higher</text>
+      <rect x="590" y="322" width="480" height="118" rx="16" class="d1-pk-tool" />
+      <text x="830" y="374" class="d1-pk-h">Codex</text>
+      <text x="830" y="414" class="d1-pk-sub">signed in with ChatGPT</text>
+      <rect x="1190" y="322" width="474" height="118" rx="16" fill="#171717" />
+      <text x="1427" y="374" class="d1-pk-mh">GPT</text>
+      <text x="1427" y="414" class="d1-pk-msub">by OpenAI</text>
+      <g class="d1-pk-lit d1-pk-r3"><rect x="0" y="322" width="470" height="118" rx="16" /><rect x="590" y="322" width="480" height="118" rx="16" /><rect x="1190" y="322" width="474" height="118" rx="16" /></g>
+    </svg>
+  </div>
+  <p class="d1-pk-note">Claude Code and Codex can also run on the course key: <code>docs/student-setup.md</code>.</p>
+  <p class="d1-pk-same">Whatever you pick, the loop and the files are the same.</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
 <!-- 4 What leaves your laptop -->
 <section class="slide light">
   <style>
-  .d1-pv svg { display: block; width: 100%; height: auto; overflow: visible; }
-  .d1-pv text { font-family: var(--sans); text-anchor: middle; }
-  .d1-pv-card { fill: #fbfaf7; stroke: #d3cfc6; stroke-width: 2; }
-  .d1-pv-cap { font-size: 22px; font-weight: 600; letter-spacing: 0.14em; fill: var(--grey); }
-  .d1-pv-h { font-size: 38px; font-weight: 600; fill: var(--ink); }
-  .d1-pv-sub { font-size: 25px; fill: var(--grey); }
-  .d1-pv-lbl { font-size: 25px; fill: var(--ink); }
-  .d1-pv-lblg { font-size: 25px; fill: var(--grey); }
-  .d1-pv-line { fill: none; stroke: #9a968e; stroke-width: 3; }
-  .d1-pv-pk { fill: none; stroke-width: 18; stroke-linecap: round; stroke-dasharray: 0 200; opacity: 0; }
-  @keyframes d1-pv-out1 { 0%, 4% { stroke-dashoffset: 0; opacity: 0; } 5% { stroke-dashoffset: 0; opacity: 1; animation-timing-function: ease-in-out; } 22% { stroke-dashoffset: -100; opacity: 1; } 24%, 100% { stroke-dashoffset: -100; opacity: 0; } }
-  @keyframes d1-pv-out2 { 0%, 25% { stroke-dashoffset: 0; opacity: 0; } 26% { stroke-dashoffset: 0; opacity: 1; animation-timing-function: ease-in-out; } 43% { stroke-dashoffset: -100; opacity: 1; } 45%, 100% { stroke-dashoffset: -100; opacity: 0; } }
-  @keyframes d1-pv-back2 { 0%, 54% { stroke-dashoffset: 0; opacity: 0; } 55% { stroke-dashoffset: 0; opacity: 1; animation-timing-function: ease-in-out; } 70% { stroke-dashoffset: -100; opacity: 1; } 72%, 100% { stroke-dashoffset: -100; opacity: 0; } }
-  @keyframes d1-pv-back1 { 0%, 73% { stroke-dashoffset: 0; opacity: 0; } 74% { stroke-dashoffset: 0; opacity: 1; animation-timing-function: ease-in-out; } 89% { stroke-dashoffset: -100; opacity: 1; } 91%, 100% { stroke-dashoffset: -100; opacity: 0; } }
-  .d1-pv-o1 { animation: d1-pv-out1 10s linear infinite; }
-  .d1-pv-o2 { animation: d1-pv-out2 10s linear infinite; }
-  .d1-pv-b2 { animation: d1-pv-back2 10s linear infinite; }
-  .d1-pv-b1 { animation: d1-pv-back1 10s linear infinite; }
-  .d1-pv-body { margin-top: 40px; max-width: 1560px; }
-  .d1-pv-body p { font-size: 32px; line-height: 1.45; }
+  .d1-pv-lead { margin: -16px 0 28px; font-size: 30px; line-height: 1.4; color: var(--grey); }
+  .d1-pv-lead b { color: var(--ink); font-weight: 600; }
+  .d1-pv { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; align-items: stretch; }
+  .d1-pv-card { display: flex; flex-direction: column; padding: 22px 26px 24px; border-radius: 16px; background: #fbfaf7; border: 2px solid #d3cfc6; }
+  .d1-pv-card.d1-pv-main { border: 3px solid #e8875b; }
+  .d1-pv-card p { margin: 0; }
+  .d1-pv-acct { font-size: 22px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey); }
+  .d1-pv-path { display: block; width: 100%; height: auto; margin: 12px 0 10px; overflow: visible; }
+  .d1-pv-path text { font-family: var(--sans); font-size: 32px; font-weight: 600; fill: var(--ink); }
+  .d1-pv-t { font-size: 26px; line-height: 1.4; color: var(--grey); }
+  .d1-pv-sw { display: flex; gap: 14px; align-items: flex-start; margin-top: auto !important; padding-top: 18px; font-size: 26px; line-height: 1.38; color: var(--grey); }
+  .d1-pv-sw svg { flex: none; width: 52px; height: 30px; margin-top: 3px; }
+  .d1-pv-sw b { color: var(--ink); font-weight: 600; }
+  .d1-pv-pk { fill: none; stroke: #e8875b; stroke-width: 16; stroke-linecap: round; stroke-dasharray: 0 200; opacity: 0; animation: d1-pv-go 6s linear infinite; }
+  @keyframes d1-pv-go { 0% { stroke-dashoffset: 0; opacity: 0; } 2% { stroke-dashoffset: 0; opacity: 1; animation-timing-function: ease-in-out; } 22% { stroke-dashoffset: -100; opacity: 1; } 26%, 100% { stroke-dashoffset: -100; opacity: 0; } }
+  .d1-pv-d2 { animation-delay: 1.4s; }
+  .d1-pv-d3 { animation-delay: 2.8s; }
+  .d1-pv-end { margin-top: 26px; font-size: 30px; line-height: 1.4; color: var(--grey); }
+  .d1-pv-end b { color: var(--ink); font-weight: 600; }
   </style>
   <p class="eyebrow">Privacy</p>
   <h2>What leaves your laptop.</h2>
+  <p class="d1-pv-lead">Your prompts, the files the agent opens, command output, screenshots. <b>Your splat files are kept away from the agent; pictures of them are not.</b></p>
   <div class="d1-pv d1-anim">
-    <svg viewBox="0 0 1664 320" role="img" aria-label="Your laptop runs OpenCode and your project; your splat files stay there. Your prompts, the files the agent opens and its screenshots go to OpenRouter, which checks the key and passes the request on to a company that runs GLM, Z.AI or another. The answer comes back the same way.">
-      <defs>
-        <marker id="d1-pv-arr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="18" markerHeight="18" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#9a968e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></marker>
-      </defs>
-      <!-- laptop -->
-      <rect x="0" y="10" width="460" height="300" rx="18" fill="#1d1d1d" />
-      <text x="230" y="58" class="d1-pv-cap" style="fill: #a9a59d">YOUR LAPTOP</text>
-      <text x="230" y="120" class="d1-pv-h" style="fill: #f1efea">OpenCode</text>
-      <text x="230" y="160" class="d1-pv-sub" style="fill: #a9a59d">and your project</text>
-      <rect x="28" y="206" width="404" height="76" rx="14" fill="#2c2c2c" stroke="#46a758" stroke-width="2.5" />
-      <text x="230" y="254" class="d1-pv-sub" style="fill: #ebe8e1">your splat files stay here</text>
-      <!-- arrows: out above, back below -->
-      <path class="d1-pv-line" d="M470 120 H690" marker-end="url(#d1-pv-arr)" />
-      <path class="d1-pv-line" d="M690 210 H470" marker-end="url(#d1-pv-arr)" />
-      <path class="d1-pv-line" d="M1010 120 H1230" marker-end="url(#d1-pv-arr)" />
-      <path class="d1-pv-line" d="M1230 210 H1010" marker-end="url(#d1-pv-arr)" />
-      <text x="580" y="30" class="d1-pv-lbl">your prompts,</text>
-      <text x="580" y="62" class="d1-pv-lbl">files it opens,</text>
-      <text x="580" y="94" class="d1-pv-lbl">screenshots</text>
-      <text x="580" y="250" class="d1-pv-lblg">the answer</text>
-      <text x="1120" y="94" class="d1-pv-lbl">the same request</text>
-      <text x="1120" y="250" class="d1-pv-lblg">the answer</text>
-      <path class="d1-pv-pk d1-pv-o1" pathLength="100" d="M470 120 H690" stroke="#e8875b" />
-      <path class="d1-pv-pk d1-pv-o2" pathLength="100" d="M1010 120 H1230" stroke="#e8875b" />
-      <path class="d1-pv-pk d1-pv-b2" pathLength="100" d="M1230 210 H1010" stroke="#8a867e" />
-      <path class="d1-pv-pk d1-pv-b1" pathLength="100" d="M690 210 H470" stroke="#8a867e" />
-      <!-- OpenRouter -->
-      <rect x="700" y="40" width="300" height="240" rx="18" class="d1-pv-card" />
-      <text x="850" y="140" class="d1-pv-h" style="font-size: 36px">OpenRouter</text>
-      <text x="850" y="184" class="d1-pv-sub">checks the key,</text>
-      <text x="850" y="216" class="d1-pv-sub">passes it on</text>
-      <!-- provider -->
-      <rect x="1240" y="40" width="424" height="240" rx="18" fill="#171717" />
-      <text x="1452" y="98" class="d1-pv-cap" style="fill: #a9a59d">A COMPANY THAT RUNS</text>
-      <text x="1452" y="154" class="d1-pv-h" style="fill: #f1efea">GLM-5.3 Flash</text>
-      <text x="1452" y="204" class="d1-pv-sub" style="fill: #a9a59d">Z.AI or another</text>
-    </svg>
+    <div class="d1-pv-card d1-pv-main">
+      <p class="d1-pv-acct">The course key</p>
+      <svg class="d1-pv-path" viewBox="0 0 484 60" role="img" aria-label="From your laptop to OpenRouter, USA">
+        <rect x="2" y="10" width="44" height="30" rx="4" fill="none" stroke="#1d1d1d" stroke-width="3" /><path d="M0 46 H48" stroke="#1d1d1d" stroke-width="4" stroke-linecap="round" />
+        <path d="M62 28 H148" fill="none" stroke="#9a968e" stroke-width="3" /><path d="M140 20 L150 28 L140 36" fill="none" stroke="#9a968e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <path class="d1-pv-pk" pathLength="100" d="M62 28 H146" />
+        <text x="166" y="40">OpenRouter, USA</text>
+      </svg>
+      <p class="d1-pv-t">Then to one of many companies running GLM, chosen by price, not country. OpenRouter keeps no content by default. A few companies keep prompts a while <span class="nowrap">(one says 30 days).</span></p>
+      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Nothing to switch:</b> the companies listed say they don't train on it.</span></p>
+    </div>
+    <div class="d1-pv-card">
+      <p class="d1-pv-acct">Your Claude plan</p>
+      <svg class="d1-pv-path" viewBox="0 0 484 60" role="img" aria-label="From your laptop to Anthropic, USA">
+        <rect x="2" y="10" width="44" height="30" rx="4" fill="none" stroke="#1d1d1d" stroke-width="3" /><path d="M0 46 H48" stroke="#1d1d1d" stroke-width="4" stroke-linecap="round" />
+        <path d="M62 28 H148" fill="none" stroke="#9a968e" stroke-width="3" /><path d="M140 20 L150 28 L140 36" fill="none" stroke="#9a968e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <path class="d1-pv-pk d1-pv-d2" pathLength="100" d="M62 28 H146" />
+        <text x="166" y="40">Anthropic, USA</text>
+      </svg>
+      <p class="d1-pv-t">Pro and Max: Anthropic trains on your chats and Claude Code sessions while “Help improve Claude” is on, and keeps them 5 years. Off: 30 days.</p>
+      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Turn it off:</b><br /><span class="nowrap">claude.ai → Settings → Privacy</span></span></p>
+    </div>
+    <div class="d1-pv-card">
+      <p class="d1-pv-acct">Your ChatGPT plan</p>
+      <svg class="d1-pv-path" viewBox="0 0 484 60" role="img" aria-label="From your laptop to OpenAI, USA">
+        <rect x="2" y="10" width="44" height="30" rx="4" fill="none" stroke="#1d1d1d" stroke-width="3" /><path d="M0 46 H48" stroke="#1d1d1d" stroke-width="4" stroke-linecap="round" />
+        <path d="M62 28 H148" fill="none" stroke="#9a968e" stroke-width="3" /><path d="M140 20 L150 28 L140 36" fill="none" stroke="#9a968e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <path class="d1-pv-pk d1-pv-d3" pathLength="100" d="M62 28 H146" />
+        <text x="166" y="40">OpenAI, USA</text>
+      </svg>
+      <p class="d1-pv-t">Plus and Pro: ChatGPT and Codex content may be used for training. Business and Edu: not by default.</p>
+      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Turn it off,</b> one switch for both: Settings&nbsp;→ Data&nbsp;controls&nbsp;→ “Improve the model <span class="nowrap">for everyone”</span></span></p>
+    </div>
   </div>
-  <div class="body d1-pv-body">
-    <p>Your prompts, the files the agent opens, command output and screenshots go to OpenRouter (USA), then to one of many companies that run GLM, chosen by price, not by country. By default OpenRouter keeps no content, only model, tokens, cost and time. A few of these companies keep prompts for a while (one says 30 days).</p>
-    <p><b>Never give the agent passwords, keys or other people's data.</b></p>
-  </div>
+  <p class="d1-pv-end">Turn training off before day one. <b>Never give the agent passwords, keys or other people's data.</b></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -962,8 +1067,8 @@ td:first-child {
   <style>
   .d1-sk { display: grid; grid-template-columns: 1110px 1fr; gap: 56px; align-items: start; }
   .d1-sk-tree { padding: 16px 26px; border-radius: 14px; background: var(--panel); font-family: var(--mono); }
-  .d1-sk-root { height: 44px; display: flex; align-items: center; font-size: 24px; color: #262626; }
-  .d1-sk-row { display: grid; grid-template-columns: 410px 1fr auto; align-items: center; height: 44px; margin: 0 -12px; padding: 0 12px; border-radius: 10px; }
+  .d1-sk-root { height: 41px; display: flex; align-items: center; font-size: 24px; color: #262626; }
+  .d1-sk-row { display: grid; grid-template-columns: 410px 1fr auto; align-items: center; height: 41px; margin: 0 -12px; padding: 0 12px; border-radius: 10px; }
   .d1-sk-name { font-size: 24px; color: #262626; white-space: pre; }
   .d1-sk-note { font-size: 22px; color: #555; white-space: nowrap; }
   .d1-sk-tag { display: inline-flex; align-items: center; gap: 8px; padding: 1px 14px 2px 10px; border-radius: 999px; font: 600 22px var(--sans); color: var(--ink); }
@@ -990,8 +1095,9 @@ td:first-child {
       <div class="d1-sk-row d1-sk-memory"><span class="d1-sk-name">├── ai/strategy.md</span><span class="d1-sk-note">goal, plan, decisions, next</span><span class="d1-sk-tag" style="background: rgba(242,201,76,.30)"><i style="background: #d9a91a"></i>Memory</span></div>
       <div class="d1-sk-row d1-sk-bounds"><span class="d1-sk-name">├── .gitignore</span><span class="d1-sk-note">what git never stores</span><span class="d1-sk-tag" style="background: rgba(229,72,77,.16)"><i style="background: #e5484d"></i>Boundaries</span></div>
       <div class="d1-sk-row d1-sk-bounds"><span class="d1-sk-name">├── .ignore</span><span class="d1-sk-note">what agent search skips</span><span class="d1-sk-tag" style="background: rgba(229,72,77,.16)"><i style="background: #e5484d"></i>Boundaries</span></div>
-      <div class="d1-sk-row d1-sk-bounds"><span class="d1-sk-name">├── .claude/settings.json</span><span class="d1-sk-note">Claude Code: deny rules</span><span class="d1-sk-tag" style="background: rgba(229,72,77,.16)"><i style="background: #e5484d"></i>Boundaries</span></div>
       <div class="d1-sk-row d1-sk-bounds"><span class="d1-sk-name">├── opencode.json</span><span class="d1-sk-note">OpenCode: deny rules</span><span class="d1-sk-tag" style="background: rgba(229,72,77,.16)"><i style="background: #e5484d"></i>Boundaries</span></div>
+      <div class="d1-sk-row d1-sk-bounds"><span class="d1-sk-name">├── .claude/settings.json</span><span class="d1-sk-note">Claude Code: deny rules</span><span class="d1-sk-tag" style="background: rgba(229,72,77,.16)"><i style="background: #e5484d"></i>Boundaries</span></div>
+      <div class="d1-sk-row d1-sk-bounds"><span class="d1-sk-name">├── .codex/config.toml</span><span class="d1-sk-note">Codex: check runs in its sandbox</span><span class="d1-sk-tag" style="background: rgba(229,72,77,.16)"><i style="background: #e5484d"></i>Boundaries</span></div>
       <div class="d1-sk-row d1-sk-check"><span class="d1-sk-name">├── package.json</span><span class="d1-sk-note">dev · test · check</span><span class="d1-sk-tag" style="background: rgba(70,167,88,.18)"><i style="background: #46a758"></i>Check</span></div>
       <div class="d1-sk-row d1-sk-check"><span class="d1-sk-name">├── scripts/check.mjs</span><span class="d1-sk-note">runs the app, reports, screenshots</span><span class="d1-sk-tag" style="background: rgba(70,167,88,.18)"><i style="background: #46a758"></i>Check</span></div>
       <div class="d1-sk-row d1-sk-check"><span class="d1-sk-name">├── scripts/app-checks.mjs</span><span class="d1-sk-note">checks for this app (you add it)</span><span class="d1-sk-tag" style="background: rgba(70,167,88,.18)"><i style="background: #46a758"></i>Check</span></div>
@@ -1002,7 +1108,7 @@ td:first-child {
     <div class="d1-sk-side">
       <p class="d1-sk-g d1-sk-rules"><i style="background: #e8875b"></i><strong>Rules:</strong> AGENTS.md, CLAUDE.md</p>
       <p class="d1-sk-g d1-sk-memory"><i style="background: #d9a91a"></i><strong>Memory:</strong> ai/strategy.md</p>
-      <p class="d1-sk-g d1-sk-bounds"><i style="background: #e5484d"></i><strong>Boundaries:</strong> ignore files, deny rules</p>
+      <p class="d1-sk-g d1-sk-bounds"><i style="background: #e5484d"></i><strong>Boundaries:</strong> ignore files, deny rules, sandbox</p>
       <p class="d1-sk-g d1-sk-check"><i style="background: #46a758"></i><strong>Check:</strong> npm test, npm run check</p>
       <p class="d1-sk-g d1-sk-app"><i style="background: #3e7bfa"></i><strong>App:</strong> src/, index.html</p>
       <p class="d1-sk-note2">In the skeleton, <code>src/</code> and <code>tests/</code> are empty and there is no page yet. You build those with your agent.</p>
@@ -1064,27 +1170,27 @@ td:first-child {
     </div>
     <div class="d1-ru-right">
       <div class="d1-ru d1-anim" style="display: block">
-        <svg viewBox="0 0 780 440" role="img" aria-label="AGENTS.md goes to OpenCode and Codex CLI directly. Claude Code reads CLAUDE.md, which has one line: @AGENTS.md.">
+        <svg viewBox="0 0 780 440" role="img" aria-label="AGENTS.md goes to OpenCode and Codex directly. Claude Code reads CLAUDE.md, which has one line: @AGENTS.md.">
           <defs>
             <marker id="d1-ru-arr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="18" markerHeight="18" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#9a968e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></marker>
           </defs>
-          <path class="d1-ru-line" d="M0 220 C 220 220, 220 68, 422 68" marker-end="url(#d1-ru-arr)" />
-          <path class="d1-ru-line" d="M0 220 H422" marker-end="url(#d1-ru-arr)" />
-          <path class="d1-ru-line" d="M0 220 C 80 220, 80 372, 142 372" marker-end="url(#d1-ru-arr)" />
-          <path class="d1-ru-line" d="M390 372 H422" marker-end="url(#d1-ru-arr)" />
-          <path class="d1-ru-pk d1-ru-pa" pathLength="100" d="M0 220 C 220 220, 220 68, 422 68" />
-          <path class="d1-ru-pk d1-ru-pa" pathLength="100" d="M0 220 H422" />
-          <path class="d1-ru-pk d1-ru-pa" pathLength="100" d="M0 220 C 80 220, 80 372, 142 372" />
-          <path class="d1-ru-pk d1-ru-pd" pathLength="100" d="M390 372 H422" />
+          <path class="d1-ru-line" d="M0 220 C 100 220, 70 68, 190 68 H422" marker-end="url(#d1-ru-arr)" />
+          <path class="d1-ru-line" d="M0 220 H142" marker-end="url(#d1-ru-arr)" />
+          <path class="d1-ru-line" d="M390 220 H422" marker-end="url(#d1-ru-arr)" />
+          <path class="d1-ru-line" d="M0 220 C 100 220, 70 372, 190 372 H422" marker-end="url(#d1-ru-arr)" />
+          <path class="d1-ru-pk d1-ru-pa" pathLength="100" d="M0 220 C 100 220, 70 68, 190 68 H422" />
+          <path class="d1-ru-pk d1-ru-pa" pathLength="100" d="M0 220 H142" />
+          <path class="d1-ru-pk d1-ru-pa" pathLength="100" d="M0 220 C 100 220, 70 372, 190 372 H422" />
+          <path class="d1-ru-pk d1-ru-pd" pathLength="100" d="M390 220 H422" />
           <circle cx="0" cy="220" r="9" fill="#1d1d1d" />
           <rect x="430" y="16" width="350" height="104" rx="16" class="d1-ru-card" /><text x="458" y="62" class="d1-ru-h">OpenCode</text><text x="458" y="98" class="d1-ru-sub">reads AGENTS.md</text>
           <rect x="430" y="16" width="350" height="104" rx="16" class="d1-ru-lit d1-ru-l1" />
-          <rect x="430" y="168" width="350" height="104" rx="16" class="d1-ru-card" /><text x="458" y="214" class="d1-ru-h">Codex CLI</text><text x="458" y="250" class="d1-ru-sub">reads AGENTS.md</text>
-          <rect x="430" y="168" width="350" height="104" rx="16" class="d1-ru-lit d1-ru-l1" />
-          <rect x="430" y="320" width="350" height="104" rx="16" class="d1-ru-card" /><text x="458" y="366" class="d1-ru-h">Claude Code</text><text x="458" y="402" class="d1-ru-sub">reads CLAUDE.md</text>
-          <rect x="430" y="320" width="350" height="104" rx="16" class="d1-ru-lit d1-ru-l3" />
-          <rect x="150" y="322" width="240" height="100" rx="16" class="d1-ru-card" /><text x="172" y="366" class="d1-ru-code">CLAUDE.md</text><text x="172" y="402" class="d1-ru-sub">@AGENTS.md</text>
-          <rect x="150" y="322" width="240" height="100" rx="16" class="d1-ru-lit d1-ru-l2" />
+          <rect x="430" y="168" width="350" height="104" rx="16" class="d1-ru-card" /><text x="458" y="214" class="d1-ru-h">Claude Code</text><text x="458" y="250" class="d1-ru-sub">reads CLAUDE.md</text>
+          <rect x="430" y="168" width="350" height="104" rx="16" class="d1-ru-lit d1-ru-l3" />
+          <rect x="430" y="320" width="350" height="104" rx="16" class="d1-ru-card" /><text x="458" y="366" class="d1-ru-h">Codex</text><text x="458" y="402" class="d1-ru-sub">reads AGENTS.md</text>
+          <rect x="430" y="320" width="350" height="104" rx="16" class="d1-ru-lit d1-ru-l1" />
+          <rect x="150" y="170" width="240" height="100" rx="16" class="d1-ru-card" /><text x="172" y="214" class="d1-ru-code">CLAUDE.md</text><text x="172" y="250" class="d1-ru-sub">@AGENTS.md</text>
+          <rect x="150" y="170" width="240" height="100" rx="16" class="d1-ru-lit d1-ru-l2" />
         </svg>
       </div>
       <div class="body">
@@ -1210,8 +1316,8 @@ A page where you paste text and see live counts.
   .d1-bd-xc { animation: d1-bd-xc 10s linear infinite; }
   .d1-bd-pd { animation: d1-bd-pd 10s linear infinite; }
   .d1-bd-hitd { animation: d1-bd-hit 10s linear infinite; }
-  .d1-bd-key { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 44px; margin-top: 34px; }
-  .d1-bd-key p { display: flex; gap: 18px; align-items: flex-start; margin: 0; font-size: 26px; line-height: 1.4; color: var(--grey); }
+  .d1-bd-key { display: grid; grid-template-columns: 1fr 1.1fr 1.15fr 1.05fr; gap: 30px; margin-top: 30px; }
+  .d1-bd-key p { display: flex; gap: 14px; align-items: flex-start; margin: 0; font-size: 26px; line-height: 1.4; color: var(--grey); }
   .d1-bd-key svg { flex: none; width: 30px; height: 40px; margin-top: 2px; }
   .d1-bd-key b { font-weight: 600; color: var(--ink); }
   .d1-bd-key b.m { font-family: var(--mono); }
@@ -1220,7 +1326,7 @@ A page where you paste text and see live counts.
   <p class="eyebrow">Ignore rules · deny rules</p>
   <h2>Hidden from search. Blocked from opening.</h2>
   <div class="d1-bd d1-anim">
-    <svg viewBox="0 0 1664 440" role="img" aria-label="The agent reads your code freely. For .env*, node_modules/ and public/splats/: search stops at the .ignore line. Opening a file by name passes .ignore and stops at the deny rules. A script the agent runs passes both and can read the files.">
+    <svg viewBox="0 0 1664 440" role="img" aria-label="The agent, OpenCode or Claude Code, reads your code freely. For .env*, node_modules/ and public/splats/: search stops at the .ignore line. Opening a file by name passes .ignore and stops at the deny rules. A script the agent runs passes both and can read the files. Codex has no deny rules.">
       <defs>
         <marker id="d1-bd-arr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="18" markerHeight="18" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#9a968e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></marker>
         <marker id="d1-bd-arr-red" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="18" markerHeight="18" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#c4383d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></marker>
@@ -1253,9 +1359,10 @@ A page where you paste text and see live counts.
       <path class="d1-bd-pk d1-bd-pc" pathLength="100" d="M250 220 C 470 220, 470 300, 690 300 H1000" stroke="#e8875b" />
       <path class="d1-bd-pk d1-bd-pd" pathLength="100" d="M250 220 C 470 220, 470 400, 690 400 H1168" stroke="#c4383d" />
       <!-- agent -->
-      <rect x="0" y="150" width="250" height="140" rx="18" fill="#fbfaf7" stroke="#e8875b" stroke-width="3" />
-      <text x="125" y="202" class="d1-bd-cap">AGENT</text>
-      <text x="125" y="254" class="d1-bd-h">OpenCode</text>
+      <rect x="0" y="140" width="250" height="160" rx="18" fill="#fbfaf7" stroke="#e8875b" stroke-width="3" />
+      <text x="125" y="184" class="d1-bd-cap">AGENT</text>
+      <text x="125" y="232" class="d1-bd-h" style="font-size: 32px">OpenCode</text>
+      <text x="125" y="274" class="d1-bd-h" style="font-size: 32px">Claude Code</text>
       <!-- your code -->
       <rect x="1180" y="10" width="484" height="92" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2" />
       <rect class="d1-bd-ok d1-bd-oka" x="1180" y="10" width="484" height="92" rx="16" fill="none" stroke="#46a758" stroke-width="4" />
@@ -1274,7 +1381,8 @@ A page where you paste text and see live counts.
     </svg>
     <div class="d1-bd-key">
       <p><svg viewBox="0 0 30 40" aria-hidden="true"><path d="M15 2 V38" stroke="#9a968e" stroke-width="3" stroke-dasharray="7 6" /></svg><span><b class="m">.ignore</b> Search skips it. The agent can still open it by name.</span></p>
-      <p><svg viewBox="0 0 30 40" aria-hidden="true"><rect x="7" y="2" width="16" height="36" rx="4" fill="#1d1d1d" /></svg><span><b class="m">deny rules</b> in <code>opencode.json</code> and <code>.claude/settings.json</code>: the tool refuses to open it. OpenCode also blocks shell commands that name it. Codex has none.</span></p>
+      <p><svg viewBox="0 0 30 40" aria-hidden="true"><rect x="7" y="2" width="16" height="36" rx="4" fill="#1d1d1d" /></svg><span><b>Deny rules:</b> OpenCode and Claude Code refuse to open it, and block commands like <code>cat</code> that name it.</span></p>
+      <p><svg viewBox="0 0 30 40" aria-hidden="true"><rect x="8" y="3" width="14" height="34" rx="4" fill="none" stroke="#9a968e" stroke-width="2" stroke-dasharray="4 4" /></svg><span><b>Codex has none.</b> In our test it read a fake <code>.env</code> with a script. It hid the value only because AGENTS.md says so.</span></p>
       <p><svg viewBox="0 0 30 40" aria-hidden="true"><path d="M15 2 V38" stroke="#c4383d" stroke-width="3" stroke-dasharray="7 6" /></svg><span><b>Not a vault.</b> A script the agent runs can still read the file. Keep secrets out of project folders.</span></p>
     </div>
   </div>
@@ -1388,36 +1496,40 @@ A page where you paste text and see live counts.
   .d1-co .ink { fill: #1d1d1d; font-weight: 600; }
   .d1-co-fill { transform-box: fill-box; transform-origin: 50% 100%; animation: d1-co-fill 10s ease-in-out infinite backwards; }
   @keyframes d1-co-fill { 0% { transform: scaleY(0); } 14%, 86% { transform: scaleY(1); } 96%, 100% { transform: scaleY(0); } }
-  .d1-co-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 36px; }
-  .d1-co-cols p { margin: 0 0 16px; font-size: 28px; line-height: 1.42; color: var(--grey); }
-  .d1-co-cols code { font-size: 0.88em; }
+  .d1-co-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 26px; }
+  .d1-co-cols p, .d1-co-plan p, .d1-co-both { margin: 0 0 14px; font-size: 28px; line-height: 1.42; color: var(--grey); }
+  .d1-co-cols code, .d1-co-plan code { font-size: 0.88em; }
+  .d1-co-plan { margin-top: 10px; padding: 16px 26px; border-radius: 14px; background: #fbfaf7; border: 2px solid #d3cfc6; }
+  .d1-co-plan p { margin: 0; }
+  .d1-co-both { margin: 18px 0 0; }
   </style>
   <p class="eyebrow">Cost</p>
-  <h2>One key, $40 a day for all of us.</h2>
+  <h2>$40 a day for all of us, or your own plan.</h2>
   <div class="d1-co d1-anim">
-    <svg viewBox="0 0 1664 236" role="img" aria-label="The daily budget of 40 dollars is shared by all of us: 15 shares of about 2 dollars 67. In each share, a normal day with GLM-5.3 Flash uses about 80 cents, our estimate. The rest is room for heavier days. The budget resets at midnight UTC.">
-      <text class="lab" x="0" y="24">$40 A DAY FOR ALL OF US = 15 × ABOUT $2.67</text>
-      <text class="lab" x="1664" y="24" text-anchor="end">RESETS AT MIDNIGHT UTC</text>
-      <rect x="0" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="111.71" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="223.43" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="335.14" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="446.86" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="558.57" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="670.29" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="782" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="893.71" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1005.43" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1117.14" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1228.86" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1340.57" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1452.29" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1564" y="44" width="100" height="120" rx="10" fill="#e6e3dc" />
-      <rect class="d1-co-fill" style="animation-delay: 0s" x="0" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.15s" x="111.71" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.3s" x="223.43" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.45s" x="335.14" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.6s" x="446.86" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.75s" x="558.57" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.9s" x="670.29" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.05s" x="782" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.2s" x="893.71" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.35s" x="1005.43" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.5s" x="1117.14" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.65s" x="1228.86" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.8s" x="1340.57" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.95s" x="1452.29" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 2.1s" x="1564" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" />
-      <rect x="0" y="196" width="26" height="26" rx="6" fill="#e8875b" />
-      <text class="tx" x="40" y="217"><tspan class="ink">≈ $0.80:</tspan> a normal day with GLM-5.3 Flash, per person (our estimate)</text>
-      <rect x="1060" y="196" width="26" height="26" rx="6" fill="#e6e3dc" stroke="#c9c4ba" stroke-width="2" />
-      <text class="tx" x="1100" y="217">room for heavier days</text>
+    <svg viewBox="0 0 1664 170" role="img" aria-label="The course key: a daily budget of 40 dollars shared by all of us, 15 shares of about 2 dollars 67. In each share, a normal day with GLM-5.3 Flash uses about 80 cents, our estimate. The rest is room for heavier days. The budget resets at midnight UTC.">
+      <text class="lab" x="0" y="24">THE COURSE KEY: $40 A DAY = 15 × ABOUT $2.67</text>
+      <rect x="0" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="111.71" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="223.43" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="335.14" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="446.86" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="558.57" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="670.29" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="782" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="893.71" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="1005.43" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="1117.14" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="1228.86" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="1340.57" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="1452.29" y="40" width="100" height="76" rx="10" fill="#e6e3dc" /><rect x="1564" y="40" width="100" height="76" rx="10" fill="#e6e3dc" />
+      <rect class="d1-co-fill" style="animation-delay: 0.0s" x="0" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.15s" x="111.71" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.3s" x="223.43" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.45s" x="335.14" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.6s" x="446.86" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.75s" x="558.57" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.9s" x="670.29" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.05s" x="782" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.2s" x="893.71" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.35s" x="1005.43" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.5s" x="1117.14" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.65s" x="1228.86" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.8s" x="1340.57" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.95s" x="1452.29" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 2.1s" x="1564" y="93.5" width="100" height="22.5" rx="6" fill="#e8875b" />
+      <rect x="0" y="138" width="26" height="26" rx="6" fill="#e8875b" />
+      <text class="tx" x="40" y="159"><tspan class="ink">≈ $0.80:</tspan> a normal day with GLM-5.3 Flash, per person (our estimate)</text>
+      <rect x="1060" y="138" width="26" height="26" rx="6" fill="#e6e3dc" stroke="#c9c4ba" stroke-width="2" />
+      <text class="tx" x="1100" y="159">room for heavier days</text>
     </svg>
   </div>
   <div class="d1-co-cols">
     <div>
-      <p><strong>The course pays.</strong> The key has $350 for the whole course. A leaked key costs the course, not you: anyone who has it can spend the budget.</p>
+      <p><strong>The course pays:</strong> $350 for the whole course. A leaked key costs the course, not you: anyone with it can spend the budget.</p>
       <p><strong>Used up?</strong> Every request gets <code>403</code> until midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich), for the whole class.</p>
-      <p><strong>Energy:</strong> we have no reliable number per request, so we give none. Fewer tokens: less money and less computing.</p>
     </div>
     <div>
-      <p><strong>Prices.</strong> GLM-5.3 Flash: $0.15 in, $0.50 out per million tokens. GLM-5.3: about 3× to 10× that, depending on the provider.</p>
+      <p><strong>Per million tokens:</strong> GLM-5.3 Flash $0.15 in, $0.50 out. <span class="nowrap">GLM-5.3:</span> about 3× to 10× that, depending on the provider.</p>
       <p><strong>Measured:</strong> all of Example 1, $0.05. Example 2, prompts 1 to 8, $0.26 (GLM-5.3 Flash, Linux).</p>
-      <p><strong>Save it:</strong> quit idle agents. New task, new session. Effort high, never max.</p>
     </div>
   </div>
+  <div class="d1-co-plan">
+    <p><strong>Your own plan:</strong> no extra cost, but it uses your plan's limits, shared with the chat app: a 5-hour window and a weekly limit (ChatGPT Plus: weekly limits may apply). <code>/usage</code> shows them. Big models use them faster.</p>
+  </div>
+  <p class="d1-co-both"><strong>Energy:</strong> no reliable number per request, so we give none. Fewer tokens save money and computing: quit idle agents, a new session per task, effort high (never max).</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -1445,16 +1557,37 @@ A page where you paste text and see live counts.
 <!-- 14 Example 1 divider -->
 <section class="slide dark statement">
   <style>
+  .d1-ex { display: grid; grid-template-columns: 860px 1fr; gap: 56px; align-items: end; }
   .d1-ex p.after { margin: 0 0 14px; }
   .d1-ex p.d1-ex-first { margin-top: 48px; }
-  .d1-ex p.d1-ex-run { color: var(--paper); }
+  .d1-ex-runs p.d1-ex-run { margin: 0 0 14px; font-size: 30px; line-height: 1.35; color: var(--paper); }
+  .d1-ex-runs table { font-size: 26px; line-height: 1.3; }
+  .d1-ex-runs th { padding: 8px 14px 10px 0; border-bottom: 1px solid #3a3a3a; color: var(--mute); font-size: 20px; }
+  .d1-ex-runs td { padding: 12px 14px 12px 0; border-bottom: 1px solid #3a3a3a; color: #ebe8e1; }
+  .d1-ex-runs td span { display: block; font-size: 22px; color: var(--mute); }
+  .d1-ex-runs td.d1-ex-n { white-space: nowrap; }
+  .d1-ex-runs td.d1-ex-ph { color: var(--mute); font-family: var(--mono); font-size: 22px; }
+  .d1-ex-runs p.d1-ex-how { margin: 14px 0 0; font-size: 22px; line-height: 1.35; color: var(--mute); }
   </style>
   <div class="d1-ex">
-    <p class="eyebrow">Exercise</p>
-    <h1>Example 1:<br />text stats</h1>
-    <p class="after d1-ex-first">A tiny app. The point is the loop.</p>
-    <p class="after d1-ex-run">We ran it with GLM-5.3 Flash: 2.7 minutes of agent time, $0.05.</p>
-    <p class="after">Not set up yet? Setup is at the back.</p>
+    <div>
+      <p class="eyebrow">Exercise</p>
+      <h1>Example 1:<br />text stats</h1>
+      <p class="after d1-ex-first">A tiny app. The point is the loop.</p>
+      <p class="after">Not set up yet? Setup is at the back.</p>
+    </div>
+    <div class="d1-ex-runs">
+      <p class="d1-ex-run">We ran it with each tool.</p>
+      <table>
+        <tr><th>Tool · account</th><th>Agent time</th><th>Result</th></tr>
+        <tr><td>OpenCode · course key<span>GLM-5.3 Flash</span></td><td class="d1-ex-n">2.7 min</td><td>check OK, $0.05</td></tr>
+        <tr><td>Claude Code · Max plan<span>Claude Opus 5.5</span></td><td class="d1-ex-n">12.5 min</td><td>check OK</td></tr>
+        <tr><td>Codex · ChatGPT plan<span>GPT-6 Astra</span></td><td class="d1-ex-n">5.8 min</td><td>check OK</td></tr>
+        <tr><td>Claude Code · course key</td><td class="d1-ex-ph" colspan="2">not tested yet</td></tr>
+        <tr><td>Codex · course key</td><td class="d1-ex-ph" colspan="2">not tested yet</td></tr>
+      </table>
+      <p class="d1-ex-how">Same prompts and steps, Linux, 24 October 2026.</p>
+    </div>
   </div>
 </section>
 
@@ -1469,7 +1602,7 @@ A page where you paste text and see live counts.
   <div class="cols d1-p1">
 <pre class="prompt">Read AGENTS.md and ai/strategy.md. We are building a small web page: <mark class="dd">a text box where I paste text</mark>, and <mark class="dd">below it live counts</mark> of words, characters and sentences, <mark class="dd">plus the reading time</mark>. Put the counting logic in src/stats.js as pure functions and export textStats(text), which returns { words, characters, sentences, readingMinutes }. Test it with node:test in tests/stats.test.js. Fill in the Goal and a plan of 4 to 6 small steps in ai/strategy.md. Don't write code yet.</pre>
     <div class="body">
-      <p><strong>Agent terminal:</strong> <code>cd ~/photolipsia-agentic-kit/01-text-stats</code>, then <code>opencode</code>. Not in your home folder: the rules and deny rules are in the project folder.</p>
+      <p><strong>Agent terminal:</strong> <code>cd ~/photolipsia-agentic-kit/01-text-stats</code>, then <code>opencode</code> (or <code>claude</code>, <code>codex</code>). Not in your home folder: the rules and deny rules are in the project folder. Codex asks whether you trust the folder: yes.</p>
       <p><strong>Your terminal,</strong> a second tab: the same folder, for your own commands.</p>
       <p>Read the plan in <code>ai/strategy.md</code>. Change it if you disagree. The plan is yours.</p>
       <p class="d1-p1-key"><mark class="dd">Marked:</mark> design decisions. Make them yours.</p>
@@ -1565,7 +1698,7 @@ check: <span class="bad">FAILED</span> (0.4 s)
   - check "page shows sentences" failed:
     expected 3, page shows undefined</pre>
       <p class="s26" style="margin-top: 22px">Or a page error: <code>Cannot set properties of null … (at /src/main.js:…)</code>, depending on how <code>main.js</code> was written.</p>
-      <p class="s26">The agent wrote this check in Prompt 3. Breaking the page on purpose is how you find out it can fail.</p>
+      <p class="s26" style="margin-top: 14px">The agent wrote this check in Prompt 3. Breaking the page on purpose is how you find out it can fail.</p>
       <p class="proof check-mark"><b>Tests:</b> it says “done” when it isn't → <code>npm run check</code></p>
     </div>
   </div>
@@ -1644,7 +1777,7 @@ git push</pre>
 <pre class="c22 d1-p6-git">git commit -am "My own rule"
 git push</pre>
       <p>Then write a real step under <code>## Next</code> in <code>ai/strategy.md</code>. In our run it was empty, and the fresh session did nothing.</p>
-      <p>2. Quit the agent (<code>/exit</code>, or Ctrl+C) and start it again. It now remembers nothing.</p>
+      <p>2. Quit the agent (<code>/exit</code>, in all three tools) and start it again. It now remembers nothing.</p>
       <p>3. Ask:</p>
 <pre class="prompt">Read AGENTS.md and ai/strategy.md, then do the step under ## Next.</pre>
     </div>
@@ -1660,9 +1793,10 @@ git push</pre>
 <!-- 22 What agents get wrong, and when to leave them out -->
 <section class="slide light">
   <style>
-  .d1-lo { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-  .d1-lo .label { margin-bottom: 18px; }
-  .d1-lo p.d1-lo-i { margin: 0 0 20px; font-size: 28px; line-height: 1.4; color: var(--grey); }
+  .d1-lo { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
+  .d1-lo .label { margin-bottom: 14px; }
+  .d1-lo .label.d1-lo-l2 { margin-top: 26px; }
+  .d1-lo p.d1-lo-i { margin: 0 0 14px; font-size: 28px; line-height: 1.36; color: var(--grey); }
   .d1-lo p.d1-lo-i b { color: var(--ink); font-weight: 600; }
   .d1-lo code { font-size: 0.88em; }
   </style>
@@ -1670,20 +1804,23 @@ git push</pre>
   <h2>What agents get wrong, and when not to use one.</h2>
   <div class="d1-lo">
     <div>
-      <p class="label">What it got wrong in our run of Example 1</p>
-      <p class="d1-lo-i"><b>Its first tests expected wrong numbers.</b> <code>npm test</code> caught it before any page existed.</p>
+      <p class="label">Our runs of Example 1 · OpenCode with GLM-5.3 Flash</p>
+      <p class="d1-lo-i"><b>Its first tests expected wrong numbers.</b> <code>npm test</code> caught it, before any page existed.</p>
       <p class="d1-lo-i"><b>Asked for one step, it wrote three files at once.</b> Read the plan, then each change.</p>
       <p class="d1-lo-i"><b>A fresh session did nothing</b>, and said it couldn't see images without trying. <code>## Next</code> was empty.</p>
-      <p class="label" style="margin-top: 26px">And often</p>
-      <p class="d1-lo-i"><b>It changes the test instead of the code.</b> Say “Don't change the tests”.</p>
-      <p class="d1-lo-i"><b>It starts <code>npm run dev</code> and waits forever.</b> Press Esc, run it in your own terminal.</p>
+      <p class="label d1-lo-l2">With our own plans · Claude Code, Codex</p>
+      <p class="d1-lo-i"><b>A fake <code>.env</code>:</b> Claude Code refused to open it. Codex read it with a script, and hid the value only because <span class="nowrap">AGENTS.md says so.</span></p>
+      <p class="d1-lo-i"><b>Codex couldn't run the check in its sandbox,</b> so it saw no screenshot. Now fixed in <code>.codex/config.toml</code>.</p>
     </div>
     <div>
-      <p class="label">When to leave the agent out</p>
+      <p class="label">And often</p>
+      <p class="d1-lo-i"><b>It changes the test instead of the code.</b> Say “Don't change the tests”.</p>
+      <p class="d1-lo-i"><b>It starts <code>npm run dev</code> and waits forever.</b> Press Esc, run it in your own terminal.</p>
+      <p class="label d1-lo-l2">When to leave the agent out</p>
       <p class="d1-lo-i"><b>When you can't check the result.</b> How a scan feels in VR: no check sees it.</p>
-      <p class="d1-lo-i"><b>When the task is what you want to learn.</b> Write it yourself first.</p>
+      <p class="d1-lo-i"><b>When the task is what you want to learn.</b> Write it <span class="nowrap">yourself first.</span></p>
       <p class="d1-lo-i"><b>When the material isn't yours.</b> Interviews, participants, clients: what the agent opens leaves your laptop.</p>
-      <p class="d1-lo-i"><b>After two failed attempts.</b> Stop, <code>git restore .</code>, then a smaller step.</p>
+      <p class="d1-lo-i"><b>After two failed attempts.</b> Stop, <code>git restore .</code>, then a <span class="nowrap">smaller step.</span></p>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1732,8 +1869,8 @@ git push</pre>
   <div class="d1-su">
     <p class="eyebrow">Appendix</p>
     <h1>Setup</h1>
-    <p class="after d1-su-first">Once per laptop, about 45 minutes. Best before day one. You need only OpenCode.</p>
-    <p class="after">Tested on Linux. The Mac and Windows commands follow each tool's own instructions, but nobody has run them on a real Mac or Windows laptop yet. If a step fails, tell your teacher.</p>
+    <p class="after d1-su-first">Once per laptop, about 45 minutes. Best before day one. You need one agent: OpenCode with the course key (most of you), or Claude Code or Codex with your own plan.</p>
+    <p class="after">Tested on Linux. The Mac and Windows commands follow each tool's own instructions, but nobody has run them on a real Mac or Windows laptop yet. If a step fails, <span class="nowrap">tell your teacher.</span></p>
     <p class="after">Every step in detail: <code>docs/student-setup.md</code></p>
   </div>
 </section>
@@ -1776,13 +1913,13 @@ git push</pre>
         <tr><td><code>pwd</code></td><td>where am I?</td></tr>
         <tr><td><b>Ctrl+C</b></td><td>stop a running program</td></tr>
       </table>
-      <svg class="d1-tm-svg d1-anim" viewBox="0 0 980 272" role="img" aria-label="Two terminal windows side by side. Terminal 1, the agent: opencode, build step 1 of the plan, it reads AGENTS.md, edits src/stats.js, runs npm run check. Terminal 2, your commands: git status, git add -A, git commit, git push.">
+      <svg class="d1-tm-svg d1-anim" viewBox="0 0 980 272" role="img" aria-label="Two terminal windows side by side. Terminal 1, the agent: opencode, or claude or codex, build step 1 of the plan, it reads AGENTS.md, edits src/stats.js, runs npm run check. Terminal 2, your commands: git status, git add -A, git commit, git push.">
         <g>
           <rect x="0" y="0" width="472" height="272" rx="16" fill="#1d1d1d" />
           <path class="bar" d="M16 0 H456 A16 16 0 0 1 472 16 V48 H0 V16 A16 16 0 0 1 16 0 Z" />
           <circle cx="26" cy="24" r="7" fill="#e5484d" /><circle cx="48" cy="24" r="7" fill="#f2c94c" /><circle cx="70" cy="24" r="7" fill="#46a758" />
           <text class="ttl" x="256" y="32" text-anchor="middle">1 · the agent</text>
-          <text class="ln d1-tm-l1" x="26" y="92"><tspan class="pr">$</tspan> opencode</text>
+          <text class="ln d1-tm-l1" x="26" y="92"><tspan class="pr">$</tspan> opencode <tspan class="dim">· claude · codex</tspan></text>
           <text class="ln d1-tm-l2" x="26" y="134"><tspan class="ag">&gt;</tspan> build step 1 of the plan</text>
           <text class="ln d1-tm-l3" x="26" y="176"><tspan class="dim">·</tspan> reads AGENTS.md</text>
           <text class="ln d1-tm-l4" x="26" y="218"><tspan class="dim">·</tspan> edits src/stats.js</text>
@@ -1937,7 +2074,7 @@ git config --global pull.rebase false</pre>
     .d1-ky .label { margin-top: 22px; }
     .d1-ky .s26 { margin: 20px 0 0; }
   </style>
-  <p class="eyebrow">Setup · the course key</p>
+  <p class="eyebrow">Setup · the course key · skip it with your own plan</p>
   <h2>The course key lives in your environment.</h2>
   <div class="d1-ky">
   <svg class="d1-ky-svg d1-anim" viewBox="0 0 1664 236" role="img" aria-label="The key, OPENROUTER_API_KEY, lives in your environment: on a Mac in ~/.zshrc, on Windows as a user variable. Your agent tool reads it when it starts and sends it to OpenRouter, which checks it. OpenRouter passes your request on to GLM-5.3 Flash without the key. The key never goes into a project folder, a commit, a screenshot, a chat or a prompt, or the agent's output.">
@@ -2003,7 +2140,7 @@ git config --global pull.rebase false</pre>
     .d1-oc-cfg .s26 { margin: 0 0 16px; }
     .d1-oc .label.d1-oc-paste { margin-top: 26px; }
   </style>
-  <p class="eyebrow">Setup · your agent</p>
+  <p class="eyebrow">Setup · OpenCode · with the course key</p>
   <h2>OpenCode: install it, give it the course config.</h2>
   <div class="d1-oc">
     <div class="d1-oc-os">
@@ -2023,7 +2160,7 @@ New-Item -ItemType Directory -Force "$HOME\.config\opencode"
 notepad "$HOME\.config\opencode\opencode.json"</pre>
       </div>
     </div>
-    <p class="s26">You want version 1.x. Not <code>brew install opencode</code>: that is OpenCode 2. Mac says “EACCES”? <code>docs/student-setup.md</code>, section 3.</p>
+    <p class="s26">You want version 1.x. Not <code>brew install opencode</code>: that is OpenCode 2. Mac says “EACCES”? <code>docs/student-setup.md</code>, section 1.</p>
     <p class="label d1-oc-paste">Paste this into the file (don't type it) and save</p>
     <div class="d1-oc-cfg">
 <pre class="c22">{
@@ -2038,8 +2175,78 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
       <div>
         <p class="s26"><code>small_model</code>: without it, OpenCode picks another model for small jobs, and the course key blocks that one.</p>
         <p class="s26"><code>"effort": "high"</code> keeps thinking shorter than the default, max.</p>
+        <p class="s26"><b>Check:</b> <code>/models</code>, on the first-run slide.</p>
       </div>
     </div>
+  </div>
+  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
+<!-- S5b Claude Code -->
+<section class="slide light">
+  <style>
+    .d1-cc .s26 { margin: 12px 0 0; }
+  </style>
+  <p class="eyebrow">Setup · Claude Code · with a Claude plan</p>
+  <h2>Claude Code: install it, sign in.</h2>
+  <div class="d1-cc">
+    <div class="d1-tl-os">
+      <div>
+        <p class="label">Mac · Terminal</p>
+<pre class="c22">curl -fsSL https://claude.ai/install.sh | bash</pre>
+      </div>
+      <div>
+        <p class="label">Windows · PowerShell</p>
+<pre class="c22">irm https://claude.ai/install.ps1 | iex</pre>
+      </div>
+    </div>
+    <p class="s26">Open a new terminal, then <code>claude --version</code>.</p>
+    <div class="d1-tl-two">
+      <div class="d1-tl-card">
+        <p class="label">Your Claude plan · Pro or Max</p>
+        <p>The first time you run <code>claude</code>, sign in in the browser.</p>
+        <p>Team and Enterprise work too. The free plan doesn't include Claude Code.</p>
+      </div>
+      <div class="d1-tl-card">
+        <p class="label">Or the course key</p>
+        <p>An <code>env</code> block in <code>~/.claude/settings.json</code>, in your home folder, never in a project: OpenRouter, the key as <code>ANTHROPIC_AUTH_TOKEN</code>, every model GLM-5.3 Flash. The whole file: <code>docs/student-setup.md</code>, section 6.</p>
+        <p>Signed in before? <code>/logout</code> once: the key beats a <span class="nowrap">signed-in</span> plan. Made for Anthropic's models: with GLM, some features may not work.</p>
+      </div>
+    </div>
+    <p class="d1-tl-chk"><b>Check:</b> <code>/status</code> shows your Claude account, or <code>Auth token: ANTHROPIC_AUTH_TOKEN</code> with the course key.</p>
+  </div>
+  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
+<!-- S5c Codex -->
+<section class="slide light">
+  <style>
+    .d1-cx-top { display: grid; grid-template-columns: 620px 1fr; gap: 40px; align-items: end; }
+    .d1-cx-top .s26 { margin: 0 0 8px; }
+  </style>
+  <p class="eyebrow">Setup · Codex CLI · with a ChatGPT plan</p>
+  <h2>Codex: install it, sign in.</h2>
+  <div class="d1-cx">
+    <div class="d1-cx-top">
+      <div>
+        <p class="label">Mac and Windows</p>
+<pre class="c22">npm install -g @openai/codex
+codex --version</pre>
+      </div>
+      <p class="s26">Mac says “EACCES”? <code>docs/student-setup.md</code>, section 1.</p>
+    </div>
+    <div class="d1-tl-two">
+      <div class="d1-tl-card">
+        <p class="label">Your ChatGPT plan · Plus or higher</p>
+        <p>The first time you run <code>codex</code>, choose “Sign in with ChatGPT” (or run <code>codex login</code>).</p>
+      </div>
+      <div class="d1-tl-card">
+        <p class="label">Or the course key</p>
+        <p><code>~/.codex/config.toml</code> in your home folder: Codex reads providers only there. The OpenRouter provider, with <code>env_key = "OPENROUTER_API_KEY"</code>. The whole file: <code>docs/student-setup.md</code>, section 7.</p>
+      </div>
+    </div>
+    <p class="d1-tl-chk"><b>“Do you trust this folder?”</b> Yes, in your project folders. Otherwise Codex ignores the project's <code>.codex/config.toml</code>, and the check can't run in its sandbox.</p>
+    <p class="d1-tl-chk">Codex has no deny rules: it relies on <code>AGENTS.md</code>, the ignore files and its sandbox. <b>Check:</b> <code>/status</code> shows the account and model.</p>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
@@ -2047,63 +2254,67 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
 <!-- S6 First run and smoke test -->
 <section class="slide light">
   <style>
+    .d1-fr { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
     .d1-fr .label { margin-top: 0; }
-    .d1-fr .d1-fr-win { margin-top: 20px; }
-    .d1-fr-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 34px; }
-    .d1-fr-cols p.s28 { margin: 0 0 16px; }
-    .d1-fr-cols .prompt { margin-bottom: 18px; }
+    .d1-fr .label.d1-fr-l { margin-top: 20px; }
+    .d1-fr .prompt { margin-bottom: 14px; }
+    .d1-fr p.s26 { margin: 0 0 12px; }
+    .d1-fr-m p { margin: 0 0 14px; font-size: 26px; line-height: 1.4; color: var(--grey); }
+    .d1-fr-m p b { color: var(--ink); font-weight: 600; }
+    .d1-fr-m p.d1-fr-tool { padding-top: 14px; border-top: 1px solid #d3cfc6; }
+    .d1-fr-m code { font-size: 0.88em; }
+    .d1-fr-end { margin: 22px 0 0; font-size: 26px; line-height: 1.42; color: var(--grey); }
   </style>
-  <p class="eyebrow">Setup · your agent</p>
-  <h2>First run: is it GLM-5.3 Flash?</h2>
+  <p class="eyebrow">Setup · first run · every tool</p>
+  <h2>First run: is it the right model?</h2>
   <div class="d1-fr">
-    <p class="label">Smoke test, in an empty folder · Mac · Terminal</p>
-<pre class="c22">mkdir -p ~/hello-agent && cd ~/hello-agent && opencode</pre>
-    <p class="label d1-fr-win">Windows · PowerShell</p>
-<pre class="c22">New-Item -ItemType Directory -Force "$HOME\hello-agent"; cd "$HOME\hello-agent"; opencode</pre>
-    <div class="d1-fr-cols">
-      <div>
-        <p class="label">In OpenCode, type /models</p>
-        <p class="s28"><b>GLM-5.3-Flash</b> (OpenRouter) must be selected. Not “GLM 5.3 FlashX”, not “GLM 5.3 Prime”: they look alike, and the course key blocks them.</p>
-        <p class="s28"><b>GLM-5.3</b>, not Flash: only for a hard problem, then switch back. Up to about 10× the cost, and it can't see images.</p>
-        <p class="s28">Asks for a key? <code>/connect</code>, choose OpenRouter, paste it.</p>
-      </div>
-      <div>
-        <p class="label">Then type</p>
+    <div>
+      <p class="label">1 · An empty test folder · Mac · Terminal</p>
+<pre class="c22">mkdir -p ~/hello-agent && cd ~/hello-agent</pre>
+      <p class="label d1-fr-l">Windows · PowerShell</p>
+<pre class="c22">New-Item -ItemType Directory -Force "$HOME\hello-agent"
+cd "$HOME\hello-agent"</pre>
+      <p class="label d1-fr-l">2 · Start <code>opencode</code>, <code>claude</code> or <code>codex</code>, then type</p>
 <pre class="prompt">Create hello.js that prints "Hello from GLM", then run it with node.</pre>
-        <p class="s28">You see <b>Hello from GLM</b>? You're set up. Quit with <code>/exit</code>.</p>
-        <p class="s28">Later, start the agent in the folder you work in, never in your home folder: the rules and deny rules are in the project folder.</p>
-      </div>
+      <p class="s26">You see <b>Hello from GLM</b> (on a plan too: it's just the text)? You're set up. Some tools ask first: allow it. Quit with <code>/exit</code>.</p>
+    </div>
+    <div class="d1-fr-m">
+      <p class="label">3 · Which model is it using?</p>
+      <p><b>OpenCode:</b> type <code>/models</code>. <b>GLM-5.3-Flash</b> (OpenRouter) must be selected. Not “GLM 5.3 FlashX”, not “GLM 5.3 Prime”: they look alike, and the course key blocks them.</p>
+      <p><b>GLM-5.3</b>, not Flash: only for a hard problem, then switch back. Up to about 10× the cost, and it can't see images.</p>
+      <p>Asks for a key? <code>/connect</code>, choose OpenRouter, paste it.</p>
+      <p class="d1-fr-tool"><b>Claude Code:</b> <code>/status</code> shows your Claude account, or the auth token with the course key.</p>
+      <p><b>Codex:</b> <code>/status</code> shows the account and model.</p>
     </div>
   </div>
+  <p class="d1-fr-end">Later, start the agent in the folder you work in, never in your home folder: the rules and deny rules are in the project folder.</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
-<!-- S7 Codex CLI and Claude Code -->
+<!-- S7 Commands in each tool -->
 <section class="slide light">
   <style>
-    .d1-cx .s28 { margin: 18px 0 0; }
-    .d1-cx .label.d1-cx-l2 { margin-top: 18px; }
+    .d1-cs { margin-top: -8px; }
+    .d1-cs th { padding-top: 0; }
+    .d1-cs th:first-child { width: 31%; }
+    .d1-cs td { padding-top: 12px; padding-bottom: 12px; font-size: 28px; }
+    .d1-cs td code { font-size: 0.92em; }
+    .d1-cs td.d1-cs-n { color: var(--grey); }
+    .d1-cs-note { margin: 26px 0 0; font-size: 28px; line-height: 1.42; color: var(--grey); }
+    .d1-cs-note b { color: var(--ink); font-weight: 600; }
   </style>
-  <p class="eyebrow">Setup · optional</p>
-  <h2>Codex CLI and Claude Code work too.</h2>
-  <div class="cols d1-cx">
-    <div>
-      <p class="label">Codex CLI · Mac and Windows</p>
-<pre class="c22">npm install -g @openai/codex</pre>
-      <p class="s28">Config only in your home folder: <code>~/.codex/config.toml</code>, provider OpenRouter, <code>env_key = "OPENROUTER_API_KEY"</code>.</p>
-      <p class="s28">It runs commands in a sandbox without network: approve <code>npm install</code> and <code>npm run check</code> when it asks.</p>
-      <p class="s28">Codex has no deny rules. It relies on <code>AGENTS.md</code>, the ignore files and its sandbox.</p>
-    </div>
-    <div>
-      <p class="label">Claude Code · Mac</p>
-<pre class="c22">curl -fsSL https://claude.ai/install.sh | bash</pre>
-      <p class="label d1-cx-l2">Windows · PowerShell</p>
-<pre class="c22">irm https://claude.ai/install.ps1 | iex</pre>
-      <p class="s28">Settings in <code>~/.claude/settings.json</code>: OpenRouter, and every model set to GLM-5.3 Flash. The key goes in there as <code>ANTHROPIC_AUTH_TOKEN</code>: fine in your home folder, never in a project.</p>
-      <p class="s28">Made for Anthropic's models, not for GLM. We ran the course examples with OpenCode.</p>
-    </div>
-  </div>
-  <p class="s26" style="margin-top: 22px">The exact config files: <code>docs/student-setup.md</code>, sections 4 and 5.</p>
+  <p class="eyebrow">Setup · commands in each tool</p>
+  <h2>Six commands, three tools.</h2>
+  <table class="d1-cs">
+    <tr><th>You want to</th><th>OpenCode</th><th>Claude Code</th><th>Codex</th></tr>
+    <tr><td>start, in your project folder</td><td><code>opencode</code></td><td><code>claude</code></td><td><code>codex</code></td></tr>
+    <tr><td>quit</td><td><code>/exit</code> <span class="d1-cs-n">or Ctrl+C</span></td><td><code>/exit</code> <span class="d1-cs-n">or Ctrl+C twice</span></td><td><code>/exit</code></td></tr>
+    <tr><td>start a new, empty session</td><td><code>/new</code></td><td><code>/clear</code></td><td><code>/new</code></td></tr>
+    <tr><td>change the model</td><td><code>/models</code></td><td><code>/model</code></td><td><code>/model</code></td></tr>
+    <tr><td>see the account and model</td><td><code>/models</code></td><td><code>/status</code></td><td><code>/status</code></td></tr>
+    <tr><td>see your plan's limits</td><td class="d1-cs-n">none: one shared budget</td><td><code>/usage</code></td><td><code>/usage</code></td></tr>
+  </table>
+  <p class="d1-cs-note"><b>New task, new session:</b> the agent sends the whole conversation again with every step. Long sessions cost more and use up plan limits faster.</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -2167,6 +2378,7 @@ cd photolipsia-agentic-kit
 git remote add upstream https://github.com/xohm/photolipsia-agentic-kit.git</pre>
       <p class="s26"><code>YOUR-NAME</code> = your GitHub user name.</p>
       <p class="s26"><b>Updates:</b> commit your work first, then <code>git pull --no-edit upstream main</code>. It says “CONFLICT”? <code>git merge --abort</code>, ask your teacher.</p>
+      <p class="s26">The browser for the check is about 300 MB, once.</p>
     </div>
     <div>
       <p class="label">3 · First check</p>
@@ -2175,7 +2387,7 @@ cd 01-text-stats
 npm install
 npx playwright install chromium
 npm run check</pre>
-      <p class="s26">You want 200 OK, 403 OK, All good. Then <b>FAILED: Nothing rendered yet</b>: correct, no app yet. The browser is about 300 MB, once.</p>
+      <p class="s26">The first line tests the course key: you want 200 OK, 403 OK, All good. Own plan? Skip it. Then <b>FAILED: Nothing rendered yet</b>: correct, no app yet.</p>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -2206,18 +2418,17 @@ npm run check</pre>
     .d1-wf-s1 { animation: d1-wf-s1 12s ease-in-out infinite; }
     .d1-wf-s2 { animation: d1-wf-s2 12s ease-in-out infinite; }
     .d1-wf-s3 { animation: d1-wf-s3 12s ease-in-out infinite; }
-    .d1-wf-cards { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 24px; margin-top: 18px; }
+    .d1-wf-cards { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 24px; margin-top: 22px; }
     .d1-wf-card { padding: 16px 22px 18px; border-radius: 14px; background: #fbfaf7; border: 2px solid #e8b9ba; }
-    .d1-wf-card p { margin: 0 0 8px; font-size: 24px; line-height: 1.36; color: var(--grey); }
-    .d1-wf-card p.h { margin: 0 0 4px; font-size: 24px; color: var(--ink); font-weight: 600; }
+    .d1-wf-card p { margin: 0 0 10px; font-size: 26px; line-height: 1.38; color: var(--grey); }
+    .d1-wf-card p.h { margin: 0 0 4px; font-size: 26px; color: var(--ink); font-weight: 600; }
     .d1-wf-card p.h b { font-family: var(--mono); color: #c4383d; margin-right: 8px; }
     .d1-wf-card code { font-size: 0.92em; white-space: nowrap; }
-    .d1-wf-t { margin-top: 18px; }
-    .d1-wf-t td { padding: 9px 18px 9px 0; font-size: 24px; }
-    .d1-wf-t td code { font-size: 0.92em; }
+    .d1-wf-key { margin: -20px 0 30px; font-size: 28px; line-height: 1.42; color: var(--grey); }
   </style>
-  <p class="eyebrow">Setup · when it fails</p>
+  <p class="eyebrow">Setup · when it fails · the course key</p>
   <h2>The error says where it stopped.</h2>
+  <p class="d1-wf-key">With the course key, a request passes three checks. 401, 403 and 404 say which one stopped it. Your own plan: next slide.</p>
   <svg class="d1-wf-svg d1-anim" viewBox="0 0 1664 150" role="img" aria-label="Your tool sends a request. OpenRouter checks the key: 401 if it is missing or wrong. The course guardrail checks the model and the budget: 403. The model: 404 if the name is wrong. Otherwise: 200 OK.">
     <defs>
       <marker id="d1-wf-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#9a968e" /></marker>
@@ -2257,21 +2468,48 @@ npm run check</pre>
     </div>
     <div class="d1-wf-card">
       <p class="h"><b>403</b>model “not allowed”</p>
-      <p>The key blocks this model (e.g. FlashX). Pick GLM-5.3-Flash in <code>/models</code>. OpenCode: is <code>small_model</code> set?</p>
+      <p>The key blocks this model (e.g. FlashX). OpenCode: pick GLM-5.3-Flash in <code>/models</code>; is <code>small_model</code> set? Claude Code: are all model variables set?</p>
       <p class="h"><b>403</b>“Budget limit exceeded”</p>
       <p>Used up for today. It resets at midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich).</p>
     </div>
     <div class="d1-wf-card">
       <p class="h"><b>404</b><code>model_not_found</code></p>
-      <p>Typo in the model name. OpenCode: <code>openrouter/z-ai/glm-5.3-flash</code>. Codex, Claude Code: <code>z-ai/glm-5.3-flash</code>.</p>
+      <p>Typo in the model name. OpenCode: <code>openrouter/z-ai/glm-5.3-flash</code>. Claude Code, Codex: <code>z-ai/glm-5.3-flash</code>.</p>
     </div>
   </div>
-  <table class="d1-wf-t">
-    <tr><td>Windows: “running scripts is disabled”</td><td><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force</code>, new terminal</td></tr>
-    <tr><td><code>node</code> “not recognized”</td><td>Open a new terminal. Still not found: reinstall Node LTS.</td></tr>
-    <tr><td>“Chromium for Playwright is missing”</td><td><code>npx playwright install chromium</code></td></tr>
-    <tr><td>Mac: <code>git push</code> asks for a password</td><td><code>gh auth login</code>, once. More: <code>docs/student-setup.md</code>, section 8.</td></tr>
-  </table>
+  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+<!-- S9b Own plan and other errors -->
+<section class="slide light">
+  <style>
+    .d1-wp-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .d1-wp-card { padding: 18px 26px 20px; border-radius: 14px; background: #fbfaf7; border: 2px solid #d3cfc6; }
+    .d1-wp-card p { margin: 0; font-size: 27px; line-height: 1.4; color: var(--grey); }
+    .d1-wp-card p.h { margin: 0 0 6px; color: var(--ink); font-weight: 600; }
+    .d1-wp-card code { font-size: 0.9em; }
+    .d1-wp .label.d1-wp-l2 { margin-top: 28px; }
+    .d1-wp-t td { padding: 10px 18px 10px 0; font-size: 25px; line-height: 1.36; }
+    .d1-wp-t td:first-child { width: 34%; }
+    .d1-wp-t td code { font-size: 0.92em; }
+  </style>
+  <p class="eyebrow">Setup · when it fails</p>
+  <h2>Your own plan, and other errors.</h2>
+  <div class="d1-wp">
+    <p class="label">With your own plan</p>
+    <div class="d1-wp-cards">
+      <div class="d1-wp-card"><p class="h">Not signed in</p><p>Sign in again. Claude Code: run <code>claude</code>, sign in in the browser. Codex: <code>codex login</code>.</p></div>
+      <div class="d1-wp-card"><p class="h">Usage limit reached</p><p>Your plan's 5-hour window or weekly limit is used up. Wait until it resets: <code>/usage</code> shows it.</p></div>
+    </div>
+    <p class="label d1-wp-l2">Any account</p>
+    <table class="d1-wp-t">
+      <tr><td>Claude Code uses the key, not your plan</td><td>The key beats a plan: remove the <code>env</code> block in <code>~/.claude/settings.json</code>.</td></tr>
+      <tr><td>Codex: the check fails, “listen EPERM”</td><td>Say yes to “Do you trust this folder?”: only then Codex reads <code>.codex/config.toml</code>.</td></tr>
+      <tr><td>Windows: “running scripts is disabled”</td><td><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force</code>, new terminal</td></tr>
+      <tr><td><code>node</code> “not recognized”</td><td>Open a new terminal. Still not found: reinstall Node LTS.</td></tr>
+      <tr><td>“Chromium for Playwright is missing”</td><td><code>npx playwright install chromium</code></td></tr>
+      <tr><td>Mac: <code>git push</code> asks for a password</td><td><code>gh auth login</code>, once. More: <code>docs/student-setup.md</code>, section 10.</td></tr>
+    </table>
+  </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 </div>

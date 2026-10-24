@@ -856,21 +856,21 @@ td:first-child {
   <p class="eyebrow">Example 2</p>
   <h1>Your scan.<br />Your viewer.</h1>
   <p class="after">A splat viewer with three.js and Spark, in nine prompts.</p>
-  <p class="after run">We ran prompts 1 to 8 with GLM-5.3 Flash: 11.6 minutes of agent time, $0.26.</p>
+  <p class="after run">We ran prompts 1 to 8 in OpenCode with GLM-5.3 Flash: 11.6 minutes of agent time, $0.26.</p>
 </section>
 
 <!-- s05-skeleton.html -->
 <section class="slide light">
   <p class="eyebrow">The skeleton · 02-splat-viewer</p>
   <h2>Same skeleton, a few new files.</h2>
-  <div class="cols wide-left">
+  <div class="cols wide-left" style="grid-template-columns: 980px 1fr; gap: 64px">
 <pre class="tight">02-splat-viewer/
 ├── AGENTS.md · CLAUDE.md
 ├── ai/strategy.md
 ├── ai/spark-facts.md        <span class="ok">new</span>  <span class="c">docs for the agent</span>
 ├── ai/steps.md              <span class="ok">new</span>  <span class="c">8 steps for the alone guide</span>
 ├── .gitignore · .ignore
-├── opencode.json · .claude/      <span class="c">deny rules</span>
+├── opencode.json · .claude/ · .codex/  <span class="c">settings per tool</span>
 ├── package.json                  <span class="c">dev · dev:vr · test · check</span>
 ├── public/splats/           <span class="ok">new</span>  <span class="c">your scans</span>
 ├── scripts/
@@ -879,8 +879,8 @@ td:first-child {
 ├── vite.config.js           <span class="ok">new</span>  <span class="c">https for VR</span>
 └── src/ · tests/                 <span class="c">empty: your agent fills them</span></pre>
     <div class="body">
-      <p><strong>ai/spark-facts.md</strong>: how Spark 2.4.0 works. Models may remember an older Spark.</p>
-      <p><strong>public/splats/</strong>: ignored by git, blocked for the agent. Reading big binaries wastes tokens and tells the agent nothing.</p>
+      <p><strong>ai/spark-facts.md</strong>: how Spark 2.4.0 works. Models may remember an older&nbsp;Spark.</p>
+      <p><strong>public/splats/</strong>: ignored by git, off limits for the agent (a deny rule in OpenCode and Claude Code). Reading big binaries wastes tokens and tells it nothing.</p>
       <p><strong>make-test-splat.mjs</strong>: writes a small test splat, so the check always has something to draw.</p>
       <p><strong>src/config.js</strong> comes later: your agent makes it in prompt 4.</p>
     </div>
@@ -923,14 +923,14 @@ check: <span class="bad">FAILED</span> (0.4 s)
 <section class="slide light">
   <p class="eyebrow">Exercise · Splat viewer</p>
   <h2>Prompt 1: plan</h2>
-  <div class="cols prompt-right">
+  <div class="cols prompt-right" style="grid-template-columns: 1fr 1fr">
     <div class="side">
       <p class="label">Agent terminal · always inside 02-splat-viewer</p>
-<pre class="tight">cd ~/photolipsia-agentic-kit/02-splat-viewer
-opencode</pre>
+<pre class="tight">cd ~/photolipsia-agentic-kit/02-splat-viewer</pre>
+      <p class="note">Then <code>opencode</code>, <code>claude</code> or <code>codex</code>. Codex asks if you trust this folder: yes.</p>
       <p class="label">Before prompt 1 · try the boundaries</p>
-<pre class="prompt">Open public/splats/test.ply and tell me what is in it.</pre>
-      <p class="note">OpenCode refuses. In our test it then tried the shell (<code>ls</code>): blocked too. Codex may read it: <code>AGENTS.md</code> rules are requests, deny rules are locks. Not perfect ones: a script the agent runs can still open any file.</p>
+<pre class="prompt" style="max-width: 680px">Open public/splats/test.ply and tell me what is in it.</pre>
+      <p class="note">OpenCode refuses. In our test it then tried the shell (<code>ls</code>): blocked too. Claude Code has deny rules too. Codex has none and may read it: <code>AGENTS.md</code> rules are requests, deny rules are locks. Not perfect ones: a script the agent runs can still open any file.</p>
     </div>
     <div class="pcol">
 <pre class="prompt">Read AGENTS.md, ai/strategy.md and <span class="nw">ai/spark-facts.md</span>. We are building a <mark class="dd">full-window viewer</mark> for Gaussian splat files with Vite, three.js and Spark. The packages are already in package.json. Write a plan of 5 to 7 small steps into ai/strategy.md: scaffold, load the test splat in <span class="nw">public/splats/test.ply</span>, then my own file, then <mark class="dd">camera controls and an orientation toggle</mark>. Never open files in public/splats/. Don't write code yet.</pre>
@@ -1111,7 +1111,7 @@ scene.add(spark);
     <div class="pcol">
 <pre class="prompt">Add OrbitControls. Frame the camera from the splat's bounding box so it <mark class="dd">fills about 70% of the window, seen from slightly above</mark>. Add an orientation toggle: flip in src/config.js, and <mark class="dd">the F key</mark> to toggle it live. Check in the screenshot that the test splat is the right way up (red on top). Then run <span class="nw">npm run check "?file=my-scan.spz"</span> and describe my capture.</pre>
       <p class="note" style="margin-top: 26px">A big scan can fail that last check with “App not ready”: look at it in the browser instead. Drag to orbit, scroll to zoom, right-drag (or Shift + drag) to pan, F to flip.</p>
-      <p class="note" style="margin-top: 16px">When the agent looks at a check of your scan, that screenshot goes to the model. The scan file itself stays blocked for the agent.</p>
+      <p class="note" style="margin-top: 16px">When the agent looks at a check of your scan, that screenshot goes to the model. The scan file itself stays off limits for the&nbsp;agent.</p>
     </div>
     <div class="side">
       <p class="label">ai/spark-facts.md · your agent reads this</p>
@@ -1591,14 +1591,15 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
 <section class="slide light">
 <style>
   .d2-ms-lead { margin: -20px 0 26px; font-size: 29px; line-height: 1.4; color: var(--grey); }
-  .d2-ms-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 26px; }
+  .d2-ms-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 30px; }
   .d2-ms pre { font-size: 22px; }
   .d2-ms .os { gap: 56px; }
-  .d2-ms .note { font-size: 27px; }
+  .d2-ms .note { font-size: 28px; }
+  .d2-ms-next { margin-top: 22px !important; color: var(--ink) !important; }
 </style>
   <p class="eyebrow">Extension · Blender MCP · set up once</p>
   <h2>Set up the Blender MCP once.</h2>
-  <p class="d2-ms-lead">Optional: tools for your agent inside Blender 5.3, the 5.3 beta until its release (planned for November 2026).</p>
+  <p class="d2-ms-lead">Optional: tools for your agent inside Blender 5.3, the 5.3 beta until its release (planned for November 2026). Steps 1 to 3 are the same for every agent.</p>
   <div class="d2-ms">
     <div class="os">
       <div><p class="label">1 · Mac</p>
@@ -1610,11 +1611,32 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
       <div class="side">
         <p class="note">2 · Close the terminal and open a new one. Open Blender once and close it. Then, on both:</p>
 <pre>uvx mcp-for-blender@2.2.4 install-addon</pre>
-        <p class="note">3 · In Blender: Edit → Preferences → Add-ons, turn on <strong>MCP for Blender</strong>. Press <strong>N</strong> in the 3D view: “Connected on port 9876”.</p>
-        <p class="note"><strong>Before you try:</strong> save your <code>.blend</code>. OpenCode runs the Blender tools without asking, and <code>look</code> sends a picture of your viewport to the model. One agent at a time.</p>
+        <p class="note">3 · In Blender: Edit → Preferences → Add-ons, turn on <strong>MCP for Blender</strong>. Press <strong>N</strong> in the 3D view: <span class="nw">“Connected on port 9876”.</span></p>
       </div>
       <div class="side">
-        <p class="label">4 · In <code>~/.config/opencode/opencode.json</code>, after <code>"provider": {…}</code></p>
+        <p class="note"><strong>Before you try:</strong> save your <code>.blend</code>. In our test, OpenCode ran the Blender tools without asking, and <code>look</code> sends a picture of your viewport to the model. One agent at a time.</p>
+        <p class="note d2-ms-next">4 · Connect your agent: next slide.</p>
+      </div>
+    </div>
+  </div>
+  <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
+<!-- s21b-mcpconnect.html -->
+<section class="slide light">
+<style>
+  .d2-mc { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+  .d2-mc pre { font-size: 22px; }
+  .d2-mc pre.d2-mc-cmd { white-space: pre-wrap; padding-left: calc(32px + 2ch); text-indent: -2ch; }
+  .d2-mc .note { font-size: 28px; }
+  .d2-mc .side > .label:not(:first-child) { margin-top: 40px; }
+  .d2-mc .d2-mc-t { color: var(--ink); }
+</style>
+  <p class="eyebrow">Extension · Blender MCP · connect your agent</p>
+  <h2>Connect your agent to Blender.</h2>
+  <div class="d2-mc">
+    <div class="side">
+      <p class="label">4 · OpenCode · in <code>~/.config/opencode/opencode.json</code>, after <code>"provider": {…}</code></p>
 <pre>"mcp": {
   "blender": {
     "type": "local",
@@ -1622,11 +1644,21 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
     "environment": { "DISABLE_TELEMETRY": "true" }
   }
 }</pre>
-        <p class="note">Put a comma after the <code>}</code> that closes <code>provider</code>, or paste the whole file from <code>docs/blender-and-splats.md</code>. Save. Restart OpenCode: <code>/exit</code>, then <code>opencode</code>.</p>
-      </div>
+      <p class="note">Put a comma after the <code>}</code> that closes <code>provider</code>, or paste the whole file from <code>docs/blender-and-splats.md</code>. Save. Restart OpenCode: <code>/exit</code>, then <code>opencode</code>.</p>
+      <p class="note d2-mc-t">Tested on Linux, Oct 2026.</p>
+    </div>
+    <div class="side">
+      <p class="label">4 · Claude Code · your terminal · one line</p>
+<pre class="d2-mc-cmd"><span class="nw">claude mcp add</span> <span class="nw">--env DISABLE_TELEMETRY=true</span> <span class="nw">--scope user</span> <span class="nw">blender</span> <span class="nw">-- uvx mcp-for-blender@2.2.4</span></pre>
+      <p class="note">Check: start <code>claude</code>, type <code>/mcp</code>.</p>
+      <p class="note d2-mc-t">Tested: adding it. Not yet with Blender.</p>
+      <p class="label">4 · Codex · your terminal · one line</p>
+<pre class="d2-mc-cmd"><span class="nw">codex mcp add</span> <span class="nw">blender</span> <span class="nw">--env DISABLE_TELEMETRY=true</span> <span class="nw">-- uvx mcp-for-blender@2.2.4</span></pre>
+      <p class="note">Check: start <code>codex</code>, type <code>/mcp</code>.</p>
+      <p class="note d2-mc-t">Not tested yet.</p>
     </div>
   </div>
-  <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+  <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux with OpenCode, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
 <!-- s22-mcp.html -->
@@ -1679,9 +1711,9 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   <p class="eyebrow">Extension · Blender MCP · how it works</p>
   <h2>How the agent talks to Blender.</h2>
   <div class="d1c-a d1c-anim">
-<svg viewBox="0 0 1664 362" role="img" aria-label="OpenCode, the agent, talks to the MCP server, which talks to the MCP for Blender add-on on port 9876, which works in your Blender scene. Requests travel right: get_scene_info, execute_blender_code, look. Answers travel back: a list of the objects, done or an error, an image."><defs><radialGradient id="d1c-a-ball" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#8fb3ff"/><stop offset=".6" stop-color="#3e7bfa"/><stop offset="1" stop-color="#2a56b8"/></radialGradient><marker id="d1c-a-hb" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#3e7bfa"/></marker><marker id="d1c-a-hc" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#e8875b"/></marker></defs><text x="0" y="41" class="d1c-cap" fill="#3e7bfa">ASKS</text><line x1="86" y1="34" x2="1650" y2="34" class="d1c-lane" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><text x="1664" y="341" class="d1c-cap" text-anchor="end" fill="#c46a3f">ANSWERS</text><line x1="1548" y1="334" x2="14" y2="334" class="d1c-lane" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="340" y1="166" x2="426" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="434" y1="206" x2="348" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="824" y1="166" x2="910" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="918" y1="206" x2="832" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="1278" y1="166" x2="1364" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="1372" y1="206" x2="1286" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><text x="387" y="146" text-anchor="middle" class="d1c-mono" font-size="22" font-weight="600">MCP</text><rect x="1.5" y="84" width="327" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><rect x="445.5" y="84" width="367" height="200" rx="16" fill="#fbfaf7" stroke="#e8875b" stroke-width="3"/><rect x="929.5" y="84" width="337" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><rect x="1383.5" y="84" width="279" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><text x="28" y="136" class="d1c-h">OpenCode</text><text x="28" y="172" class="d1c-sub">the agent</text><text x="28" y="222" class="d1c-t">reads your prompt,</text><text x="28" y="252" class="d1c-t">picks a tool</text><text x="472" y="136" class="d1c-h">MCP server</text><text x="472" y="176" class="d1c-mono" font-size="21">uvx mcp-for-blender@2.2.4</text><text x="472" y="222" class="d1c-t">OpenCode starts it,</text><text x="472" y="252" class="d1c-t">from its config</text><text x="956" y="136" class="d1c-h">Blender add-on</text><text x="956" y="172" class="d1c-sub">MCP for Blender</text><text x="956" y="216" class="d1c-mono" font-size="22">port 9876</text><text x="956" y="252" class="d1c-t">runs it in Blender</text><text x="1410" y="136" class="d1c-h">Your scene</text><ellipse cx="1523" cy="250" rx="104" ry="18" fill="#e6e3dc"/><g><polygon points="1478,174 1516.1,196 1478,218 1439.9,196" fill="#f07a7e"/><polygon points="1439.9,196 1478,218 1478,262 1439.9,240" fill="#e5484d"/><polygon points="1478,218 1516.1,196 1516.1,240 1478,262" fill="#b8343a"/></g><circle cx="1572" cy="222" r="32" fill="url(#d1c-a-ball)"/><rect x="1.5" y="392" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="392" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d0"/><rect x="14" y="404" width="216" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="432" class="d1c-mono" font-size="22" font-weight="600">get_scene_info</text><text x="326" y="432" class="d1c-t">“What is in the scene?”</text><text x="640" y="432" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="404" width="286" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><text x="690" y="432" class="d1c-t" fill="#1d1d1d">a list of the objects</text><rect x="1.5" y="464" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="464" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d3"/><rect x="14" y="476" width="292" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="504" class="d1c-mono" font-size="22" font-weight="600">execute_blender_code</text><text x="326" y="504" class="d1c-t">“Run this Python.”</text><text x="640" y="504" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="476" width="238" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><text x="690" y="504" class="d1c-t" fill="#1d1d1d">done, or an error</text><rect x="1.5" y="536" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="536" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d6"/><rect x="14" y="548" width="82" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="576" class="d1c-mono" font-size="22" font-weight="600">look</text><text x="326" y="576" class="d1c-t">“Show me the viewport.”</text><text x="640" y="576" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="548" width="164" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><rect x="690" y="557" width="26" height="22" rx="3" fill="#fbfaf7" stroke="#1d1d1d" stroke-width="2"/><path d="M693 576 l7 -8 l5 5 l4 -4 l5 7 Z" fill="#1d1d1d"/><text x="724" y="576" class="d1c-t" fill="#1d1d1d">an image</text><rect x="1089.5" y="392" width="573" height="208" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><text x="1118" y="444" class="d1c-h" font-size="34">MCP is a plug.</text><text x="1118" y="490" class="d1c-t">It gives the agent new tools,</text><text x="1118" y="522" class="d1c-t">here tools that work in Blender.</text><text x="1118" y="566" class="d1c-t" fill="#1d1d1d">You still plan, go and check.</text><g class="d1c-req d1c-d0"><rect x="166" y="12" width="214" height="44" rx="22" fill="#3e7bfa"/><text x="180" y="42" class="d1c-mono" font-size="22" font-weight="600" fill="#ffffff">get_scene_info</text></g><g class="d1c-req d1c-d3"><rect x="74" y="12" width="412" height="44" rx="22" fill="#3e7bfa"/><text x="88" y="42" class="d1c-mono" font-size="22" font-weight="600" fill="#ffffff">execute_blender_code<tspan font-weight="400"> + Python</tspan></text></g><g class="d1c-req d1c-d6"><rect x="228" y="12" width="84" height="44" rx="22" fill="#3e7bfa"/><text x="242" y="42" class="d1c-mono" font-size="22" font-weight="600" fill="#ffffff">look</text></g><g class="d1c-ans d1c-d1h"><rect x="1357" y="312" width="146" height="44" rx="22" fill="#e8875b"/><text x="1372" y="341" class="d1c-t" font-size="22" font-weight="600" fill="#1d1d1d">scene info</text></g><g class="d1c-ans d1c-d4h"><rect x="1392" y="312" width="76" height="44" rx="22" fill="#e8875b"/><text x="1407" y="341" class="d1c-t" font-size="22" font-weight="600" fill="#1d1d1d">done</text></g><g class="d1c-ans d1c-d7h"><rect x="1369" y="312" width="122" height="44" rx="22" fill="#e8875b"/><rect x="1384" y="323" width="26" height="22" rx="3" fill="#fbfaf7" stroke="#1d1d1d" stroke-width="2"/><path d="M1387 342 l7 -8 l5 5 l4 -4 l5 7 Z" fill="#1d1d1d"/><text x="1418" y="341" class="d1c-t" font-size="22" font-weight="600" fill="#1d1d1d">image</text></g></svg>
+<svg viewBox="0 0 1664 362" role="img" aria-label="Your agent (OpenCode, Claude Code or Codex) starts and talks to the MCP server, which talks to the MCP for Blender add-on on port 9876, which works in your Blender scene. Requests travel right: get_scene_info, execute_blender_code, look. Answers travel back: a list of the objects, done or an error, an image."><defs><radialGradient id="d1c-a-ball" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#8fb3ff"/><stop offset=".6" stop-color="#3e7bfa"/><stop offset="1" stop-color="#2a56b8"/></radialGradient><marker id="d1c-a-hb" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#3e7bfa"/></marker><marker id="d1c-a-hc" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#e8875b"/></marker></defs><text x="0" y="41" class="d1c-cap" fill="#3e7bfa">ASKS</text><line x1="86" y1="34" x2="1650" y2="34" class="d1c-lane" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><text x="1664" y="341" class="d1c-cap" text-anchor="end" fill="#c46a3f">ANSWERS</text><line x1="1548" y1="334" x2="14" y2="334" class="d1c-lane" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="340" y1="166" x2="426" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="434" y1="206" x2="348" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="824" y1="166" x2="910" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="918" y1="206" x2="832" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="1278" y1="166" x2="1364" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="1372" y1="206" x2="1286" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><text x="387" y="146" text-anchor="middle" class="d1c-mono" font-size="22" font-weight="600">MCP</text><rect x="1.5" y="84" width="327" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><rect x="445.5" y="84" width="367" height="200" rx="16" fill="#fbfaf7" stroke="#e8875b" stroke-width="3"/><rect x="929.5" y="84" width="337" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><rect x="1383.5" y="84" width="279" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><text x="28" y="124" class="d1c-h">Your agent</text><text x="28" y="160" class="d1c-sub">OpenCode,</text><text x="28" y="190" class="d1c-sub">Claude Code or Codex</text><text x="28" y="232" class="d1c-t">reads your prompt,</text><text x="28" y="262" class="d1c-t">picks a tool</text><text x="472" y="136" class="d1c-h">MCP server</text><text x="472" y="176" class="d1c-mono" font-size="21">uvx mcp-for-blender@2.2.4</text><text x="472" y="222" class="d1c-t">your agent starts it,</text><text x="472" y="252" class="d1c-t">from its config</text><text x="956" y="136" class="d1c-h">Blender add-on</text><text x="956" y="172" class="d1c-sub">MCP for Blender</text><text x="956" y="216" class="d1c-mono" font-size="22">port 9876</text><text x="956" y="252" class="d1c-t">runs it in Blender</text><text x="1410" y="136" class="d1c-h">Your scene</text><ellipse cx="1523" cy="250" rx="104" ry="18" fill="#e6e3dc"/><g><polygon points="1478,174 1516.1,196 1478,218 1439.9,196" fill="#f07a7e"/><polygon points="1439.9,196 1478,218 1478,262 1439.9,240" fill="#e5484d"/><polygon points="1478,218 1516.1,196 1516.1,240 1478,262" fill="#b8343a"/></g><circle cx="1572" cy="222" r="32" fill="url(#d1c-a-ball)"/><rect x="1.5" y="392" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="392" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d0"/><rect x="14" y="404" width="216" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="432" class="d1c-mono" font-size="22" font-weight="600">get_scene_info</text><text x="326" y="432" class="d1c-t">“What is in the scene?”</text><text x="640" y="432" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="404" width="286" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><text x="690" y="432" class="d1c-t" fill="#1d1d1d">a list of the objects</text><rect x="1.5" y="464" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="464" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d3"/><rect x="14" y="476" width="292" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="504" class="d1c-mono" font-size="22" font-weight="600">execute_blender_code</text><text x="326" y="504" class="d1c-t">“Run this Python.”</text><text x="640" y="504" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="476" width="238" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><text x="690" y="504" class="d1c-t" fill="#1d1d1d">done, or an error</text><rect x="1.5" y="536" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="536" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d6"/><rect x="14" y="548" width="82" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="576" class="d1c-mono" font-size="22" font-weight="600">look</text><text x="326" y="576" class="d1c-t">“Show me the viewport.”</text><text x="640" y="576" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="548" width="164" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><rect x="690" y="557" width="26" height="22" rx="3" fill="#fbfaf7" stroke="#1d1d1d" stroke-width="2"/><path d="M693 576 l7 -8 l5 5 l4 -4 l5 7 Z" fill="#1d1d1d"/><text x="724" y="576" class="d1c-t" fill="#1d1d1d">an image</text><rect x="1089.5" y="392" width="573" height="208" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><text x="1118" y="444" class="d1c-h" font-size="34">MCP is a plug.</text><text x="1118" y="490" class="d1c-t">It gives the agent new tools,</text><text x="1118" y="522" class="d1c-t">here tools that work in Blender.</text><text x="1118" y="566" class="d1c-t" fill="#1d1d1d">You still plan, go and check.</text><g class="d1c-req d1c-d0"><rect x="166" y="12" width="214" height="44" rx="22" fill="#3e7bfa"/><text x="180" y="42" class="d1c-mono" font-size="22" font-weight="600" fill="#ffffff">get_scene_info</text></g><g class="d1c-req d1c-d3"><rect x="74" y="12" width="412" height="44" rx="22" fill="#3e7bfa"/><text x="88" y="42" class="d1c-mono" font-size="22" font-weight="600" fill="#ffffff">execute_blender_code<tspan font-weight="400"> + Python</tspan></text></g><g class="d1c-req d1c-d6"><rect x="228" y="12" width="84" height="44" rx="22" fill="#3e7bfa"/><text x="242" y="42" class="d1c-mono" font-size="22" font-weight="600" fill="#ffffff">look</text></g><g class="d1c-ans d1c-d1h"><rect x="1357" y="312" width="146" height="44" rx="22" fill="#e8875b"/><text x="1372" y="341" class="d1c-t" font-size="22" font-weight="600" fill="#1d1d1d">scene info</text></g><g class="d1c-ans d1c-d4h"><rect x="1392" y="312" width="76" height="44" rx="22" fill="#e8875b"/><text x="1407" y="341" class="d1c-t" font-size="22" font-weight="600" fill="#1d1d1d">done</text></g><g class="d1c-ans d1c-d7h"><rect x="1369" y="312" width="122" height="44" rx="22" fill="#e8875b"/><rect x="1384" y="323" width="26" height="22" rx="3" fill="#fbfaf7" stroke="#1d1d1d" stroke-width="2"/><path d="M1387 342 l7 -8 l5 5 l4 -4 l5 7 Z" fill="#1d1d1d"/><text x="1418" y="341" class="d1c-t" font-size="22" font-weight="600" fill="#1d1d1d">image</text></g></svg>
     <div class="d2-mcp-row">
-      <svg viewBox="0 384 1044 220" class="d2-mcp-rows" aria-hidden="true"><text x="0" y="41" class="d1c-cap" fill="#3e7bfa">ASKS</text><line x1="86" y1="34" x2="1650" y2="34" class="d1c-lane" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><text x="1664" y="341" class="d1c-cap" text-anchor="end" fill="#c46a3f">ANSWERS</text><line x1="1548" y1="334" x2="14" y2="334" class="d1c-lane" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="340" y1="166" x2="426" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="434" y1="206" x2="348" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="824" y1="166" x2="910" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="918" y1="206" x2="832" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="1278" y1="166" x2="1364" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="1372" y1="206" x2="1286" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><text x="387" y="146" text-anchor="middle" class="d1c-mono" font-size="22" font-weight="600">MCP</text><rect x="1.5" y="84" width="327" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><rect x="445.5" y="84" width="367" height="200" rx="16" fill="#fbfaf7" stroke="#e8875b" stroke-width="3"/><rect x="929.5" y="84" width="337" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><rect x="1383.5" y="84" width="279" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><text x="28" y="136" class="d1c-h">OpenCode</text><text x="28" y="172" class="d1c-sub">the agent</text><text x="28" y="222" class="d1c-t">reads your prompt,</text><text x="28" y="252" class="d1c-t">picks a tool</text><text x="472" y="136" class="d1c-h">MCP server</text><text x="472" y="176" class="d1c-mono" font-size="21">uvx mcp-for-blender@2.2.4</text><text x="472" y="222" class="d1c-t">OpenCode starts it,</text><text x="472" y="252" class="d1c-t">from its config</text><text x="956" y="136" class="d1c-h">Blender add-on</text><text x="956" y="172" class="d1c-sub">MCP for Blender</text><text x="956" y="216" class="d1c-mono" font-size="22">port 9876</text><text x="956" y="252" class="d1c-t">runs it in Blender</text><text x="1410" y="136" class="d1c-h">Your scene</text><ellipse cx="1523" cy="250" rx="104" ry="18" fill="#e6e3dc"/><g><polygon points="1478,174 1516.1,196 1478,218 1439.9,196" fill="#f07a7e"/><polygon points="1439.9,196 1478,218 1478,262 1439.9,240" fill="#e5484d"/><polygon points="1478,218 1516.1,196 1516.1,240 1478,262" fill="#b8343a"/></g><circle cx="1572" cy="222" r="32" fill="url(#d1c-a-ball)"/><rect x="1.5" y="392" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="392" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d0"/><rect x="14" y="404" width="216" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="432" class="d1c-mono" font-size="22" font-weight="600">get_scene_info</text><text x="326" y="432" class="d1c-t">“What is in the scene?”</text><text x="640" y="432" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="404" width="286" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><text x="690" y="432" class="d1c-t" fill="#1d1d1d">a list of the objects</text><rect x="1.5" y="464" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="464" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d3"/><rect x="14" y="476" width="292" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="504" class="d1c-mono" font-size="22" font-weight="600">execute_blender_code</text><text x="326" y="504" class="d1c-t">“Run this Python.”</text><text x="640" y="504" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="476" width="238" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><text x="690" y="504" class="d1c-t" fill="#1d1d1d">done, or an error</text><rect x="1.5" y="536" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="536" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d6"/><rect x="14" y="548" width="82" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="576" class="d1c-mono" font-size="22" font-weight="600">look</text><text x="326" y="576" class="d1c-t">“Show me the viewport.”</text><text x="640" y="576" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="548" width="164" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><rect x="690" y="557" width="26" height="22" rx="3" fill="#fbfaf7" stroke="#1d1d1d" stroke-width="2"/><path d="M693 576 l7 -8 l5 5 l4 -4 l5 7 Z" fill="#1d1d1d"/><text x="724" y="576" class="d1c-t" fill="#1d1d1d">an image</text><rect x="1089.5" y="392" width="573" height="208" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><text x="1118" y="444" class="d1c-h" font-size="34">MCP is a plug.</text><text x="1118" y="490" class="d1c-t">It gives the agent new tools,</text><text x="1118" y="522" class="d1c-t">here tools that work in Blender.</text><text x="1118" y="566" class="d1c-t" fill="#1d1d1d">You still plan, go and check.</text></svg>
+      <svg viewBox="0 384 1044 220" class="d2-mcp-rows" aria-hidden="true"><text x="0" y="41" class="d1c-cap" fill="#3e7bfa">ASKS</text><line x1="86" y1="34" x2="1650" y2="34" class="d1c-lane" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><text x="1664" y="341" class="d1c-cap" text-anchor="end" fill="#c46a3f">ANSWERS</text><line x1="1548" y1="334" x2="14" y2="334" class="d1c-lane" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="340" y1="166" x2="426" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="434" y1="206" x2="348" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="824" y1="166" x2="910" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="918" y1="206" x2="832" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><line x1="1278" y1="166" x2="1364" y2="166" class="d1c-flow" stroke="#3e7bfa" marker-end="url(#d1c-a-hb)"/><line x1="1372" y1="206" x2="1286" y2="206" class="d1c-flow" stroke="#e8875b" marker-end="url(#d1c-a-hc)"/><text x="387" y="146" text-anchor="middle" class="d1c-mono" font-size="22" font-weight="600">MCP</text><rect x="1.5" y="84" width="327" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><rect x="445.5" y="84" width="367" height="200" rx="16" fill="#fbfaf7" stroke="#e8875b" stroke-width="3"/><rect x="929.5" y="84" width="337" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><rect x="1383.5" y="84" width="279" height="200" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><text x="28" y="124" class="d1c-h">Your agent</text><text x="28" y="160" class="d1c-sub">OpenCode,</text><text x="28" y="190" class="d1c-sub">Claude Code or Codex</text><text x="28" y="232" class="d1c-t">reads your prompt,</text><text x="28" y="262" class="d1c-t">picks a tool</text><text x="472" y="136" class="d1c-h">MCP server</text><text x="472" y="176" class="d1c-mono" font-size="21">uvx mcp-for-blender@2.2.4</text><text x="472" y="222" class="d1c-t">your agent starts it,</text><text x="472" y="252" class="d1c-t">from its config</text><text x="956" y="136" class="d1c-h">Blender add-on</text><text x="956" y="172" class="d1c-sub">MCP for Blender</text><text x="956" y="216" class="d1c-mono" font-size="22">port 9876</text><text x="956" y="252" class="d1c-t">runs it in Blender</text><text x="1410" y="136" class="d1c-h">Your scene</text><ellipse cx="1523" cy="250" rx="104" ry="18" fill="#e6e3dc"/><g><polygon points="1478,174 1516.1,196 1478,218 1439.9,196" fill="#f07a7e"/><polygon points="1439.9,196 1478,218 1478,262 1439.9,240" fill="#e5484d"/><polygon points="1478,218 1516.1,196 1516.1,240 1478,262" fill="#b8343a"/></g><circle cx="1572" cy="222" r="32" fill="url(#d1c-a-ball)"/><rect x="1.5" y="392" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="392" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d0"/><rect x="14" y="404" width="216" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="432" class="d1c-mono" font-size="22" font-weight="600">get_scene_info</text><text x="326" y="432" class="d1c-t">“What is in the scene?”</text><text x="640" y="432" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="404" width="286" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><text x="690" y="432" class="d1c-t" fill="#1d1d1d">a list of the objects</text><rect x="1.5" y="464" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="464" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d3"/><rect x="14" y="476" width="292" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="504" class="d1c-mono" font-size="22" font-weight="600">execute_blender_code</text><text x="326" y="504" class="d1c-t">“Run this Python.”</text><text x="640" y="504" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="476" width="238" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><text x="690" y="504" class="d1c-t" fill="#1d1d1d">done, or an error</text><rect x="1.5" y="536" width="1040" height="64" rx="14" fill="#fbfaf7" stroke="#e0dcd3" stroke-width="2"/><rect x="1.5" y="536" width="1040" height="64" rx="14" fill="none" stroke="#3e7bfa" stroke-width="3" class="d1c-rowhi d1c-d6"/><rect x="14" y="548" width="82" height="40" rx="10" fill="#e3ebfe" stroke="#3e7bfa" stroke-width="2"/><text x="26" y="576" class="d1c-mono" font-size="22" font-weight="600">look</text><text x="326" y="576" class="d1c-t">“Show me the viewport.”</text><text x="640" y="576" class="d1c-t" fill="#e8875b" font-weight="600">←</text><rect x="676" y="548" width="164" height="40" rx="10" fill="#fbe7dc" stroke="#e8875b" stroke-width="2"/><rect x="690" y="557" width="26" height="22" rx="3" fill="#fbfaf7" stroke="#1d1d1d" stroke-width="2"/><path d="M693 576 l7 -8 l5 5 l4 -4 l5 7 Z" fill="#1d1d1d"/><text x="724" y="576" class="d1c-t" fill="#1d1d1d">an image</text><rect x="1089.5" y="392" width="573" height="208" rx="16" fill="#fbfaf7" stroke="#d3cfc6" stroke-width="2"/><text x="1118" y="444" class="d1c-h" font-size="34">MCP is a plug.</text><text x="1118" y="490" class="d1c-t">It gives the agent new tools,</text><text x="1118" y="522" class="d1c-t">here tools that work in Blender.</text><text x="1118" y="566" class="d1c-t" fill="#1d1d1d">You still plan, go and check.</text></svg>
       <div class="d2-mcp-try">
         <p class="label">Try it · in 02-splat-viewer</p>
 <pre class="prompt">Use the Blender tools. Call get_scene_info and tell me what is in the scene. Then plan a <mark class="dd">ring of 12 cubes</mark> around the origin. Don't change anything yet.</pre>
@@ -1689,7 +1721,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
       </div>
     </div>
   </div>
-  <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+  <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux with OpenCode, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
 <!-- s23-clean.html -->
@@ -1741,17 +1773,17 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   </div>
   <div class="d2-cl-row">
     <div>
-      <p class="label">Plan · your <code>.ply</code> copied to <code>public/splats/scan.ply</code> · OpenCode in 02-splat-viewer</p>
+      <p class="label">Plan · your <code>.ply</code> copied to <code>public/splats/scan.ply</code> · your agent in 02-splat-viewer</p>
 <pre class="prompt">Use the Blender tools. In Blender, import ../tools/blender/splats.py and load public/splats/scan.ply with splats.load(). Use absolute paths. Tell me how many splats it has and how big it is. Then plan how to remove <mark class="dd">the floaters far away from the scan</mark>. Don't change anything yet.</pre>
     </div>
     <div class="d2-cl-steps">
       <p><b>Go:</b> “Go.” It picks the splats to keep.</p>
       <p><b>Check:</b> “Use look in rendered mode. Is the scan still whole, and are the floaters gone?”</p>
       <p><b>Save:</b> “Save it with splats.save() as <span class="nw">public/splats/scan-clean.ply</span>.”</p>
-      <p class="d2-cl-test">Our test: a generated 500,000-splat file with planted floaters, not a phone scan. It cut 2,545 splats for about $0.03 (GLM-5.3 Flash).</p>
+      <p class="d2-cl-test">Our test: a generated 500,000-splat file with planted floaters, not a phone scan. It cut 2,545 splats for $0.03–0.04 (GLM-5.3 Flash).</p>
     </div>
   </div>
-  <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+  <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux with OpenCode, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
 <!-- s24-spirula1.html -->
@@ -1811,14 +1843,14 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
 </svg>
     </div>
     <div class="side">
-      <p class="label">Plan · scene open and saved · OpenCode in 02-splat-viewer</p>
+      <p class="label">Plan · scene open and saved · your agent in 02-splat-viewer</p>
 <pre class="prompt">Use the Blender tools. Plan a training set for Spirula from the open scene: render it from <mark class="dd">48 cameras on a sphere</mark> around the objects, with a transparent background, into <span class="nw">public/splats/training/images/</span>. Write <span class="nw">public/splats/training/transforms.json</span> with w, h, fl_x, fl_y, cx, cy and one frame per image: file_path with .png, and transform_matrix = the camera's matrix_world turned <span class="nw">y-down</span> like a scan (rotate +90 degrees about X). Use absolute paths. Don't change anything yet.</pre>
       <p class="label">Then “Go.” Then</p>
 <pre class="prompt">Check: count the images, check transforms.json, and use look on one of the images.</pre>
       <p class="note">Spirula gets the pictures <strong>and</strong> the exact cameras, so it doesn’t have to guess where each picture was taken.</p>
     </div>
   </div>
-  <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+  <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux with OpenCode, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
 <!-- s25-spirula2.html -->
@@ -1868,7 +1900,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   .d2-wr-more { margin-top: 18px; font-size: 26px; line-height: 1.4; color: var(--grey); }
   .d2-wr-end { margin-top: 26px; font-size: 40px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; color: var(--ink); }
 </style>
-  <p class="eyebrow">Viewer, Blender, Spirula · our test runs with GLM-5.3 Flash</p>
+  <p class="eyebrow">Our test runs · OpenCode with GLM-5.3 Flash, and Codex</p>
   <h2>What went wrong when we tried it.</h2>
   <table class="d2-wr">
     <tr><th>What happened</th><th>How we saw it</th><th>The fix</th></tr>
@@ -1877,8 +1909,9 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
     <tr><td><b>Blender:</b> after a refused <code>ls</code> it mixed up the steps.</td><td>By reading its steps.</td><td><b>Read every plan</b>, check every step.</td></tr>
     <tr><td><b>Viewer, prompt 5:</b> its orientation check failed; it blamed the browser.</td><td>By reading its reply.</td><td>One sentence: look at the screenshot.</td></tr>
     <tr><td><b>Viewer, prompt 7:</b> VR scale inverted: 5&nbsp;m, not 2&nbsp;m.</td><td>By reading the code.</td><td>A pure function with a unit test.</td></tr>
+    <tr><td><b>Codex, Example 1:</b> the sandbox stopped its check.</td><td>Its reply: no&nbsp;screenshot.</td><td><code>.codex/config.toml</code>, now in the skeleton.</td></tr>
   </table>
-  <p class="d2-wr-end is-check">An error or a failed check showed two of these. The other three only a person found, by looking and reading.</p>
+  <p class="d2-wr-end is-check">An error or a failed check showed three of these. The other three only a person found, by looking and reading.</p>
   <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -1895,7 +1928,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   <div class="cols d2-rc">
     <div class="body">
       <p><strong>Current facts, as a file:</strong> <code>ai/spark-facts.md</code> beats the model’s memory.</p>
-      <p><strong>Big files stay out:</strong> ignored by git, blocked for the agent, read only by the browser.</p>
+      <p><strong>Big files stay out:</strong> ignored by git, off limits for the agent, read only by the browser.</p>
       <p><strong>Ready means drawn:</strong> splats on screen, not just “loaded”.</p>
       <p><strong>Your scan:</strong> dropped on the page, streamed from <code>public/splats/</code> as <code>.rad</code>, or in VR on a Quest. Cleaned in Blender or trained with Spirula? Open it with “Open file”.</p>
     </div>
@@ -1924,9 +1957,9 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
 <!-- s29-trouble.html -->
 <section class="slide light">
 <style>
-  .d2-tr td, .d2-tr th { padding: 10px 18px 10px 0; }
-  .d2-tr td { font-size: 24px; }
-  .d2-tr code { font-size: 21px; }
+  .d2-tr td, .d2-tr th { padding: 14px 18px 14px 0; }
+  .d2-tr td { font-size: 27px; }
+  .d2-tr code { font-size: 22px; }
   .d2-tr td:first-child { width: 22%; white-space: normal; }
 </style>
   <p class="eyebrow">Appendix · Troubleshooting · Mac and Windows</p>
@@ -1935,14 +1968,34 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
     <tr><th>Problem</th><th>Mac</th><th>Windows</th></tr>
     <tr><td>npm not found</td><td>Install Node LTS, open a new terminal</td><td><code>winget install --id OpenJS.NodeJS.LTS -e</code>, new terminal</td></tr>
     <tr><td>Scripts disabled</td><td>(does not happen)</td><td><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force</code></td></tr>
-    <tr><td>401: User not found</td><td><code>source ~/.zshrc</code></td><td>Open a new terminal</td></tr>
     <tr><td>Port 5173 in use</td><td colspan="2">Find the terminal running <code>npm run dev</code> and press Ctrl+C</td></tr>
-    <tr><td>Agent hangs after <code>npm run dev</code></td><td colspan="2">Press Esc in the agent. Run <code>npm run dev</code> in your own terminal</td></tr>
-    <tr><td>Agent can’t see the screenshot</td><td colspan="2"><code>/models</code> → <strong>GLM-5.3-Flash</strong>. GLM-5.3 can’t see images</td></tr>
     <tr><td>Chromium missing</td><td colspan="2"><code>npx playwright install chromium</code></td></tr>
     <tr><td>No Enter VR button</td><td>Mac browsers can’t do VR: <code>npm run dev:vr</code>, Quest browser</td><td>Quest Link + Chrome, or the Quest browser</td></tr>
     <tr><td>Upside down</td><td colspan="2">Press F, or set <code>flip</code> in <code>src/config.js</code></td></tr>
-    <tr><td>403 from the model</td><td colspan="2">Model not allowed, or today’s budget is used up (until midnight UTC). See <code>docs/student-setup.md</code></td></tr>
+  </table>
+  <p class="note" style="margin-top: 26px">Problems with the agent or your account: next slide. All of them: <code>docs/student-setup.md</code>, section 10.</p>
+  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
+<!-- s30-trouble-agent.html -->
+<section class="slide light">
+<style>
+  .d2-ta td, .d2-ta th { padding: 13px 18px 13px 0; }
+  .d2-ta td { font-size: 26px; }
+  .d2-ta code { font-size: 22px; }
+  .d2-ta td:first-child { width: 30%; white-space: normal; }
+  .d2-ta .d2-ta-acc { display: block; font-size: 20px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); }
+</style>
+  <p class="eyebrow">Appendix · Troubleshooting · the agent and your account</p>
+  <h2>When the agent goes wrong</h2>
+  <table class="d2-ta">
+    <tr><th>Problem</th><th>What to do</th></tr>
+    <tr><td><span class="d2-ta-acc">Any account</span>Agent hangs after <code>npm run dev</code></td><td>Press Esc in the agent, the same in all three. Run <code>npm run dev</code> in your own terminal.</td></tr>
+    <tr><td><span class="d2-ta-acc">Course key (GLM)</span>Agent can’t see the screenshot</td><td>GLM-5.3 can’t see images, GLM-5.3 Flash can. OpenCode: <code>/models</code> → <strong>GLM-5.3-Flash</strong>. Claude Code, Codex: <code>/model</code>.</td></tr>
+    <tr><td><span class="d2-ta-acc">Course key (GLM)</span>403 from the model</td><td>Model not allowed, or today’s budget is used up (until midnight UTC). <span class="nw">See <code>docs/student-setup.md</code>.</span></td></tr>
+    <tr><td><span class="d2-ta-acc">Course key (GLM)</span>401: User not found</td><td>OpenCode, Codex: Mac <code>source ~/.zshrc</code>, Windows: open a new terminal. Claude Code: check the key in <code>~/.claude/settings.json</code>.</td></tr>
+    <tr><td><span class="d2-ta-acc">Your own plan</span>Usage limit reached</td><td>Claude Code, Codex: <code>/usage</code> shows your limits. Wait until it resets.</td></tr>
+    <tr><td><span class="d2-ta-acc">Codex</span>The check fails: “listen EPERM”</td><td>Start Codex in the project folder and answer yes to “Do you trust this folder?”. Otherwise it ignores <code>.codex/config.toml</code>.</td></tr>
   </table>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>

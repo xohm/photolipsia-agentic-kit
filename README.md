@@ -2,17 +2,19 @@
 
 ZHdK · MA Interaction Design · HS 2026
 
-Two weeks of coding with AI agents (OpenCode, Codex CLI, Claude Code) through one shared
-OpenRouter account. You build two small apps with an AI coding agent. You get **skeletons, not
-apps**: rules for the agent, a memory file and a check that looks at the result. Your agent writes
-the code. You plan, decide and check.
+Two weeks of coding with an AI agent in the terminal. Most of you use OpenCode with the course
+key (one shared OpenRouter account, with the model GLM-5.3 Flash). If you have your own Claude or
+ChatGPT plan, you can use Claude Code or Codex CLI with it instead. You build two small apps with
+your agent. You get **skeletons, not apps**: rules for the agent, a memory file and a check that
+looks at the result. Your agent writes the code. You plan, decide and check.
 
 Fork this repository: your fork is your copy, where you work and save every step. Your fork is
 public: anyone can see it.
 
 ## Start here
 
-1. **Setup:** [docs/student-setup.md](docs/student-setup.md): the tools, the API key, your fork.
+1. **Setup:** [docs/student-setup.md](docs/student-setup.md): your fork, picking your tool and
+   account, installing it.
 2. **Example 1, your first agent loop:** [guides/01-text-stats.md](guides/01-text-stats.md)
 3. **Example 2, a viewer for your own 3D scans:**
    - in class: [guides/02-splat-viewer.md](guides/02-splat-viewer.md)
@@ -22,7 +24,8 @@ public: anyone can see it.
 
 Before you start, read two short sections of the setup guide:
 [where your prompts go, who sees them](docs/student-setup.md#where-your-prompts-go-who-sees-them)
-and [what it costs](docs/student-setup.md#what-it-costs).
+(and how to switch off training on your own plan) and
+[what it costs](docs/student-setup.md#what-it-costs).
 
 ## Slides
 
@@ -40,13 +43,13 @@ They are also in `slides/` in your fork: double-click to open them without GitHu
 guides/             what to type into your agent, step by step
 docs/               setup and background
 slides/             the two slide decks
-tools/              check-openrouter.mjs: tests your API key
+tools/              check-openrouter.mjs: tests the course key
                     blender/splats.py: Gaussian splats in Blender 5.3, for the agent
 ```
 
 Each skeleton has the same few files:
 
-- `AGENTS.md`: the rules every agent reads
+- `AGENTS.md`: the rules every agent reads (Claude Code through `CLAUDE.md`)
 - `ai/strategy.md`: the plan and the decisions, the agent's memory
 - `scripts/check.mjs`: `npm run check` opens your page in a hidden browser and writes a report and a screenshot
 

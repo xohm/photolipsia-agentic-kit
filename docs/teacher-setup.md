@@ -5,6 +5,12 @@ Photolipsia · ZHdK · MA Interaction Design · HS 2026
 One OpenRouter account, one shared API key with a hard credit limit, and a guardrail that only
 allows the two course models and caps daily spending. 15 students, two weeks.
 
+Most students use **OpenCode on the course key**: that is the main path, and all course examples
+were run with it. The key is for every student **without** a Claude or ChatGPT plan (Claude Code
+and Codex can also be set up for it). Students with their own plan may use Claude Code or Codex on
+that plan instead; they don't use the key, and the key's budget and guardrail don't cover them. See
+[Students on their own plans](#students-on-their-own-plans) in section 7.
+
 Facts below were checked against the OpenRouter docs on 2026-10-23. Dashboard labels change;
 the links go to the current pages.
 
@@ -110,7 +116,7 @@ Notes
 ## 4. Test it
 
 Set the key in your own terminal (same commands as the students, see
-[student-setup.md](student-setup.md#2-your-api-key)), then in the course kit folder:
+[student-setup.md](student-setup.md#4-the-course-key)), then in the course kit folder:
 
 ```bash
 node tools/check-openrouter.mjs
@@ -141,8 +147,8 @@ If you use it, every base URL changes:
 | Tool | Setting | EU value |
 |---|---|---|
 | OpenCode | `provider.openrouter.options.baseURL` in `opencode.json` | `https://eu.openrouter.ai/api/v1` |
-| Codex CLI | `base_url` in `~/.codex/config.toml` | `https://eu.openrouter.ai/api/v1` |
 | Claude Code | `ANTHROPIC_BASE_URL` in `~/.claude/settings.json` | `https://eu.openrouter.ai/api` |
+| Codex CLI | `base_url` in `~/.codex/config.toml` | `https://eu.openrouter.ai/api/v1` |
 | `tools/check-openrouter.mjs` | `API` constant at the top | `https://eu.openrouter.ai/api/v1` |
 
 Check on the model pages that both GLM models have EU endpoints before switching.
@@ -151,17 +157,18 @@ Check on the model pages that both GLM models have EU endpoints before switching
 
 ## 6. Set up and test the three tools yourself
 
-Use exactly the student configs: [student-setup.md](student-setup.md), sections 3 to 6. Then, on
-your own machine and ideally on one Windows laptop:
+Use exactly the student configs: [student-setup.md](student-setup.md), sections 4 to 8 (the
+course key, OpenCode, Claude Code, Codex, the smoke test). Then, on your own machine and ideally
+on one Windows laptop:
 
 Versions used to prepare the kit: OpenCode 1.14.39 locally (npm `opencode-ai@1` was 1.19.4),
-Codex CLI 0.155.1, Claude Code 2.1.302. Students install the current versions.
+Claude Code 2.1.302, Codex CLI 0.155.1. Students install the current versions.
 
-1. Smoke test in each tool (section 6 of the student guide).
+1. Smoke test in each tool (section 8 of the student guide).
 2. Run both examples in OpenCode in a fork of this kit, following
    [guides/01-text-stats.md](../guides/01-text-stats.md) and
    [guides/02-splat-viewer.md](../guides/02-splat-viewer.md).
-3. Repeat Example 1 in Codex and in Claude Code.
+3. Repeat Example 1 in Claude Code and in Codex: on the course key, and on a plan if you have one.
 4. On the OpenRouter **Logs** page (https://openrouter.ai/logs), check that every request used one
    of the two models and none got a 403. A 403 means a tool calls a hidden extra model. The
    configs set `small_model` (OpenCode) and all model variables (Claude Code) to prevent that.
@@ -192,14 +199,33 @@ isolate devices; a small router or a phone hotspot solves it.
    Link in Edge; Chrome over a USB cable is the most reliable combination.
 6. Write down the Chrome version, the Link version and the GPU driver of each PC that works.
 
+**Our runs of Example 1** (24 October 2026, Linux, the same prompts and student steps):
+
+| Tool and account | Agent time | Result | Notes |
+|---|---|---|---|
+| OpenCode, course key (GLM-5.3 Flash) | 2.7 min | checks pass, $0.05 | the run on the slides |
+| Claude Code, Max plan (Claude Opus 5.5) | 12.5 min | checks pass | looked at every screenshot; refused a fake `.env`; asked before piped commands |
+| Codex, ChatGPT plan (GPT-6 Astra) | 5.8 min | checks pass | its check couldn't run in the sandbox (fixed in the skeleton since); read the fake `.env` with a script but hid the value |
+| Claude Code, course key | not run yet | | |
+| Codex, course key | not run yet | | |
+
+Example 2 and the Blender parts ran only in OpenCode with GLM-5.3 Flash.
+
 Known differences
 
-- **OpenCode** reads `AGENTS.md`, honours `opencode.json` deny rules and is the most reliable with GLM.
-- **Codex** runs commands in a sandbox without network. `npm install` and `npm run check` need
-  approval to run outside it. Decide before the course whether students should approve each
-  time or start Codex with more permissive settings.
-- **Claude Code** is supported on OpenRouter only with Anthropic models. Effort settings
-  probably don't reach GLM.
+- **OpenCode** reads `AGENTS.md`, honours `opencode.json` deny rules (also for shell commands that
+  name the files) and is the most reliable with GLM.
+- **Claude Code** reads `CLAUDE.md`, which imports `AGENTS.md`. `.claude/settings.json` denies
+  reading and editing `.env*`, `node_modules/` and `public/splats/`: that blocks its own file tools
+  and commands like `cat`, `head`, `tail`, `sed`, not a script it writes. The skeleton lets it run
+  `npm test`, `npm run check`, `git status/diff/log` and `ls` without asking, but not `node` (a
+  script could read past the deny rules). On OpenRouter it is supported only with Anthropic
+  models; effort settings probably don't reach GLM.
+- **Codex** has no file deny rules. Its sandbox lets commands write only inside the project. The
+  skeleton's `.codex/config.toml` lets `npm run check` start its local server inside the sandbox
+  (without it every check crashed with "listen EPERM" and the agent never saw a screenshot) and
+  lets commands in the project use the internet (`npm install`). Codex reads that file only in a
+  folder the student trusted: they must answer **yes** to "Do you trust this folder?".
 
 ---
 
@@ -264,6 +290,28 @@ sources (`slides-src/` in the solutions), then rebuild the slides.
   only, never in a project, a commit, a screenshot or a prompt.
 - Remind them on day one that a leaked key costs the course budget, not them.
 
+### Students on their own plans
+
+A student with a Claude plan (Pro, Max, Team or Enterprise) may use Claude Code with it; with a
+ChatGPT plan (Plus or higher), Codex. The free Claude plan doesn't include Claude Code, and ChatGPT
+Free and Go don't list the Codex CLI. These students don't get the key.
+
+- **Outside your setup.** Their requests don't go through OpenRouter: the guardrail, the daily
+  budget, Activity and Logs don't see them. Their prompts, files and screenshots go to Anthropic
+  or OpenAI (USA), under their own account.
+- **Training switches.** Ask them to switch training off before day one:
+  - Claude (Pro, Max): claude.ai → **Settings → Privacy**, "Help improve Claude". With it on,
+    Anthropic trains on their chats and Claude Code sessions and keeps them 5 years; with it off,
+    30 days.
+  - ChatGPT (Plus, Pro): **Settings → Data controls → "Improve the model for everyone"**. One
+    switch covers ChatGPT and Codex. Business, Edu and Enterprise: no training by default.
+- **Limits.** Their work counts against the plan: a 5-hour window and a weekly limit, shared with
+  the chat app (ChatGPT Plus: a 5-hour window, weekly limits may apply). `/usage` shows what is
+  left; big models use it faster. When a limit is reached, they wait for the reset (or switch on
+  Claude's paid usage credits, at their own cost).
+- **Tested less.** Example 1 ran with both tools on a plan (section 6). Example 2 and the Blender
+  parts did not.
+
 ---
 
 ## 8. Course checklist
@@ -279,6 +327,9 @@ sources (`slides-src/` in the solutions), then rebuild the slides.
         OpenRouter keeps prompts and answers for at least 3 months and you can read them).
       - Settings › Privacy: **"OpenRouter use of inputs/outputs" off** (the 1% discount; when on,
         you grant OpenRouter a licence to the content).
+      - Settings › Privacy: **training off**: don't allow providers that may train on your data,
+        for paid and for free models (the docs suggest that is the default; the exact labels were
+        not checked).
       - Settings › Privacy: **Zero Data Retention on** for "All other models" (or on the course
         guardrail). It removes the providers that keep prompts: 7 of 48 for GLM-5.3, 6 of 38 for
         GLM-5.3 Flash (October 2026). Then tell students it is on.
@@ -287,11 +338,16 @@ sources (`slides-src/` in the solutions), then rebuild the slides.
 - [ ] `node tools/check-openrouter.mjs` says "All good"
 - [ ] All three tools tested on your machine; both examples run in OpenCode
 - [ ] One Windows laptop tested (PowerShell execution policy with `-Force`, the key command from
-      [student-setup.md](student-setup.md#2-your-api-key) section 2, OpenCode, `npm run check`)
-- [ ] Students got the kit link and the setup guide before day one
+      [student-setup.md](student-setup.md#4-the-course-key) section 4, OpenCode, `npm run check`)
+- [ ] Students got the kit link and the setup guide before day one, and know which account to
+      use (student-setup.md section 2: no plan, the course key with OpenCode)
+- [ ] Students on their own Claude or ChatGPT plan switched training off and know `/usage`
+      ([Students on their own plans](#students-on-their-own-plans))
 - [ ] Blender MCP (the Blender slides in deck 2) tried once on a Mac and a Windows laptop: open Blender once,
-      `uvx mcp-for-blender@2.2.4 install-addon`, the OpenCode `mcp` entry, then the slide's prompt.
+      `uvx mcp-for-blender@2.2.4 install-addon`, the MCP entry for the tool
+      ([blender-and-splats.md](blender-and-splats.md)), then the slide's prompt.
       Tested on Linux only (2026-10-24, Blender 5.3 beta, GLM-5.3 Flash in OpenCode).
+      Claude Code and Codex with the Blender MCP: not tested yet.
 - [ ] Gaussian splats in Blender (deck 2): students need **Blender 5.3** (release planned for
       10 Nov 2026; until then the beta from https://builder.blender.org/download/daily/). It opens
       splat `.ply` files itself; `tools/blender/splats.py` saves them again. Blender 5.2 and older
@@ -300,7 +356,7 @@ sources (`slides-src/` in the solutions), then rebuild the slides.
       the `spirula` command: System Settings → Privacy & Security → **Open Anyway** (right-click →
       Open no longer works on macOS 15 and later). While training it serves a preview on port 7007
       to the whole network. Tested on Linux only (2026-10-24).
-- [ ] Key slips or password-manager items prepared
+- [ ] Key slips or password-manager items prepared, for every student without a plan
 
 ### During
 
@@ -318,7 +374,7 @@ sources (`slides-src/` in the solutions), then rebuild the slides.
 2. Create a new key with the remaining budget as its limit and assign the guardrail to it.
 3. Check **Activity** for requests after the leak.
 4. Hand out the new key privately. Students update it everywhere they put it: see the box
-   "If the key changes" in [student-setup.md](student-setup.md#2-your-api-key).
+   "If the key changes" in [student-setup.md](student-setup.md#4-the-course-key).
 5. If the key was committed, deleting the file is not enough: it stays in the history. Treat
    the old key as public. Revoking it (step 1) is what protects the budget.
 
@@ -334,7 +390,7 @@ sources (`slides-src/` in the solutions), then rebuild the slides.
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
-| `403`, `permission_denied`, model not allowed | The tool requested a model outside the allowlist: OpenCode without `small_model`, Claude Code without all model variables, or a typo | Fix the student's config (student guide, sections 3 to 5) |
+| `403`, `permission_denied`, model not allowed | The tool requested a model outside the allowlist: OpenCode without `small_model`, Claude Code without all model variables, or a typo | Fix the student's config (student guide, sections 5 to 7) |
 | `403` "Budget limit exceeded (daily limit)…" | Guardrail budget reached today | Wait until midnight UTC, or raise the budget in the guardrail |
 | `402` or `403` "Key limit exceeded" | The key's $350 limit is used up | Raise the key's credit limit |
 | `402` "insufficient credits" | Account balance empty | Buy credits |
@@ -344,6 +400,8 @@ sources (`slides-src/` in the solutions), then rebuild the slides.
 | Images rejected or ignored | GLM-5.3 is text-only | Use GLM-5.3 Flash when the agent needs to look at screenshots |
 | Responses API `400` about `store` or `previous_response_id` | OpenRouter's Responses API is stateless | Should not happen with current Codex. Update Codex |
 | Slow answers | `max` reasoning | Set effort `high` or `low` in the tool config |
+| Codex: `npm run check` fails with "listen EPERM", no screenshot | The folder isn't trusted, so Codex ignores the project's `.codex/config.toml` | Start Codex in the project folder and answer yes to "Do you trust this folder?" |
+| A student on a plan: the agent stops, usage limit reached | The plan's 5-hour window or weekly limit is used up | `/usage` shows it. Wait for the reset; a smaller model (`/model`) and new sessions make it last longer |
 
 ---
 
@@ -367,6 +425,8 @@ step, so input dominates:
 **15 students × 10 days ≈ $120**, plus the 5.5% fee. Heavy days, long sessions and some GLM-5.3
 use can double or triple that, so plan for **$100–300**. The $40 daily
 budget is about $2.70 per student per day, three times the estimate, with room for heavy days.
+That assumes all 15 students use the key. Students on their own plan cost the course nothing:
+count only those without a plan.
 
 Biggest cost drivers: long sessions (start fresh for each task), GLM-5.3 instead of Flash, idle
 agents that keep summarising, and agents reading large files (that's what the ignore and deny

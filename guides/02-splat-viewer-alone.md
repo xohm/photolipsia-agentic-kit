@@ -4,7 +4,8 @@ You build a viewer for your own 3D scans, step by step, together with an AI agen
 At the end you can open your scan in the browser, look around, and step into it with a Quest 3.
 
 You don't write the code. You plan, decide and check. The agent writes the code.
-Plan about three hours. This guide is made for OpenCode with GLM-5.3 Flash, the course model.
+Plan about three hours. The guide works with OpenCode, Claude Code or Codex. It was made for
+OpenCode with GLM-5.3 Flash, the course model, and not tried with Claude Code or Codex.
 In our test, another small model, standing in for GLM, got through all 8 steps. That test was
 not with GLM itself, and not after the last changes to this guide: expect to repeat a step now
 and then.
@@ -39,17 +40,23 @@ per laptop.
 **You should see:** `check: FAILED … Nothing rendered yet`, followed by a few `npm error` lines.
 That is right: there is no page yet.
 
-In the **agent terminal**, go to the same folder and start the agent:
+In the **agent terminal**, go to the same folder:
 
 ```bash
 cd ~/photolipsia-agentic-kit/02-splat-viewer
-opencode
 ```
 
-Always start the agent inside `02-splat-viewer`, never in the main kit folder: the rules and
-locks are in the project folder.
+Start your agent there and check what it uses:
 
-Type `/models` and choose **GLM-5.3-Flash** (not FlashX, not Prime: the course key blocks them).
+- **OpenCode** (most of you): `opencode`. Type `/models` and choose **GLM-5.3-Flash** (not
+  FlashX, not Prime: the course key blocks them).
+- **Claude Code:** `claude`. Type `/status`: it shows your plan, or the course key.
+- **Codex:** `codex`. The first time, it asks "Do you trust this folder?": answer **yes**, or the
+  check can't run. Type `/status` to see the account and model.
+
+Always start the agent inside `02-splat-viewer`, never in the main kit folder: the rules and
+deny rules are in the project folder. The few commands that differ between the tools are in
+[the setup guide](../docs/student-setup.md#commands-in-each-tool).
 
 ---
 
@@ -171,14 +178,17 @@ stay; `git status` lists them). Try the step again, in smaller tasks.
 Don't read node_modules. Use ai/spark-facts.md.
 ```
 
-**It gets slow or forgets things.** Quit the agent (`/exit`), start it again, and write:
+**It gets slow or forgets things.** Quit the agent (`/exit`) and start it again, or start a new,
+empty session (`/new` in OpenCode and Codex, `/clear` in Claude Code). Then write:
 ```text
 Read AGENTS.md, ai/strategy.md, ai/steps.md and ai/spark-facts.md. Then
 continue with the step under ## Next: plan it first.
 ```
 A new session every two or three steps keeps the agent fast and cheap.
 
-**It says it can't see images.** Choose **GLM-5.3-Flash** again with `/models`.
+**It says it can't see images.** On the course key, choose **GLM-5.3-Flash** again (`/models`
+in OpenCode): GLM-5.3 can't see images. In Codex, make sure `npm run check` ran at all: without a
+yes to "Do you trust this folder?" it can't run, and there is no screenshot.
 
 **Really stuck?** Ask the agent to explain the problem in simple words:
 ```text
