@@ -252,6 +252,9 @@ and `xohm.github.io/photolipsia-agentic-kit` with your names in `README.md`, `do
 - [ ] Blender MCP (deck 1, slide 17) tried once on a Mac and a Windows laptop: open Blender once,
       `uvx mcp-for-blender@2.2.4 install-addon`, the OpenCode `mcp` entry, then the slide's prompt.
       Tested on Linux only (2026-10-24, Blender 5.3 beta, GLM-5.3 Flash in OpenCode).
+- [ ] Gaussian splats in Blender (deck 1, slide 18): students need **Blender 5.3** (release planned for
+      10 Nov 2026; until then the beta). It opens splat `.ply` files itself; `tools/blender/splats.py`
+      saves them again. Blender 5.2 and older can't open splats.
 - [ ] Key slips or password-manager items prepared
 
 ### During

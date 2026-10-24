@@ -35,6 +35,7 @@ guides/             what to type into your agent, step by step
 docs/               setup and background
 slides/             the two slide decks
 tools/              check-openrouter.mjs: tests your API key
+                    blender/splats.py: Gaussian splats in Blender 5.3, for the agent
 ```
 
 Each skeleton has the same few files:
