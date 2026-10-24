@@ -16,11 +16,8 @@ pick.
 > follow each tool's official instructions, but were not tried on a real Mac or Windows laptop
 > when this kit was written. Both examples were first tried with other AI models standing in for
 > GLM; our run with GLM-5.3 Flash in OpenCode is at the top of the Example 1 and Example 2 guides.
-> Example 1 also ran with Claude Code on a Claude plan and with Codex on a ChatGPT plan; Example 2
-> did not.
->
-> - Claude Code on the course key: not tested yet.
-> - Codex on the course key: not tested yet.
+> Example 1 also ran with Claude Code and with Codex, each on its own plan and on the course key;
+> the checks passed every time. Example 2 did not run with them.
 >
 > The Blender parts ran with GLM-5.3 Flash in OpenCode. If a step fails, tell your teacher: you
 > are probably the first to find it.
@@ -536,8 +533,8 @@ Skip this if you use your plan. Set up the key first ([section 4](#4-the-course-
 Claude Code is built for Anthropic's models. OpenRouter supports it only with those, so with GLM
 some features may not work.
 
-**Tested:** not yet. These steps follow the official docs; we have not run Claude Code on the
-course key.
+**Tested** on Linux, 24 October 2026: Example 1 with these values, 4.7 min of agent time, $0.08 on
+the key. The checks passed, and Claude Code looked at the screenshots.
 
 Create the settings file and open it in a text editor.
 
@@ -643,7 +640,8 @@ There is nothing to configure. The first time you start `codex` (First run, belo
 
 Skip this if you use your plan. Set up the key first ([section 4](#4-the-course-key)).
 
-**Tested:** not yet. These steps follow the official docs; we have not run Codex on the course key.
+**Tested** on Linux, 24 October 2026: Example 1 with this file, 3.8 min of agent time, $0.11 on the
+key. The checks passed, also when Codex ran them itself inside its sandbox.
 
 Codex only reads providers from your user config, never from a project folder.
 
