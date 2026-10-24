@@ -13,7 +13,7 @@
 # In Blender, through the MCP (execute_blender_code), with absolute paths. Every call starts with
 # fresh variables, but Blender keeps imported modules, so import this file once:
 #   import sys; sys.path.append('/path/to/tools/blender'); import splats
-#   scan = splats.load('/path/to/scan.ply')       # upside down? splats.load(path, flip=True)
+#   scan = splats.load('/path/to/scan.ply')       # upside down? splats.load(path, flip=False)
 # and in later calls:
 #   import splats; scan = bpy.data.objects['scan']
 #   p = splats.read(scan, 'position')                 # numpy array, one row per splat
@@ -26,12 +26,13 @@ from mathutils import Matrix
 
 WIDTH = {'FLOAT': 1, 'FLOAT_VECTOR': 3, 'FLOAT4': 4, 'QUATERNION': 4}
 
-# Blender is z-up. Scans are y-up (like three.js and Spark) or, from many training tools, y-down.
+# Blender is z-up. Most scans, and the course's test splat, are stored y-down: that's why the
+# viewer flips them (flip: true in src/config.js). load() flips the same way. A y-up file: flip=False.
 Y_UP_TO_Z_UP = Matrix.Rotation(np.pi / 2, 4, 'X')
 
 
-def load(path, flip=False):
-    """Imports a .ply scan and returns the object. flip=True for a scan that is upside down (y-down).
+def load(path, flip=True):
+    """Imports a .ply scan upright and returns the object, flipped like the viewer's flip setting.
 
     Only the object is turned, not the data. save() turns it back, so the file keeps its own up.
     """
