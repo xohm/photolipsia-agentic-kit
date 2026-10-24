@@ -7,3 +7,4 @@ Thumbs.db
 **/public/splats/*
 !**/public/splats/.gitkeep
 __pycache__/
+*.blend1

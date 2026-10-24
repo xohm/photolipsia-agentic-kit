@@ -3,14 +3,20 @@
 A full-window viewer for your own Gaussian splat (radiance field) file,
 built with Vite, three.js and Spark.
 
+Our run with GLM-5.3 Flash (24 October 2026): prompts 1 to 8 in 11.6 minutes of agent time, for
+$0.26, with a copy of the generated test splat as "my scan". Two things needed a person: the agent
+blamed the browser for a check it had written wrong, and it built the VR scale the wrong way round (see
+prompt 7).
+
 Same loop as Example 1: **plan → build → introspect → fix → log**. Every prompt ends the same
 way: the agent runs `npm test` and `npm run check`, reads `.check/report.json`, looks at
 `.check/screenshot.png` and tells you what it sees.
 
-Keep two terminals open, as in Example 1: one for the agent, one for your own commands.
+Keep two terminals open, as in Example 1. Each prompt below is one step: plan, go, check. If the
+agent writes a plan and stops (`AGENTS.md` tells it to), read the plan and type `Go.` When the
+check says OK, look at the screenshot yourself, then commit.
 
-> Working alone? [02-splat-viewer-alone.md](02-splat-viewer-alone.md) is the same project in eight small steps, with three short
-> prompts you repeat for each: plan, go, check.
+> Working alone? Use [the step-by-step guide](02-splat-viewer-alone.md): the same project in eight small steps, with three short prompts you repeat for each: plan, go, check.
 
 ## Setup (once)
 
@@ -23,35 +29,43 @@ npm install
 npm run check
 ```
 
-After every step that works, commit and push in your terminal, so it is saved in your fork:
-
-```bash
-git add -A
-git commit -m "Prompt 2: scaffold"
-git push
-```
+Skipped Example 1? Run `npx playwright install chromium` once before `npm run check` (about
+300 MB).
 
 `npm run check` first writes a small test splat to `public/splats/test.ply`, then
 says **FAILED: Nothing rendered yet**. Correct: there is no page yet.
 
 `public/splats/` is ignored by git and blocked for the agent. Splat files are large
-binaries: reading them wastes tokens and money and tells the agent nothing.
+binaries: reading them wastes tokens and money and tells the agent nothing. Git does not save
+them either: keep your own copies of your scans.
 
 New in this project: `ai/spark-facts.md`. Models may know an older version of Spark, the
-splat library. This file tells the agent how the current version works. Handing the agent
-documentation as a file is part of good prompting.
+splat library. This file tells the agent how the current version works. Giving the agent the
+docs as a file is good prompting.
 
 ## Try the boundaries
 
-Start your agent and ask:
+In your agent terminal, start the agent in the project folder (the same on Mac and Windows):
+
+```bash
+cd ~/photolipsia-agentic-kit/02-splat-viewer
+opencode
+```
+
+Always start it inside `02-splat-viewer`, never in the main kit folder: the rules and locks are in
+the project folder. Then ask:
 
 ```text
 Open public/splats/test.ply and tell me what is in it.
 ```
 
-OpenCode and Claude Code should refuse: their deny rules (`opencode.json`,
-`.claude/settings.json`) block the folder. Codex has no such file, so it may read it anyway, and only `AGENTS.md`
-asks it not to. Rules in `AGENTS.md` are requests; deny rules are locks.
+OpenCode's read tool refuses: `opencode.json` denies the folder. In our test the agent then tried
+the shell instead (`ls … public/splats`). That is denied too: OpenCode blocks shell commands that
+name `public/splats` or `.env`. Claude Code refuses through `.claude/settings.json`. Codex has no
+such file, so it may read the folder anyway; only `AGENTS.md` asks it not to.
+
+Rules in `AGENTS.md` are requests; deny rules are locks. Not perfect ones: a script the agent
+writes and runs can still open any file. Read every permission question before you answer.
 
 ## Prompt 1: plan
 
@@ -64,6 +78,8 @@ my own file, then camera controls and an orientation toggle. Never open files
 in public/splats/. Don't write code yet.
 ```
 
+Read the plan in `ai/strategy.md`. Change it if you disagree.
+
 ## Prompt 2: scaffold
 
 ```text
@@ -74,7 +90,17 @@ window.__APP_READY__ = true after the first frame. Small files. Run npm test and
 npm run check, then describe the screenshot.
 ```
 
-The screenshot should be an empty dark page, and the check should say **OK** in a second or two.
+**Check:** the screenshot should be an empty dark page, and the check should say **OK** in a
+second or two.
+
+After every prompt that works, commit and push in your terminal. Name the commit after the
+prompt:
+
+```bash
+git add -A
+git commit -m "Prompt 2: scaffold"
+git push
+```
 
 ## Prompt 3: load the test splat
 
@@ -86,8 +112,10 @@ canvas is not blank, using measure('canvas') and nonBackgroundRatio. Run the
 check, look at the screenshot and describe what you see.
 ```
 
-The test splat is a spectrum sphere with a light ring: red on top, violet at the bottom.
-If violet is on top, the orientation is flipped. Keep that in mind for prompt 5.
+**Check yourself:** open the screenshot (Mac: `open .check/screenshot.png`, Windows:
+`start .check\screenshot.png`). The test splat is a rainbow sphere with a light ring: red on top,
+violet at the bottom. If violet is on top, the orientation is flipped. Keep that in mind for
+prompt 5. Then commit ("Prompt 3: test splat").
 
 If the check takes more than about 5 seconds, ask: "The check is slow. Render only when
 something changed, as ai/spark-facts.md says."
@@ -118,8 +146,20 @@ tests. Run npm test and npm run check, then npm run check "?file=my-scan.spz",
 npm run check "?file=missing.ply" and npm run check "?file=photo.jpg".
 ```
 
-Keep `file` in `src/config.js` empty while you build. Every `npm run check` then uses the small
-test splat and stays fast: the check draws in software, and a big capture can take a while.
+**Check:** `?file=missing.ply` and `?file=photo.jpg` should **fail**, each with a clear message.
+That is correct: you asked for those messages.
+
+`?file=my-scan.spz` may fail too, with **App not ready**. That is expected for a big scan: the
+check draws without a graphics card and can't keep up (our 500,000-splat test file failed the
+same way). Your scan is not broken: look at it with `npm run dev` (below). If the agent starts
+"fixing" the app because of it, tell it:
+
+```text
+My scan is too big for npm run check. Use the test splat for checks.
+```
+
+Keep `file` in `src/config.js` empty while you build. Then every `npm run check` uses the small
+test splat and stays fast.
 
 Now look at your capture yourself, in your terminal:
 
@@ -129,7 +169,7 @@ npm run dev
 
 Open http://localhost:5173/?file=my-scan.spz in your browser. Leave the server running: the page
 reloads when files change. Stop it with **Ctrl+C**. On Windows, a firewall prompt may appear the
-first time: "Allow" on private networks is fine.
+first time: "Allow" on private networks is fine. Then commit ("Prompt 4: my file").
 
 ## Prompt 5: controls and orientation
 
@@ -141,11 +181,15 @@ that the test splat is the right way up (red on top). Then run
 npm run check "?file=my-scan.spz" and describe my capture.
 ```
 
+A big scan can fail that last check with **App not ready**, as in prompt 4: look at it in the
+browser instead.
+
 Real captures often have a few stray splats far away ("floaters"). They make the bounding
 box huge and the splat tiny. If that happens: "Frame on the middle 96% of the splats, not
 the whole bounding box."
 
-In the browser: drag to orbit, scroll to zoom, right-drag to pan, F to flip.
+**Check yourself**, in the browser: drag to orbit, scroll to zoom, right-drag (or Shift + drag)
+to pan, F to flip. Then commit ("Prompt 5: controls").
 
 ## Prompt 6: open any file
 
@@ -157,7 +201,8 @@ file can't be read. Add an app check that opens public/splats/test.ply through
 the file input.
 ```
 
-Then drop your own scans on the page, one after the other.
+**Check:** the check says OK, with one more app check than before. Then, with `npm run dev`, drop
+your own scans on the page, one after the other. Commit ("Prompt 6: open file").
 
 ## Prompt 7: VR with a Quest 3
 
@@ -169,6 +214,12 @@ src/config.js, 0 keeps the file's own scale). Draw every frame while in VR,
 move with the controllers, and go back to the desktop view when VR ends. Add a
 check that the button stays hidden in a browser without VR.
 ```
+
+**Check:** the check says OK. Its hidden browser can't do VR, so there the button must stay
+hidden. That also means **no check sees the VR size**. In our run the agent built it the wrong way round:
+the test splat would have looked about 5 m big instead of 2 m. So ask: "Is the VR scale a pure
+function with a unit test, as ai/spark-facts.md says?" Commit ("Prompt 7: VR"), then try it in the
+headset: is the splat about vrSize metres big?
 
 There are two ways to see it in the headset. Which one works depends on your computer.
 
@@ -192,9 +243,14 @@ It prints a `Network: https://…:5173` address. Open exactly that address in th
 accept the certificate warning (**Advanced → Proceed**: the dev server makes its own certificate),
 then press **Enter VR**.
 
+- While `npm run dev:vr` runs, anyone on the same Wi-Fi can open your page. Stop it with
+  **Ctrl+C** when you are done.
 - The Quest and the computer must be on the same Wi-Fi, and that Wi-Fi must let devices see each
   other. University networks often don't: use a phone hotspot or a small router.
 - Allow incoming connections when your firewall asks (Mac: for `node`; Windows: private networks).
+- Windows with a phone hotspot: Windows often marks a new network as Public. Set it to Private
+  (Settings → Network & internet → Wi-Fi → the network), or the firewall blocks the Quest. (Not
+  tested.)
 - In standalone mode the Quest does the rendering and draws at most 500,000 splats (prompt 8).
   Put the file in `public/splats/` and add `?file=my-scan.spz`. A `.rad` file streams best.
 
@@ -213,9 +269,11 @@ the first splats of a stream. Check that the test splat still passes
 npm run check.
 ```
 
+**Check:** the test splat still passes `npm run check`. Commit ("Prompt 8: big scans").
+
 Then convert your scan to `.rad` (see [docs/big-scans.md](../docs/big-scans.md)), put it in
 `public/splats/` and look at it with `npm run dev` and `?file=my-scan-lod.rad`. Try `&detail=0.5`
-and `&detail=2`.
+and `&detail=2`. Don't use `npm run check` on a big `.rad`: it times out.
 
 ## Prompt 9: extensions
 
@@ -238,9 +296,14 @@ between them without reloading the page.
 Plan, then build: a "Save image" button that downloads the current view as PNG.
 ```
 
+These prompts say "Plan, then build", but `AGENTS.md` makes the agent stop after the plan. Read
+the plan, then type `Go.` **Check:** does `scripts/app-checks.mjs` have a check for the new
+feature? Look at it in the browser. Then commit.
+
 ## When it breaks
 
-The `summary` at the top of `.check/report.json` tells you why. Common cases:
+The `summary` at the top of `.check/report.json` tells you why. Common cases (the exact
+"App error" text is whatever your agent wrote):
 
 | Report says | Meaning |
 |---|---|
@@ -248,9 +311,8 @@ The `summary` at the top of `.check/report.json` tells you why. Common cases:
 | `App error: "x.jpg" is not a splat file…` | Unsupported format. Export .ply, .spz, .splat, .ksplat, .sog or .rad |
 | `App error: Could not read x.ply (…)` | The file is broken or in a variant Spark can't read, e.g. ASCII `.ply`. Export it again |
 | `check "canvas is not blank" failed` | Nothing drawn: camera points away, splat too small, or no SparkRenderer |
-| `App error: WebGL unavailable…` | The browser could not start WebGL. See the troubleshooting table |
-| `App not ready: … within 30000 ms` | Large file in software WebGL. Check with the test splat: `npm run check "?file=test.ply"` |
+| `App error: WebGL unavailable…` | The browser could not start WebGL. Close other 3D apps and try another browser; if it persists, ask your teacher |
+| `App not ready: … within … ms` | Large file in software WebGL. Check with the test splat: `npm run check "?file=test.ply"` |
 | `check "app checks ran" failed: … Timeout` with a big streamed file | `npm run check` draws in software and can't keep up. Check big files in the browser with `npm run dev` |
 | No **Enter VR** button | The browser can't do VR: a Mac browser never can. Use the Quest browser with `npm run dev:vr`, or a Windows PC with Quest Link |
 | The Quest can't open the `https://…` address | Not the same Wi-Fi, a network that isolates devices, or the firewall. Try a phone hotspot |
-

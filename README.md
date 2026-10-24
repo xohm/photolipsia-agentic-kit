@@ -3,11 +3,12 @@
 ZHdK · MA Interaction Design · HS 2026
 
 Two weeks of coding with AI agents (OpenCode, Codex CLI, Claude Code) through one shared
-OpenRouter account. You build two small apps together with an AI coding agent. You get
-**skeletons, not apps**: rules for the agent, a memory file and a check that looks at the result.
-You and your agent write the code.
+OpenRouter account. You build two small apps with an AI coding agent. You get **skeletons, not
+apps**: rules for the agent, a memory file and a check that looks at the result. Your agent writes
+the code. You plan, decide and check.
 
-Fork this repository: your fork is your copy, where you work and save every step.
+Fork this repository: your fork is your copy, where you work and save every step. Your fork is
+public: anyone can see it.
 
 ## Start here
 
@@ -18,6 +19,10 @@ Fork this repository: your fork is your copy, where you work and save every step
    - on your own, step by step: [guides/02-splat-viewer-alone.md](guides/02-splat-viewer-alone.md)
 4. **Big scans:** [docs/big-scans.md](docs/big-scans.md)
 5. **Blender, MCP and your own splats:** [docs/blender-and-splats.md](docs/blender-and-splats.md)
+
+Before you start, read two short sections of the setup guide:
+[where your prompts go, who sees them](docs/student-setup.md#where-your-prompts-go-who-sees-them)
+and [what it costs](docs/student-setup.md#what-it-costs).
 
 ## Slides
 
@@ -50,7 +55,11 @@ A skeleton is also a blank template for your own projects: copy it and change th
 
 ## The loop
 
-**Plan → build → check → fix → log.** Small steps, every time.
+**Plan → build → introspect → fix → log.** Small steps, every time.
+
+You type three kinds of prompt: a plan, then `Go.`, then a check. "Introspect" means the agent
+runs `npm run check` (the check), reads the report and looks at the screenshot. Then you look
+yourself.
 
 ## Save your work
 
@@ -63,6 +72,19 @@ git push
 ```
 
 `git push` saves it in your fork on GitHub, where your teacher can follow it.
+Splat files in `public/splats/` are not saved by git: keep your own copies.
+
+## Licence and your work
+
+- **The code** in this kit (the two skeletons and `tools/`) is under the MIT licence: see
+  [LICENSE](LICENSE). If you copy a skeleton into another project, keep a copy of `LICENSE`
+  with it.
+- **The texts** (slides, guides, docs and this README) are under CC BY 4.0: see
+  [LICENSE-CONTENT.md](LICENSE-CONTENT.md). You may share and change them if you name the source.
+- **Your fork is public.** Anyone can see what you push: your code, your `ai/strategy.md`, your
+  commit messages and your GitHub name.
+- **The skeletons are yours to reuse.** They are MIT-licensed, so you may keep them in your own
+  projects, also after the course.
 
 ## For teachers
 

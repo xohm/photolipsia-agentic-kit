@@ -31,6 +31,10 @@ older Spark versions worked differently.
 - Put the camera in a `THREE.Group` (a rig). In VR the headset moves the camera inside the rig:
   move, turn or scale the rig to place the viewer. `sparkXr.updateControllers(camera)` moves the
   rig with the Quest sticks. Call it every frame in VR.
+- Size in VR: the camera sits inside the rig, so scaling the rig by s makes the world look 1/s as
+  big. To show the splat about `vrSize` metres large, scale the rig by `largest / vrSize`, where
+  `largest` is the splat's biggest dimension; not `vrSize / largest`. Write this as a pure function
+  with a unit test: without a headset, no check can see a wrong VR size.
 - While `renderer.xr.isPresenting` is true, render every frame: the head never stops moving.
   VR only works if the render loop is `renderer.setAnimationLoop(...)`. SparkXr turns on
   `renderer.xr.enabled` by itself.

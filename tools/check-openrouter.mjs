@@ -13,7 +13,9 @@ const key = process.env.OPENROUTER_API_KEY?.trim();
 if (!key) {
   console.log('OPENROUTER_API_KEY is not set in this terminal.');
   console.log('  Mac:     add it to ~/.zshrc, then run: source ~/.zshrc');
-  console.log('  Windows: setx OPENROUTER_API_KEY "sk-or-...", then open a NEW terminal');
+  console.log("  Windows: [Environment]::SetEnvironmentVariable('OPENROUTER_API_KEY', (Read-Host 'Paste the key'), 'User')");
+  console.log('           then open a NEW terminal');
+  console.log('  Details: docs/student-setup.md, section 2.');
   process.exit(1);
 }
 
@@ -25,7 +27,7 @@ await showKeyInfo();
 await expect(COURSE_MODEL, 'should work', (status) => status === 200);
 const other = await anotherModel();
 if (other) await expect(other, 'should be blocked', (status) => status === 403);
-console.log(ok ? '\nAll good.' : '\nSomething is off. See docs/teacher-setup.md, "Troubleshooting".');
+console.log(ok ? '\nAll good.' : '\nSomething is off. See docs/student-setup.md, section 8 (Troubleshooting).');
 process.exit(ok ? 0 : 1);
 
 async function showKeyInfo() {

@@ -88,10 +88,22 @@ Notes
 - **Provider allowlist (optional):** OpenRouter routes to the cheapest provider by default. For
   GLM-5.3 that can be a heavily quantised (fp4) endpoint. Restricting providers to `Z.AI` gives
   the original model, but GLM-5.3 then costs $1.40 / $4.40 per million tokens instead of about
-  $0.08 / $1.40. Flash costs $0.15 / $0.50 at Z.AI and at most other providers.
+  $0.08 / $1.40. Flash costs $0.15 / $0.50 at Z.AI and at most other providers; by default it,
+  too, can go to a cheaper quantised (fp4 or fp8) endpoint.
+- **GLM-5.3 against Flash:** with all providers allowed, GLM-5.3 costs about 3× Flash for output
+  (and less for input); restricted to Z.AI, about 10×. The student docs say "up to about ten
+  times".
 - **Optional filter:** with an organisation account, **Settings → Privacy → "Filter the model
   catalog for API keys"** makes the model list show students only the allowed models. That is
   nice in `/models` pickers.
+- **Look-alike models:** OpenCode's own model catalog (`~/.cache/opencode/models.json`) lists
+  "GLM 5.3 FlashX" and "GLM 5.3 Prime" next to GLM-5.3-Flash and GLM-5.3. The guardrail blocks
+  them (403); the student docs tell students to pick GLM-5.3-Flash.
+- **Privacy:** check **Settings → Privacy** for the options on providers that may log prompts or
+  train on them, and decide before day one what students are told. The student guide has a
+  section for it ("Where your prompts go, who sees them" in
+  [student-setup.md](student-setup.md#where-your-prompts-go-who-sees-them)). The labels here come
+  from the docs, not from clicking through.
 
 ---
 
@@ -155,7 +167,7 @@ Codex CLI 0.155.1, Claude Code 2.1.302. Students install the current versions.
    configs set `small_model` (OpenCode) and all model variables (Claude Code) to prevent that.
 5. Ask the agent in each tool to look at `.check/screenshot.png` and describe it. GLM-5.3 Flash
    can see images, GLM-5.3 cannot. Note which tools pass the image through: see "Untested" in
-   `NOTES.md` in the solutions repository.
+   `NOTES.md` in the solutions repository (private).
 
 **VR with a Quest 3** (Example 2, prompt 7). PC VR, where the computer renders and the headset
 only displays, needs Windows: Quest Link, Air Link and SteamVR don't run on macOS. Mac students
@@ -186,7 +198,7 @@ Known differences
 - **Codex** runs commands in a sandbox without network. `npm install` and `npm run check` need
   approval to run outside it. Decide before the course whether students should approve each
   time or start Codex with more permissive settings.
-- **Claude Code** is only guaranteed with Anthropic models on OpenRouter. Effort settings
+- **Claude Code** is supported on OpenRouter only with Anthropic models. Effort settings
   probably don't reach GLM.
 
 ---
@@ -217,7 +229,14 @@ node tools/check-kit.mjs
 
 It refuses if app code, the single-file viewer, a hint at the solutions or something that looks
 like a real API key would land in the kit, and it checks that the skeleton files (rules, ignores,
-check script) match the finished apps. Students get updates with `git pull upstream main`.
+check script) match the finished apps.
+
+**Updates during the course.** Students commit their own work, then run
+`git pull --no-edit upstream main` and `git push` (the setup sets `pull.rebase false`, so the pull
+merges and doesn't stop with "divergent branches"). Push updates only to `docs/`, `guides/`,
+`slides/` and `tools/` during the course: a change to a skeleton file (`AGENTS.md`,
+`ai/strategy.md`, `scripts/check.mjs`) can conflict with students' own edits. On `CONFLICT` the
+student docs say `git merge --abort` and ask you.
 
 **The slides** are served from this repository with GitHub Pages (*Settings → Pages*: branch
 `main`, folder `/`; the empty `.nojekyll` file serves the HTML as it is). Link to the addresses at
@@ -228,7 +247,9 @@ and `xohm.github.io/photolipsia-agentic-kit` with your names in `README.md`, `do
 
 - **Forks of a public repository are public:** everyone can see the students' work. For private
   work, mark the kit as a template (*Settings → Template repository*) and let students use
-  *Use this template* with a private repository, or use GitHub Classroom.
+  *Use this template* with a private repository, or use GitHub Classroom. With a template,
+  students can't pull your updates with git ("refusing to merge unrelated histories"): plan
+  updates as files they copy.
 - **Following the class:** on GitHub, *Insights → Forks* lists every fork. Students push after
   every step, so you see where everyone is.
 - Never hand out a zip of your own working folder: it contains installed packages and check output.
@@ -250,18 +271,32 @@ and `xohm.github.io/photolipsia-agentic-kit` with your names in `README.md`, `do
 - [ ] Credits bought, auto top-up off, low-balance alert at ~$40
 - [ ] Key created with a $350 limit (and an expiry, if offered)
 - [ ] Guardrail with both models, $40 daily budget, assigned to the key
+- [ ] Privacy settings of the course account (students read about them in student-setup.md,
+      "Where your prompts go"). Recommended:
+      - Settings › Observability: **Input & Output Logging off** (off by default; when on,
+        OpenRouter keeps prompts and answers for at least 3 months and you can read them).
+      - Settings › Privacy: **"OpenRouter use of inputs/outputs" off** (the 1% discount; when on,
+        you grant OpenRouter a licence to the content).
+      - Settings › Privacy: **Zero Data Retention on** for "All other models" (or on the course
+        guardrail). It removes the providers that keep prompts: 7 of 48 for GLM-5.3, 6 of 38 for
+        GLM-5.3 Flash (October 2026). Then tell students it is on.
+      - No Broadcast destinations.
+      OpenRouter's terms require users to be 18 or older.
 - [ ] `node tools/check-openrouter.mjs` says "All good"
 - [ ] All three tools tested on your machine; both examples run in OpenCode
-- [ ] One Windows laptop tested (PowerShell execution policy, `setx`, OpenCode, `npm run check`)
+- [ ] One Windows laptop tested (PowerShell execution policy with `-Force`, the key command from
+      [student-setup.md](student-setup.md#2-your-api-key) section 2, OpenCode, `npm run check`)
 - [ ] Students got the kit link and the setup guide before day one
-- [ ] Blender MCP (deck 1, slides 31–32) tried once on a Mac and a Windows laptop: open Blender once,
+- [ ] Blender MCP (the Blender slides in deck 2) tried once on a Mac and a Windows laptop: open Blender once,
       `uvx mcp-for-blender@2.2.4 install-addon`, the OpenCode `mcp` entry, then the slide's prompt.
       Tested on Linux only (2026-10-24, Blender 5.3 beta, GLM-5.3 Flash in OpenCode).
-- [ ] Gaussian splats in Blender (deck 1, slides 33–34): students need **Blender 5.3** (release planned for
-      10 Nov 2026; until then the beta). It opens splat `.ply` files itself; `tools/blender/splats.py`
-      saves them again. Blender 5.2 and older can't open splats.
-- [ ] Spirula Studio (deck 1, slides 35–36) opened once on a Mac and a Windows laptop. The Mac app may
-      not be notarized (then: right-click → Open). While training it serves a preview on port 7007
+- [ ] Gaussian splats in Blender (deck 2): students need **Blender 5.3** (release planned for
+      10 Nov 2026; until then the beta from https://builder.blender.org/download/daily/). It opens
+      splat `.ply` files itself; `tools/blender/splats.py` saves them again. Blender 5.2 and older
+      can't open splats.
+- [ ] Spirula Studio (deck 2) opened once on a Mac and a Windows laptop. If macOS blocks the app or
+      the `spirula` command: System Settings → Privacy & Security → **Open Anyway** (right-click →
+      Open no longer works on macOS 15 and later). While training it serves a preview on port 7007
       to the whole network. Tested on Linux only (2026-10-24).
 - [ ] Key slips or password-manager items prepared
 
