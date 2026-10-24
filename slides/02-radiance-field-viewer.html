@@ -295,6 +295,11 @@ pre {
   white-space: pre;
 }
 
+/* Code boxes never shrink: a too-full slide must show, not clip the code. */
+pre {
+  flex-shrink: 0;
+}
+
 pre.tight {
   font-size: 23px;
 }
@@ -339,6 +344,20 @@ code {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--grey);
+}
+
+/* Code in a label keeps its spelling and the label's size. */
+.label code {
+  text-transform: none;
+  font-size: inherit;
+  letter-spacing: 0;
+}
+
+/* Short code chips don't break across lines. */
+.body code,
+.small code,
+td code {
+  white-space: nowrap;
 }
 
 /* A label inside a text block keeps its label size. */
@@ -888,8 +907,8 @@ splat.quaternion.set(1, 0, 0, 0);</pre>
         <tr><td>Laptop, PC VR</td><td>2,500,000</td></tr>
       </table>
       <div>
-        <p class="label">Convert to .rad · Mac and Windows</p>
-        <p class="small" style="margin: 0">One command, next slide. 124 MB <code>.ply</code> → 30 MB <code>.rad</code> in 7 s. Streamed: ready in 0.4 s, Spark fetches only what you see.</p>
+        <p class="label">Convert to .rad · next slide</p>
+        <p class="small" style="margin: 0">One command, next slide. 124 MB <code>.ply</code> → 30 MB <code>.rad</code> in 7&nbsp;s. Streamed: ready in 0.4&nbsp;s, Spark fetches only what you see.</p>
       </div>
     </div>
   </div>

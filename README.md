@@ -17,6 +17,7 @@ Fork this repository: your fork is your copy, where you work and save every step
    - in class: [guides/02-splat-viewer.md](guides/02-splat-viewer.md)
    - on your own, step by step: [guides/02-splat-viewer-alone.md](guides/02-splat-viewer-alone.md)
 4. **Big scans:** [docs/big-scans.md](docs/big-scans.md)
+5. **Blender, MCP and your own splats:** [docs/blender-and-splats.md](docs/blender-and-splats.md)
 
 ## Slides
 
