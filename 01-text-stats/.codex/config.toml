@@ -1,0 +1,6 @@
+# Codex reads this file in this project folder (say yes when Codex asks whether you trust it).
+# Codex runs commands in a sandbox. Without the next two lines the sandbox blocks the local
+# server that npm run check starts, and the agent never sees the screenshot.
+# It also lets commands in this folder use the internet, for example npm install.
+[sandbox_workspace_write]
+network_access = true
