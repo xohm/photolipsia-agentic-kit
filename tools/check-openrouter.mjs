@@ -26,7 +26,9 @@ console.log(`key: ${key.slice(0, 9)}... (${key.length} characters)`);
 await showKeyInfo();
 await expect(COURSE_MODEL, 'should work', (status) => status === 200);
 const other = await anotherModel();
-if (other) await expect(other, 'should be blocked', (status) => status === 403);
+// The guardrail answers a model outside its allowlist with 404 ("... matching your guardrail
+// restrictions ..."); a 403 counts as blocked too.
+if (other) await expect(other, 'should be blocked', (status) => status === 403 || status === 404);
 console.log(ok ? '\nAll good.' : '\nSomething is off. See docs/student-setup.md, section 10 (Troubleshooting).');
 process.exit(ok ? 0 : 1);
 

@@ -1992,7 +1992,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
     <tr><th>Problem</th><th>What to do</th></tr>
     <tr><td><span class="d2-ta-acc">Any account</span>Agent hangs after <code>npm run dev</code></td><td>Press Esc in the agent, the same in all three. Run <code>npm run dev</code> in your own terminal.</td></tr>
     <tr><td><span class="d2-ta-acc">Course key (GLM)</span>Agent can’t see the screenshot</td><td>GLM-5.3 can’t see images, GLM-5.3 Flash can. OpenCode: <code>/models</code> → <strong>GLM-5.3-Flash</strong>. Claude Code, Codex: <code>/model</code>.</td></tr>
-    <tr><td><span class="d2-ta-acc">Course key (GLM)</span>403 from the model</td><td>Model not allowed, or today’s budget is used up (until midnight UTC). <span class="nw">See <code>docs/student-setup.md</code>.</span></td></tr>
+    <tr><td><span class="d2-ta-acc">Course key (GLM)</span>403 or 404 from the model</td><td>404: model not allowed or misspelled. 403: today’s budget is used up (until midnight UTC). <span class="nw">See <code>docs/student-setup.md</code>.</span></td></tr>
     <tr><td><span class="d2-ta-acc">Course key (GLM)</span>401: User not found</td><td>OpenCode, Codex: Mac <code>source ~/.zshrc</code>, Windows: open a new terminal. Claude Code: check the key in <code>~/.claude/settings.json</code>.</td></tr>
     <tr><td><span class="d2-ta-acc">Your own plan</span>Usage limit reached</td><td>Claude Code, Codex: <code>/usage</code> shows your limits. Wait until it resets.</td></tr>
     <tr><td><span class="d2-ta-acc">Codex</span>The check fails: “listen EPERM”</td><td>Start Codex in the project folder and answer yes to “Do you trust this folder?”. Otherwise it ignores <code>.codex/config.toml</code>.</td></tr>

@@ -104,7 +104,7 @@ Notes
   nice in `/models` pickers.
 - **Look-alike models:** OpenCode's own model catalog (`~/.cache/opencode/models.json`) lists
   "GLM 5.3 FlashX" and "GLM 5.3 Prime" next to GLM-5.3-Flash and GLM-5.3. The guardrail blocks
-  them (403); the student docs tell students to pick GLM-5.3-Flash.
+  them (404 "… matching your guardrail restrictions …"); the student docs tell students to pick GLM-5.3-Flash.
 - **Privacy:** check **Settings → Privacy** for the options on providers that may log prompts or
   train on them, and decide before day one what students are told. The student guide has a
   section for it ("Where your prompts go, who sees them" in
@@ -128,7 +128,7 @@ Same command on Mac and Windows. Expected:
 key: sk-or-v1-... (NN characters)
 key info: limit $350.00, used $0.00, left $350.00
 z-ai/glm-5.3-flash (should work): 200 OK "hello"
-<some other model> (should be blocked): 403 OK "..."
+<some other model> (should be blocked): 404 OK "..."
 
 All good.
 ```
@@ -170,7 +170,8 @@ Claude Code 2.1.302, Codex CLI 0.155.1. Students install the current versions.
    [guides/02-splat-viewer.md](../guides/02-splat-viewer.md).
 3. Repeat Example 1 in Claude Code and in Codex: on the course key, and on a plan if you have one.
 4. On the OpenRouter **Logs** page (https://openrouter.ai/logs), check that every request used one
-   of the two models and none got a 403. A 403 means a tool calls a hidden extra model. The
+   of the two models and none got a 404 that names the guardrail. Such a 404 means a tool calls a
+   hidden extra model. The
    configs set `small_model` (OpenCode) and all model variables (Claude Code) to prevent that.
 5. Ask the agent in each tool to look at `.check/screenshot.png` and describe it. GLM-5.3 Flash
    can see images, GLM-5.3 cannot. Note which tools pass the image through: see "Untested" in
@@ -362,7 +363,7 @@ Free and Go don't list the Codex CLI. These students don't get the key.
 
 - [ ] **After day 1 and day 2:** **Activity** (https://openrouter.ai/activity), filtered by the key.
       Is daily spend well below $40? Any requests from unexpected models?
-- [ ] **Logs** (https://openrouter.ai/logs): many 403s mean a student's tool config is wrong.
+- [ ] **Logs** (https://openrouter.ai/logs): many 404s that name the guardrail mean a student's tool config is wrong.
       Many 402s mean the key limit or balance is reached.
 - [ ] Remind students to quit idle agents and to start a new session for a new task (long
       sessions resend a long history with every request).
@@ -390,7 +391,7 @@ Free and Go don't list the Codex CLI. These students don't get the key.
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
-| `403`, `permission_denied`, model not allowed | The tool requested a model outside the allowlist: OpenCode without `small_model`, Claude Code without all model variables, or a typo | Fix the student's config (student guide, sections 5 to 7) |
+| `404` "… matching your guardrail restrictions …" (or `403`, model not allowed) | The tool requested a model outside the allowlist: OpenCode without `small_model`, Claude Code without all model variables, or a typo | Fix the student's config (student guide, sections 5 to 7) |
 | `403` "Budget limit exceeded (daily limit)…" | Guardrail budget reached today | Wait until midnight UTC, or raise the budget in the guardrail |
 | `402` or `403` "Key limit exceeded" | The key's $350 limit is used up | Raise the key's credit limit |
 | `402` "insufficient credits" | Account balance empty | Buy credits |

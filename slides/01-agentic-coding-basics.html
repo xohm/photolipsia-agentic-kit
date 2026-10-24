@@ -2386,7 +2386,7 @@ cd 01-text-stats
 npm install
 npx playwright install chromium
 npm run check</pre>
-      <p class="s26">The first line tests the course key: you want 200 OK, 403 OK, All good. Own plan? Skip it. Then <b>FAILED: Nothing rendered yet</b>: correct, no app yet.</p>
+      <p class="s26">The first line tests the course key: you want 200 OK, 404 OK, All good. Own plan? Skip it. Then <b>FAILED: Nothing rendered yet</b>: correct, no app yet.</p>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -2427,8 +2427,8 @@ npm run check</pre>
   </style>
   <p class="eyebrow">Setup · when it fails · the course key</p>
   <h2>The error says where it stopped.</h2>
-  <p class="d1-wf-key">With the course key, a request passes three checks. 401, 403 and 404 say which one stopped it. Your own plan: next slide.</p>
-  <svg class="d1-wf-svg d1-anim" viewBox="0 0 1664 150" role="img" aria-label="Your tool sends a request. OpenRouter checks the key: 401 if it is missing or wrong. The course guardrail checks the model and the budget: 403. The model: 404 if the name is wrong. Otherwise: 200 OK.">
+  <p class="d1-wf-key">With the course key, a request passes three checks. The error says which one stopped it. Your own plan: next slide.</p>
+  <svg class="d1-wf-svg d1-anim" viewBox="0 0 1664 150" role="img" aria-label="Your tool sends a request. OpenRouter checks the key: 401 if it is missing or wrong. The course guardrail checks the model and the budget: 404 if the model is not allowed, 403 if the budget is used up. The model: 404 if the name is wrong. Otherwise: 200 OK.">
     <defs>
       <marker id="d1-wf-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#9a968e" /></marker>
     </defs>
@@ -2457,7 +2457,7 @@ npm run check</pre>
     <text class="nm" x="1522" y="46">Answer</text>
     <text class="okc" x="1522" y="86">200 OK</text>
     <text class="code stamp d1-wf-s1" x="485" y="146" text-anchor="middle">401</text>
-    <text class="code stamp d1-wf-s2" x="890" y="146" text-anchor="middle">403</text>
+    <text class="code stamp d1-wf-s2" x="890" y="146" text-anchor="middle">404 · 403</text>
     <text class="code stamp d1-wf-s3" x="1280" y="146" text-anchor="middle">404</text>
   </svg>
   <div class="d1-wf-cards">
@@ -2466,7 +2466,7 @@ npm run check</pre>
       <p>Typo in the key, or the terminal doesn't see it: open a new one (Mac: <code>source ~/.zshrc</code>).</p>
     </div>
     <div class="d1-wf-card">
-      <p class="h"><b>403</b>model “not allowed”</p>
+      <p class="h"><b>404</b>“… guardrail restrictions …”</p>
       <p>The key blocks this model (e.g. FlashX). OpenCode: pick GLM-5.3-Flash in <code>/models</code>; is <code>small_model</code> set? Claude Code: are all model variables set?</p>
       <p class="h"><b>403</b>“Budget limit exceeded”</p>
       <p>Used up for today. It resets at midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich).</p>

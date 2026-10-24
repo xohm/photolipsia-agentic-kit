@@ -383,7 +383,7 @@ cd ~/photolipsia-agentic-kit
 node tools/check-openrouter.mjs
 ```
 
-You want: the course model answers (`200 OK`), another model is blocked (`403 OK`), and the last
+You want: the course model answers (`200 OK`), another model is blocked (`404 OK`), and the last
 line says `All good.`
 
 > **If the key changes** (your teacher hands out a new one), update it everywhere you put it:
@@ -842,7 +842,7 @@ What this means:
 
 | Problem | Fix |
 |---|---|
-| `403` "permission denied" or a model "not allowed" | The tool asked for a model the course key doesn't allow. Check the model name in your config. OpenCode: is `small_model` set? In `/models`, pick **GLM-5.3-Flash**, not FlashX or Prime. Claude Code: are all model variables set? |
+| `404` "… matching your guardrail restrictions …", or `403` "not allowed" | The tool asked for a model the course key doesn't allow. Check the model name in your config. OpenCode: is `small_model` set? In `/models`, pick **GLM-5.3-Flash**, not FlashX or Prime. Claude Code: are all model variables set? |
 | `403` "Budget limit exceeded" | Today's course budget is used up. It resets at midnight UTC (1 or 2 am in Zurich). Tell your teacher. |
 | `401` "User not found" or "invalid key" | Typo in the key, or the terminal doesn't see it. Windows: open a new terminal after setting the key. Mac: `source ~/.zshrc`. Run `node tools/check-openrouter.mjs`. |
 | `model_not_found`, `404` | Typo in the model name. OpenCode needs `openrouter/z-ai/glm-5.3-flash`, Claude Code and Codex need `z-ai/glm-5.3-flash`. |
