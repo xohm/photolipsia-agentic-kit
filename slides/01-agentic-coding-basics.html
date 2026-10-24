@@ -346,6 +346,16 @@ code {
   color: var(--grey);
 }
 
+/* Jump links between slides, e.g. <a class="jump" href="#s-opencode">: deck.js finds the slide by its id. */
+a.jump {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: #e8875b;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+
 /* Code in a label keeps its spelling and the label's size. */
 .label code {
   text-transform: none;
@@ -896,7 +906,7 @@ td:first-child {
       <g class="d1-pk-lit d1-pk-r3"><rect x="0" y="322" width="470" height="118" rx="16" /><rect x="590" y="322" width="480" height="118" rx="16" /><rect x="1190" y="322" width="474" height="118" rx="16" /></g>
     </svg>
   </div>
-  <p class="d1-pk-note">Claude Code and Codex can also run on the course key: <code>docs/student-setup.md</code>.</p>
+  <p class="d1-pk-note">Claude Code and Codex can also run on the course key. Jump to the setup: <a class="jump" href="#s-opencode">OpenCode</a> · <a class="jump" href="#s-claude">Claude Code</a> · <a class="jump" href="#s-codex">Codex</a></p>
   <p class="d1-pk-same">Whatever you pick, the loop and the files are the same.</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
@@ -1859,7 +1869,7 @@ git push</pre>
 </section>
 
 <!-- S0 Setup divider -->
-<section class="slide dark statement">
+<section class="slide dark statement" id="s-setup">
   <style>
   .d1-su p.after { max-width: 1400px; margin: 0 0 16px; }
   .d1-su p.d1-su-first { margin-top: 48px; }
@@ -1871,11 +1881,12 @@ git push</pre>
     <p class="after d1-su-first">Once per laptop, about 45 minutes. Best before day one. You need one agent: OpenCode with the course key (most of you), or Claude Code or Codex with your own plan.</p>
     <p class="after">Tested on Linux. The Mac and Windows commands follow each tool's own instructions, but nobody has run them on a real Mac or Windows laptop yet. If a step fails, <span class="nowrap">tell your teacher.</span></p>
     <p class="after">Every step in detail: <code>docs/student-setup.md</code></p>
+    <p class="after d1-su-jump">Jump to: <a class="jump" href="#s-terminal">terminal</a> · <a class="jump" href="#s-git-node">Git and Node.js</a> · <a class="jump" href="#s-github">GitHub</a> · <a class="jump" href="#s-key">course key</a> · <a class="jump" href="#s-opencode">OpenCode</a> · <a class="jump" href="#s-claude">Claude Code</a> · <a class="jump" href="#s-codex">Codex</a> · <a class="jump" href="#s-key-tools">course key in Claude Code or Codex</a> · <a class="jump" href="#s-first-run">first run</a> · <a class="jump" href="#s-commands">commands</a> · <a class="jump" href="#s-fork">your fork</a> · <a class="jump" href="#s-errors">when it fails</a></p>
   </div>
 </section>
 
 <!-- S1 The terminal -->
-<section class="slide light">
+<section class="slide light" id="s-terminal">
   <style>
     .d1-tm td { padding-top: 10px; padding-bottom: 10px; }
     .d1-tm-svg { display: block; width: 100%; height: auto; margin-top: 30px; }
@@ -1948,7 +1959,7 @@ git push</pre>
 </section>
 
 <!-- S2 Install Git and Node.js -->
-<section class="slide light">
+<section class="slide light" id="s-git-node">
   <style>
     .d1-in-svg { display: block; width: 100%; height: auto; flex: none; }
     .d1-in-svg .nd { fill: #fbfaf7; stroke: #d3cfc6; stroke-width: 2; }
@@ -2014,7 +2025,7 @@ git --version</pre>
 </section>
 
 <!-- S3 GitHub account and Git settings -->
-<section class="slide light">
+<section class="slide light" id="s-github">
   <style>
     .d1-gh-step { display: flex; gap: 18px; align-items: center; margin: 0 0 14px; }
     .d1-gh-n { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--ink); color: var(--paper); font: 600 23px var(--mono); }
@@ -2053,7 +2064,7 @@ git config --global pull.rebase false</pre>
 </section>
 
 <!-- S4 The course key -->
-<section class="slide light">
+<section class="slide light" id="s-key">
   <style>
     .d1-ky-svg { display: block; width: 100%; height: auto; flex: none; }
     .d1-ky-svg .lab { font: 600 22px var(--sans); letter-spacing: 0.12em; }
@@ -2125,13 +2136,13 @@ git config --global pull.rebase false</pre>
   </div>
   <p class="label">Windows · PowerShell · paste the key when asked, then open a new terminal</p>
 <pre class="c22">[Environment]::SetEnvironmentVariable('OPENROUTER_API_KEY', (Read-Host 'Paste the key'), 'User')</pre>
-  <p class="s26">Paste the export line, don't type it: TextEdit can turn typed quotes into curly ones. Claude Code: the key goes in <code>~/.claude/settings.json</code>, in your home folder, never in a project. Test it later in your fork: <code>node tools/check-openrouter.mjs</code> should end with All good.</p>
+  <p class="s26">Paste the export line, don't type it: TextEdit can turn typed quotes into curly ones. Claude Code: the key goes in <code>~/.claude/settings.json</code>, in your home folder, never in a project. Test it later in your fork: <code>node tools/check-openrouter.mjs</code> should end with All good. Own plan? Skip to <a class="jump" href="#s-claude">Claude Code</a> or <a class="jump" href="#s-codex">Codex</a>.</p>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
 <!-- S5 OpenCode: install and config -->
-<section class="slide light">
+<section class="slide light" id="s-opencode">
   <style>
     .d1-oc-os { display: grid; grid-template-columns: 620px 1fr; gap: 28px; }
     .d1-oc .s26 { margin: 14px 0 0; }
@@ -2174,7 +2185,7 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
       <div>
         <p class="s26"><code>small_model</code>: without it, OpenCode picks another model for small jobs, and the course key blocks that one.</p>
         <p class="s26"><code>"effort": "high"</code> keeps thinking shorter than the default, max.</p>
-        <p class="s26"><b>Check:</b> <code>/models</code>, on the first-run slide.</p>
+        <p class="s26"><b>Check:</b> <code>/models</code>, on the <a class="jump" href="#s-first-run">first-run slide</a>.</p>
       </div>
     </div>
   </div>
@@ -2182,11 +2193,11 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
 </section>
 
 <!-- S5b Claude Code -->
-<section class="slide light">
+<section class="slide light" id="s-claude">
   <style>
     .d1-cc .s26 { margin: 12px 0 0; }
   </style>
-  <p class="eyebrow">Setup · Claude Code · with a Claude plan</p>
+  <p class="eyebrow">Setup · Claude Code</p>
   <h2>Claude Code: install it, sign in.</h2>
   <div class="d1-cc">
     <div class="d1-tl-os">
@@ -2204,12 +2215,12 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
       <div class="d1-tl-card">
         <p class="label">Your Claude plan · Pro or Max</p>
         <p>The first time you run <code>claude</code>, sign in in the browser.</p>
-        <p>Team and Enterprise work too. The free plan doesn't include Claude Code.</p>
+        <p>Team and Enterprise work too. The free plan doesn't include Claude Code. Then: <a class="jump" href="#s-first-run">first run</a>.</p>
       </div>
       <div class="d1-tl-card">
         <p class="label">Or the course key</p>
-        <p>An <code>env</code> block in <code>~/.claude/settings.json</code>, in your home folder, never in a project: OpenRouter, the key as <code>ANTHROPIC_AUTH_TOKEN</code>, every model GLM-5.3 Flash. The whole file: <code>docs/student-setup.md</code>, section 6.</p>
-        <p>Signed in before? <code>/logout</code> once: the key beats a <span class="nowrap">signed-in</span> plan. Made for Anthropic's models: with GLM, some features may not work.</p>
+        <p>A settings file in your home folder, never in a project: <a class="jump" href="#s-key-tools">set it up</a>. Signed in before? <code>/logout</code> once: the key beats a <span class="nowrap">signed-in</span> plan.</p>
+        <p>Made for Anthropic's models: with GLM, some features may not work.</p>
       </div>
     </div>
     <p class="d1-tl-chk"><b>Check:</b> <code>/status</code> shows your Claude account, or <code>Auth token: ANTHROPIC_AUTH_TOKEN</code> with the course key.</p>
@@ -2218,12 +2229,12 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
 </section>
 
 <!-- S5c Codex -->
-<section class="slide light">
+<section class="slide light" id="s-codex">
   <style>
     .d1-cx-top { display: grid; grid-template-columns: 620px 1fr; gap: 40px; align-items: end; }
     .d1-cx-top .s26 { margin: 0 0 8px; }
   </style>
-  <p class="eyebrow">Setup · Codex CLI · with a ChatGPT plan</p>
+  <p class="eyebrow">Setup · Codex CLI</p>
   <h2>Codex: install it, sign in.</h2>
   <div class="d1-cx">
     <div class="d1-cx-top">
@@ -2237,11 +2248,11 @@ codex --version</pre>
     <div class="d1-tl-two">
       <div class="d1-tl-card">
         <p class="label">Your ChatGPT plan · Plus or higher</p>
-        <p>The first time you run <code>codex</code>, choose “Sign in with ChatGPT” (or run <code>codex login</code>).</p>
+        <p>The first time you run <code>codex</code>, choose “Sign in with ChatGPT” (or run <code>codex login</code>). Then: <a class="jump" href="#s-first-run">first run</a>.</p>
       </div>
       <div class="d1-tl-card">
         <p class="label">Or the course key</p>
-        <p><code>~/.codex/config.toml</code> in your home folder: Codex reads providers only there. The OpenRouter provider, with <code>env_key = "OPENROUTER_API_KEY"</code>. The whole file: <code>docs/student-setup.md</code>, section 7.</p>
+        <p><code>~/.codex/config.toml</code> in your home folder: Codex reads providers only there: <a class="jump" href="#s-key-tools">set it up</a>.</p>
       </div>
     </div>
     <p class="d1-tl-chk"><b>“Do you trust this folder?”</b> Yes, in your project folders. Otherwise Codex ignores the project's <code>.codex/config.toml</code>, and the check can't run in its sandbox.</p>
@@ -2250,8 +2261,62 @@ codex --version</pre>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
+<!-- S5d Claude Code or Codex with the course key -->
+<section class="slide light" id="s-key-tools">
+  <style>
+    .d1-ck { display: grid; grid-template-columns: 900px 1fr; gap: 48px; margin-top: -26px; }
+    .d1-ck .label { margin: 8px 0 6px; }
+    .d1-ck .label:first-child { margin-top: 0; }
+    .d1-ck pre { margin: 0; padding: 14px 26px; }
+  </style>
+  <p class="eyebrow">Setup · the course key · Claude Code or Codex</p>
+  <h2>Claude Code or Codex with the course key.</h2>
+  <div class="d1-ck">
+    <div>
+      <p class="label">Claude Code · Mac</p>
+<pre class="c22">mkdir -p ~/.claude &amp;&amp; touch ~/.claude/settings.json
+open -e ~/.claude/settings.json</pre>
+      <p class="label">Claude Code · Windows</p>
+<pre class="c22">New-Item -ItemType Directory -Force "$HOME\.claude"
+notepad "$HOME\.claude\settings.json"</pre>
+      <p class="label">Paste, put in the real key, save</p>
+<pre class="c22">{ "env": {
+  "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
+  "ANTHROPIC_AUTH_TOKEN": "sk-or-...",
+  "ANTHROPIC_API_KEY": "",
+  "ANTHROPIC_MODEL": "z-ai/glm-5.3-flash",
+  "ANTHROPIC_DEFAULT_FABLE_MODEL": "z-ai/glm-5.3-flash",
+  "ANTHROPIC_DEFAULT_OPUS_MODEL": "z-ai/glm-5.3-flash",
+  "ANTHROPIC_DEFAULT_SONNET_MODEL": "z-ai/glm-5.3-flash",
+  "ANTHROPIC_DEFAULT_HAIKU_MODEL": "z-ai/glm-5.3-flash",
+  "CLAUDE_CODE_SUBAGENT_MODEL": "z-ai/glm-5.3-flash"
+} }</pre>
+    </div>
+    <div>
+      <p class="label">Codex · Mac</p>
+<pre class="c22">mkdir -p ~/.codex &amp;&amp; touch ~/.codex/config.toml
+open -e ~/.codex/config.toml</pre>
+      <p class="label">Codex · Windows</p>
+<pre class="c22">New-Item -ItemType Directory -Force "$HOME\.codex"
+notepad "$HOME\.codex\config.toml"</pre>
+      <p class="label">Paste and save · the key comes from your environment</p>
+<pre class="c22">model = "z-ai/glm-5.3-flash"
+model_provider = "openrouter"
+model_reasoning_effort = "high"
+[model_providers.openrouter]
+name = "OpenRouter"
+base_url = "https://openrouter.ai/api/v1"
+wire_api = "responses"
+env_key = "OPENROUTER_API_KEY"
+[tui]
+auto_recap = false</pre>
+    </div>
+  </div>
+  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
 <!-- S6 First run and smoke test -->
-<section class="slide light">
+<section class="slide light" id="s-first-run">
   <style>
     .d1-fr { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
     .d1-fr .label { margin-top: 0; }
@@ -2291,7 +2356,7 @@ cd "$HOME\hello-agent"</pre>
 </section>
 
 <!-- S7 Commands in each tool -->
-<section class="slide light">
+<section class="slide light" id="s-commands">
   <style>
     .d1-cs { margin-top: -8px; }
     .d1-cs th { padding-top: 0; }
@@ -2318,7 +2383,7 @@ cd "$HOME\hello-agent"</pre>
 </section>
 
 <!-- S8 Your fork -->
-<section class="slide light">
+<section class="slide light" id="s-fork">
   <style>
     .d1-fk-svg { display: block; width: 100%; height: auto; flex: none; }
     .d1-fk-svg .lab { font: 600 22px var(--sans); letter-spacing: 0.12em; fill: #555; }
@@ -2393,7 +2458,7 @@ npm run check</pre>
 </section>
 
 <!-- S9b Own plan and other errors -->
-<section class="slide light">
+<section class="slide light" id="s-errors">
   <style>
     .d1-wp-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
     .d1-wp-card { padding: 18px 26px 20px; border-radius: 14px; background: #fbfaf7; border: 2px solid #d3cfc6; }
@@ -2495,10 +2560,17 @@ window.addEventListener('pointerup', (event) => {
   show(event.clientX > width / 3 ? current + 1 : current - 1);
 });
 
-window.addEventListener('hashchange', () => show(Number(location.hash.slice(1)) - 1 || 0));
+// A hash is a slide number (#12) or a slide's id (#s-opencode, for jump links).
+function target(hash) {
+  const name = decodeURIComponent(hash.slice(1));
+  const named = slides.findIndex((slide) => slide.id === name);
+  return named >= 0 ? named : Number(name) - 1 || 0;
+}
+
+window.addEventListener('hashchange', () => show(target(location.hash)));
 window.addEventListener('resize', fit);
 fit();
-show(Number(location.hash.slice(1)) - 1 || 0);
+show(target(location.hash));
 
 </script>
 </body>
