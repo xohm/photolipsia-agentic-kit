@@ -249,8 +249,9 @@ and `xohm.github.io/photolipsia-agentic-kit` with your names in `README.md`, `do
 - [ ] All three tools tested on your machine; both examples run in OpenCode
 - [ ] One Windows laptop tested (PowerShell execution policy, `setx`, OpenCode, `npm run check`)
 - [ ] Students got the kit link and the setup guide before day one
-- [ ] Blender MCP (deck 1, slide 17) tried once: `uvx mcp-for-blender@2.2.4 install-addon`, the
-      OpenCode `mcp` entry, then the slide's prompt. Not tested while preparing the kit.
+- [ ] Blender MCP (deck 1, slide 17) tried once on a Mac and a Windows laptop: open Blender once,
+      `uvx mcp-for-blender@2.2.4 install-addon`, the OpenCode `mcp` entry, then the slide's prompt.
+      Tested on Linux only (2026-10-24, Blender 5.3 beta, GLM-5.3 Flash in OpenCode).
 - [ ] Key slips or password-manager items prepared
 
 ### During
