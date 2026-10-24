@@ -240,10 +240,12 @@ student docs say `git merge --abort` and ask you.
 
 **The slides** are served from this repository with GitHub Pages (*Settings → Pages*: branch
 `main`, folder `/`; the empty `.nojekyll` file serves the HTML as it is). Link to the addresses at
-the top of this guide.
+the top of this guide. The decks are built from sources in the solutions repository: edit
+`slides-src/` there, never the HTML in `slides/`, and run its `npm run check` (see its README).
 
 **Your own course:** fork the kit (and ask for the solutions), then replace `xohm/photolipsia-agentic-kit`
-and `xohm.github.io/photolipsia-agentic-kit` with your names in `README.md`, `docs/` and `slides/`.
+and `xohm.github.io/photolipsia-agentic-kit` with your names in `README.md`, `docs/` and the slide
+sources (`slides-src/` in the solutions), then rebuild the slides.
 
 - **Forks of a public repository are public:** everyone can see the students' work. For private
   work, mark the kit as a template (*Settings → Template repository*) and let students use
