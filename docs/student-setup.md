@@ -88,22 +88,27 @@ You keep your work on GitHub, in your own copy of the course repository: a **for
 Every `git push` saves your progress there, and your teacher can follow it.
 
 1. Make a free account on https://github.com.
-2. Install the GitHub command-line tool, then open a new terminal.
-   **Mac:** the installer from https://cli.github.com (or `brew install gh`).
-   **Windows:**
-   ```powershell
-   winget install --id GitHub.cli -e
-   ```
-3. Log in, once. Answer: GitHub.com, HTTPS, yes, log in with a web browser.
-   ```bash
-   gh auth login
-   ```
-4. Fork the course repository and download your fork into your home folder:
+2. **Fork:** open https://github.com/xohm/photolipsia-agentic-kit, press **Fork** (top right), then
+   **Create fork**. Now GitHub has your own copy: `https://github.com/YOUR-NAME/photolipsia-agentic-kit`,
+   where `YOUR-NAME` is your GitHub user name.
+3. **Clone** your fork into your home folder, and connect it to the course repository, so you can
+   get updates later. Same on both:
    ```bash
    cd ~
-   gh repo fork xohm/photolipsia-agentic-kit --clone
+   git clone https://github.com/YOUR-NAME/photolipsia-agentic-kit.git
    cd photolipsia-agentic-kit
+   git remote add upstream https://github.com/xohm/photolipsia-agentic-kit.git
    ```
+4. **Log in, so `git push` works.** Once.
+   - **Windows:** nothing to install. At your first `git push`, Git opens a GitHub login in your
+     browser.
+   - **Mac:** Git on a Mac can't log in through the browser, so install the GitHub tool once: the
+     installer from https://cli.github.com (or `brew install gh`). Then, in a new terminal:
+     ```bash
+     gh auth login
+     ```
+     Answer: GitHub.com, HTTPS, Yes, log in with a web browser. From then on, `git push` works.
+     You don't need `gh` for anything else.
 
 You now have the folder `photolipsia-agentic-kit`: the skeletons `01-text-stats` and
 `02-splat-viewer`, the guides in `guides/` and these docs in `docs/`. The skeletons have no app
@@ -510,5 +515,6 @@ What this means:
 | A big scan is slow or jerky | Convert it to `.rad` and/or lower the detail with `?detail=0.5`. See [big-scans.md](big-scans.md). |
 | No **Enter VR** button in the splat viewer | The browser can't do VR. Mac browsers never can: use the Quest browser with `npm run dev:vr`. On Windows, Quest Link plus Chrome or Edge also works. See Example 2, prompt 7. |
 | The Quest can't open the `https://…` address from `npm run dev:vr` | Same Wi-Fi? University Wi-Fi often isolates devices: try a phone hotspot. Allow `node` through the firewall (Mac), or private networks (Windows). |
+| Mac: `git push` asks for a username and password | Git isn't logged in yet: `gh auth login` (section 1, "Git and GitHub"). A GitHub password never works here. |
 | `npm install` fails with "Cannot read properties of null (reading 'edgesOut')" | Old npm with a newer package. Update Node to the current LTS. |
 | Windows: a firewall prompt when starting `npm run dev` | Allow on private networks, or cancel: the local page still works on your own laptop. |

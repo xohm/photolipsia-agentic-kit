@@ -195,11 +195,16 @@ Known differences
 
 **One public kit.** This repository is the whole course for students: the two skeletons, the
 guides, the setup docs, the slides and this guide. Students fork it and build the apps with their
-own agent ([student-setup.md](student-setup.md#git-and-github-your-own-fork)):
+own agent ([student-setup.md](student-setup.md#git-and-github-your-own-fork)). They use the
+Fork button on github.com, then plain git:
 
 ```bash
-gh repo fork xohm/photolipsia-agentic-kit --clone
+git clone https://github.com/YOUR-NAME/photolipsia-agentic-kit.git
+git remote add upstream https://github.com/xohm/photolipsia-agentic-kit.git
 ```
+
+They use `gh` only on a Mac, once, for `gh auth login` (so `git push` can log in); Git for Windows
+logs in through the browser by itself.
 
 **The solutions stay private**, in a separate repository: both finished apps, the single-file
 viewer and the notes on what was tested (`xohm/photolipsia-solutions`, ask for access). Clone it
