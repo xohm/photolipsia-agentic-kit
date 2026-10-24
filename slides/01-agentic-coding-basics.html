@@ -634,7 +634,7 @@ td:first-child {
     <h1 style="color: var(--mute); font-size: 88px; margin-top: 18px">Your first agent loop</h1>
     <div class="sub">
       <p>You build two small apps with a coding agent.</p>
-      <p>Nothing counts as done until a check has run and you have looked.</p>
+      <p>Nothing counts as done until the check has run and you have looked.</p>
     </div>
     <div class="rule"></div>
   </div>
@@ -855,7 +855,7 @@ td:first-child {
     </svg>
   </div>
   <div class="body d1-pv-body">
-    <p>Your prompts, the files the agent opens, command output and screenshots go to OpenRouter (USA), then to a company that runs GLM, maybe outside Switzerland. By default OpenRouter keeps no content, only model, tokens, cost and time. A few of them keep prompts, up to 30 days.</p>
+    <p>Your prompts, the files the agent opens, command output and screenshots go to OpenRouter (USA), then to one of many companies that run GLM, chosen by price, not by country. By default OpenRouter keeps no content, only model, tokens, cost and time. A few of these companies keep prompts for a while (one says 30 days).</p>
     <p><b>Never give the agent passwords, keys or other people's data.</b></p>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -937,7 +937,7 @@ td:first-child {
     <text x="1006" y="37" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="25" fill="#555">again</text>
   </svg>
   <div class="d1-lp d1-anim">
-    <div class="box d1-lp-b1"><span class="n">1</span><h3>Plan</h3><p>Write the plan into <code>ai/strategy.md</code>. Wait for “go”.</p></div>
+    <div class="box d1-lp-b1"><span class="n">1</span><h3>Plan</h3><p>The plan goes in <code>ai/strategy.md</code>. Wait for “go”.</p></div>
     <div class="arrow d1-lp-a1">→</div>
     <div class="box d1-lp-b2"><span class="n">2</span><h3>Build</h3><p>One small step. Tests first for pure logic.</p></div>
     <div class="arrow d1-lp-a2">→</div>
@@ -951,7 +951,7 @@ td:first-child {
     <path d="M1528 4 V48 Q1528 64 1512 64 H152 Q136 64 136 48 V14" fill="none" stroke="#9a968e" stroke-width="3" />
     <path d="M124 22 L136 4 L148 22" fill="none" stroke="#9a968e" stroke-width="3" />
     <path class="d1-lp-pk d1-lp-pk-back" pathLength="100" d="M1528 4 V48 Q1528 64 1512 64 H152 Q136 64 136 48 V14" />
-    <rect x="652" y="46" width="360" height="38" fill="#f1efea" />
+    <rect x="612" y="46" width="440" height="38" fill="#f1efea" />
     <text x="832" y="75" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="25" fill="#555">commit, then the next step</text>
   </svg>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1088,7 +1088,7 @@ td:first-child {
         </svg>
       </div>
       <div class="body">
-        <p>The dark lines: three rules against made-up answers.</p>
+        <p>The dark lines: three rules against made-up answers and endless retries.</p>
         <p>Rules are requests. Nothing enforces them: that is what the deny rules and the check are for.</p>
       </div>
     </div>
@@ -1175,7 +1175,7 @@ A page where you paste text and see live counts.
     </div>
   </div>
   <div class="body d1-me-body">
-    <p>The goal in one sentence. The plan as checkboxes. One line per decision, with <strong>because</strong>. The next step. Short lines: if it gets long, your steps are too big.</p>
+    <p>The goal in one sentence. The plan as checkboxes. One line per decision, with <strong>because</strong>. The next step. Keep each line short: a step that needs a long line is too big.</p>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
@@ -1374,7 +1374,7 @@ A page where you paste text and see live counts.
   </div>
   <div class="d1-ck-cap">
     <p><code>npm test</code> checks the logic. <code>npm run check</code> opens the real page in a hidden browser and writes a report and a screenshot. The report also describes the screenshot in numbers, for models that can't see images.</p>
-    <p>“Looks” means: the screenshot goes to the model as an image. The model can misread it. So open <code>.check/screenshot.png</code> yourself.</p>
+    <p>When the agent “looks”, the screenshot goes to the model as an image, and the model can misread it. So open <code>.check/screenshot.png</code> yourself.</p>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
@@ -1395,8 +1395,8 @@ A page where you paste text and see live counts.
   <p class="eyebrow">Cost</p>
   <h2>One key, $40 a day for all of us.</h2>
   <div class="d1-co d1-anim">
-    <svg viewBox="0 0 1664 236" role="img" aria-label="The daily budget of 40 dollars is shared by all of us: 15 shares of 2 dollars 70. In each share, a normal day with GLM-5.3 Flash uses about 80 cents, our estimate. The rest is room for heavier days. The budget resets at midnight UTC.">
-      <text class="lab" x="0" y="24">$40 A DAY FOR ALL OF US = 15 × $2.70</text>
+    <svg viewBox="0 0 1664 236" role="img" aria-label="The daily budget of 40 dollars is shared by all of us: 15 shares of about 2 dollars 67. In each share, a normal day with GLM-5.3 Flash uses about 80 cents, our estimate. The rest is room for heavier days. The budget resets at midnight UTC.">
+      <text class="lab" x="0" y="24">$40 A DAY FOR ALL OF US = 15 × ABOUT $2.67</text>
       <text class="lab" x="1664" y="24" text-anchor="end">RESETS AT MIDNIGHT UTC</text>
       <rect x="0" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="111.71" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="223.43" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="335.14" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="446.86" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="558.57" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="670.29" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="782" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="893.71" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1005.43" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1117.14" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1228.86" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1340.57" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1452.29" y="44" width="100" height="120" rx="10" fill="#e6e3dc" /><rect x="1564" y="44" width="100" height="120" rx="10" fill="#e6e3dc" />
       <rect class="d1-co-fill" style="animation-delay: 0s" x="0" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.15s" x="111.71" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.3s" x="223.43" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.45s" x="335.14" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.6s" x="446.86" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.75s" x="558.57" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 0.9s" x="670.29" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.05s" x="782" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.2s" x="893.71" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.35s" x="1005.43" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.5s" x="1117.14" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.65s" x="1228.86" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.8s" x="1340.57" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 1.95s" x="1452.29" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" /><rect class="d1-co-fill" style="animation-delay: 2.1s" x="1564" y="128.5" width="100" height="35.5" rx="6" fill="#e8875b" />
@@ -1409,12 +1409,12 @@ A page where you paste text and see live counts.
   <div class="d1-co-cols">
     <div>
       <p><strong>The course pays.</strong> The key has $350 for the whole course. A leaked key costs the course, not you: anyone who has it can spend the budget.</p>
-      <p><strong>Used up?</strong> Every request gets <code>403</code> until midnight UTC (1 or 2 am in Zurich), for the whole class.</p>
-      <p><strong>Energy:</strong> we have no reliable number per request, so we give none. What saves money saves computing too.</p>
+      <p><strong>Used up?</strong> Every request gets <code>403</code> until midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich), for the whole class.</p>
+      <p><strong>Energy:</strong> we have no reliable number per request, so we give none. Fewer tokens: less money and less computing.</p>
     </div>
     <div>
-      <p><strong>Prices.</strong> GLM-5.3 Flash: $0.15 in, $0.50 out per million tokens. GLM-5.3: up to about 10× more.</p>
-      <p><strong>Measured:</strong> cleaning a generated test scan in Blender, $0.03 to $0.04 per run (Linux, GLM-5.3 Flash).</p>
+      <p><strong>Prices.</strong> GLM-5.3 Flash: $0.15 in, $0.50 out per million tokens. GLM-5.3: about 3× to 10× that, depending on the provider.</p>
+      <p><strong>Measured:</strong> all of Example 1, $0.05. Example 2, prompts 1 to 8, $0.26 (GLM-5.3 Flash, Linux).</p>
       <p><strong>Save it:</strong> quit idle agents. New task, new session. Effort high, never max.</p>
     </div>
   </div>
@@ -1469,7 +1469,7 @@ A page where you paste text and see live counts.
   <div class="cols d1-p1">
 <pre class="prompt">Read AGENTS.md and ai/strategy.md. We are building a small web page: <mark class="dd">a text box where I paste text</mark>, and <mark class="dd">below it live counts</mark> of words, characters and sentences, <mark class="dd">plus the reading time</mark>. Put the counting logic in src/stats.js as pure functions and export textStats(text), which returns { words, characters, sentences, readingMinutes }. Test it with node:test in tests/stats.test.js. Fill in the Goal and a plan of 4 to 6 small steps in ai/strategy.md. Don't write code yet.</pre>
     <div class="body">
-      <p><strong>Agent terminal:</strong> <code>cd ~/photolipsia-agentic-kit/01-text-stats</code>, then <code>opencode</code>. Not in your home folder: the rules and locks are in the project folder.</p>
+      <p><strong>Agent terminal:</strong> <code>cd ~/photolipsia-agentic-kit/01-text-stats</code>, then <code>opencode</code>. Not in your home folder: the rules and deny rules are in the project folder.</p>
       <p><strong>Your terminal,</strong> a second tab: the same folder, for your own commands.</p>
       <p>Read the plan in <code>ai/strategy.md</code>. Change it if you disagree. The plan is yours.</p>
       <p class="d1-p1-key"><mark class="dd">Marked:</mark> design decisions. Make them yours.</p>
@@ -1564,7 +1564,7 @@ A page where you paste text and see live counts.
 check: <span class="bad">FAILED</span> (0.4 s)
   - check "page shows sentences" failed:
     expected 3, page shows undefined</pre>
-      <p class="s26">Or a page error: <code>Cannot set properties of null … (at /src/main.js:…)</code>, depending on how <code>main.js</code> was written.</p>
+      <p class="s26" style="margin-top: 22px">Or a page error: <code>Cannot set properties of null … (at /src/main.js:…)</code>, depending on how <code>main.js</code> was written.</p>
       <p class="s26">The agent wrote this check in Prompt 3. Breaking the page on purpose is how you find out it can fail.</p>
       <p class="proof check-mark"><b>Tests:</b> it says “done” when it isn't → <code>npm run check</code></p>
     </div>
@@ -1604,7 +1604,7 @@ check: <span class="bad">FAILED</span> (0.4 s)
   .d1-p5 .body .label { margin-top: 26px; }
   </style>
   <p class="eyebrow">Example 1 · Prompt 5</p>
-  <h2>Prompt 5: review, then commit.</h2>
+  <h2>Prompt 5: review, then commit</h2>
   <div class="cols d1-p5">
     <div>
 <pre class="prompt">Summarise what changed since the last commit in five lines.</pre>
@@ -1637,7 +1637,7 @@ git push</pre>
   .d1-p6 .d1-p6-done { font-size: 26px; line-height: 1.42; color: var(--grey); margin: 0; }
   </style>
   <p class="eyebrow">Example 1 · Prompt 6</p>
-  <h2>Prompt 6: change the rules, start fresh.</h2>
+  <h2>Prompt 6: change the rules, start fresh</h2>
   <div class="cols d1-p6">
     <div class="body steps">
       <p>1. Add one line of your own to <code>AGENTS.md</code>, under <code>## Code style</code>, for example: <code>- All text on the page is in sentence case.</code> Commit it:</p>
@@ -1716,7 +1716,7 @@ git push</pre>
       <p>Everything that made this work is plain text in your fork. Any of the three tools reads it, and another model could too.</p>
       <p>The loop: plan → build → introspect → fix → log.</p>
       <p class="lead">Next: your own scan in the browser.</p>
-      <p class="s26">Bring a splat file: a capture exported as <code>.ply</code> or <code>.spz</code>. Smaller files load faster.</p>
+      <p class="s26">Bring a splat file: a capture exported as <code>.ply</code> or <code>.spz</code>. Big scans work too: deck 2 shows how to stream them.</p>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1898,11 +1898,11 @@ git --version</pre>
 git config --global user.email "you@example.com"
 git config --global pull.rebase false</pre>
     <div>
-      <p class="s26">Use the email of your GitHub account. It is public in every commit you push. A private address: <code>docs/student-setup.md</code>.</p>
+      <p class="s26">Use the email of your GitHub account. It is public in every commit you push. Want it private? Use GitHub’s noreply address: <code>docs/student-setup.md</code>.</p>
       <p class="s26">The last line makes <code>git pull</code> merge your teacher's updates into your work.</p>
     </div>
   </div>
-  <div class="d1-gh-step"><span class="d1-gh-n">3</span><p class="label">Log in once, so git push works</p></div>
+  <div class="d1-gh-step"><span class="d1-gh-n">3</span><p class="label">Log in once, so <code>git push</code> works</p></div>
   <div class="d1-gh-os">
     <div>
       <p class="s26" style="margin-top: 0"><b>Mac:</b> install the GitHub tool once: the installer from <b>cli.github.com</b> (or <code>brew install gh</code>). Then, in a new terminal:</p>
@@ -1989,7 +1989,7 @@ git config --global pull.rebase false</pre>
   </div>
   <p class="label">Windows · PowerShell · paste the key when asked, then open a new terminal</p>
 <pre class="c22">[Environment]::SetEnvironmentVariable('OPENROUTER_API_KEY', (Read-Host 'Paste the key'), 'User')</pre>
-  <p class="s26">Paste the export line, don't type it: TextEdit can turn typed quotes into curly ones. Claude Code: the key goes in <code>~/.claude/settings.json</code>, in your home folder, never in a project. Test it later in your fork: <code>node tools/check-openrouter.mjs</code> says 200 OK, 403 OK, All good.</p>
+  <p class="s26">Paste the export line, don't type it: TextEdit can turn typed quotes into curly ones. Claude Code: the key goes in <code>~/.claude/settings.json</code>, in your home folder, never in a project. Test it later in your fork: <code>node tools/check-openrouter.mjs</code> should end with All good. Its “403 OK” is right: that model must be blocked.</p>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
@@ -2071,7 +2071,7 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
         <p class="label">Then type</p>
 <pre class="prompt">Create hello.js that prints "Hello from GLM", then run it with node.</pre>
         <p class="s28">You see <b>Hello from GLM</b>? You're set up. Quit with <code>/exit</code>.</p>
-        <p class="s28">Later, start the agent in the folder you work in, never in your home folder: the rules and locks are in the project folder.</p>
+        <p class="s28">Later, start the agent in the folder you work in, never in your home folder: the rules and deny rules are in the project folder.</p>
       </div>
     </div>
   </div>
@@ -2100,7 +2100,7 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
       <p class="label d1-cx-l2">Windows · PowerShell</p>
 <pre class="c22">irm https://claude.ai/install.ps1 | iex</pre>
       <p class="s28">Settings in <code>~/.claude/settings.json</code>: OpenRouter, and every model set to GLM-5.3 Flash. The key goes in there as <code>ANTHROPIC_AUTH_TOKEN</code>: fine in your home folder, never in a project.</p>
-      <p class="s28">Made for Anthropic's models: some features may not work with GLM. OpenCode is the safer choice.</p>
+      <p class="s28">Made for Anthropic's models, not for GLM. We ran the course examples with OpenCode.</p>
     </div>
   </div>
   <p class="s26" style="margin-top: 22px">The exact config files: <code>docs/student-setup.md</code>, sections 4 and 5.</p>
@@ -2257,9 +2257,9 @@ npm run check</pre>
     </div>
     <div class="d1-wf-card">
       <p class="h"><b>403</b>model “not allowed”</p>
-      <p>Check the model name in your config. OpenCode: is <code>small_model</code> set?</p>
+      <p>The key blocks this model (e.g. FlashX). Pick GLM-5.3-Flash in <code>/models</code>. OpenCode: is <code>small_model</code> set?</p>
       <p class="h"><b>403</b>“Budget limit exceeded”</p>
-      <p>Used up for today. It resets at midnight UTC (1 or 2 am in Zurich).</p>
+      <p>Used up for today. It resets at midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich).</p>
     </div>
     <div class="d1-wf-card">
       <p class="h"><b>404</b><code>model_not_found</code></p>
