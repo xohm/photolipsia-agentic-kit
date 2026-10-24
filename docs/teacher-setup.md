@@ -2,11 +2,11 @@
 
 Photolipsia · ZHdK · MA Interaction Design · HS 2026
 
-One OpenRouter account, one shared API key with a hard credit limit, and a guardrail that only
-allows the two course models and caps daily spending. 15 students, two weeks.
+One OpenRouter account, one API key per student with a hard credit limit, and a guardrail that
+only allows the two course models and caps each key's daily spending. 15 students, two weeks.
 
 Most students use **OpenCode on the course key**: that is the main path, and all course examples
-were run with it. The key is for every student **without** a Claude or ChatGPT plan (Claude Code
+were run with it. A course key is for every student **without** a Claude or ChatGPT plan (Claude Code
 and Codex can also be set up for it). Students with their own plan may use Claude Code or Codex on
 that plan instead; they don't use the key, and the key's budget and guardrail don't cover them. See
 [Students on their own plans](#students-on-their-own-plans) in section 7.
@@ -20,7 +20,7 @@ the links go to the current pages.
 Contents
 
 1. [Account and credits](#1-account-and-credits)
-2. [The shared key](#2-the-shared-key)
+2. [One key per student](#2-one-key-per-student)
 3. [The guardrail](#3-the-guardrail)
 4. [Test it](#4-test-it)
 5. [Optional: EU routing](#5-optional-eu-routing)
@@ -42,7 +42,7 @@ Contents
 3. **Auto top-up** (same page) refills when the balance drops below a threshold. For a course, a
    fixed budget is easier to reason about: leave auto top-up **off** and use the alert instead.
 4. **Low balance alert:** **Settings → Notifications**. Email only. The default threshold is
-   $100: set it to about $40, one day of course budget.
+   $100: set it to about $40, about one day of all keys at their daily limit (15 × $3).
 
 Spending controls (budgets and guardrails) are not available on the **Free** plan. Once you buy
 credits you are on the pay-as-you-go plan, which includes them. Check https://openrouter.ai/pricing
@@ -50,22 +50,28 @@ if the Guardrails page is greyed out.
 
 ---
 
-## 2. The shared key
+## 2. One key per student
 
-**Settings → API Keys** (https://openrouter.ai/settings/keys) → **Create API Key**.
+Every student without a plan gets their own key. A mistake (an agent left running, a leaked key)
+then stops only that student's key, and **Activity** shows each student's use. One shared key
+also works, but then one student can use up the day for everyone.
+
+**Settings → API Keys** (https://openrouter.ai/settings/keys) → **Create API Key**, once per
+student:
 
 | Field | Value |
 |---|---|
-| Name | `photolipsia-hs26` |
-| Credit limit | `350` (dollars) |
+| Name | `photolipsia-hs26-<name>` |
+| Credit limit | `25` (dollars) |
 | Reset | none: the limit is for the whole course |
 | Expiry | a few days after the last course day, if offered |
 
-Copy the key when it is shown: it is shown only once. It starts with `sk-or-v1-`.
-Keep it in your password manager.
+Copy each key when it is shown: it is shown only once. It starts with `sk-or-v1-`.
+Keep them in your password manager, each with the student's name.
 
-The credit limit is the hard ceiling for the whole course. The guardrail (next step) adds a
-daily ceiling and the model allowlist.
+The credit limit is each key's ceiling for the whole course (15 keys × $25 ≈ $375). The
+guardrail (next step) adds a daily ceiling per key and the model allowlist. Your account balance
+(section 1) is the ceiling over all keys.
 
 ---
 
@@ -77,11 +83,13 @@ daily ceiling and the model allowlist.
 | Setting | Value |
 |---|---|
 | Name | `photolipsia` |
-| Budget limit | `$40`, reset **daily** (resets at midnight UTC) |
+| Budget limit | `$3`, reset **daily** (resets at midnight UTC), for each key on its own |
 | Model allowlist | `z-ai/glm-5.3-flash` and `z-ai/glm-5.3` |
 | Provider allowlist | empty (all providers), or see the note below |
 
-Save it, then **assign** it: open the guardrail and add the course key under **API Keys**.
+Save it, then **assign** it: open the guardrail and add every student key under **API Keys**.
+The budget counts per key, not for all of them together: "Guardrail budgets are enforced
+per-user and per-key" (OpenRouter's docs).
 A guardrail does nothing until it is assigned. A key can have one directly assigned guardrail.
 
 Notes
@@ -126,7 +134,7 @@ Same command on Mac and Windows. Expected:
 
 ```
 key: sk-or-v1-... (NN characters)
-key info: limit $350.00, used $0.00, left $350.00
+key info: limit $25.00, used $0.00, left $25.00
 z-ai/glm-5.3-flash (should work): 200 OK "hello"
 <some other model> (should be blocked): 404 OK "..."
 
@@ -289,7 +297,8 @@ sources (`slides-src/` in the solutions), then rebuild the slides.
   Never in a group chat, an email to the class, a slide or the repository.
 - Tell students the rules from the student guide: environment variable or home-folder config
   only, never in a project, a commit, a screenshot or a prompt.
-- Remind them on day one that a leaked key costs the course budget, not them.
+- Remind them on day one that the key is theirs alone: no sharing. A leaked key costs the course
+  budget, not them.
 
 ### Students on their own plans
 
@@ -320,8 +329,8 @@ Free and Go don't list the Codex CLI. These students don't get the key.
 ### Before
 
 - [ ] Credits bought, auto top-up off, low-balance alert at ~$40
-- [ ] Key created with a $350 limit (and an expiry, if offered)
-- [ ] Guardrail with both models, $40 daily budget, assigned to the key
+- [ ] One key per student, each with a $25 limit (and an expiry, if offered)
+- [ ] Guardrail with both models, $3 daily budget, assigned to every student key
 - [ ] Privacy settings of the course account (students read about them in student-setup.md,
       "Where your prompts go"). Recommended:
       - Settings › Observability: **Input & Output Logging off** (off by default; when on,
@@ -361,8 +370,8 @@ Free and Go don't list the Codex CLI. These students don't get the key.
 
 ### During
 
-- [ ] **After day 1 and day 2:** **Activity** (https://openrouter.ai/activity), filtered by the key.
-      Is daily spend well below $40? Any requests from unexpected models?
+- [ ] **After day 1 and day 2:** **Activity** (https://openrouter.ai/activity), per key.
+      Is any key at its $3 every day? Any requests from unexpected models?
 - [ ] **Logs** (https://openrouter.ai/logs): many 404s that name the guardrail mean a student's tool config is wrong.
       Many 402s mean the key limit or balance is reached.
 - [ ] Remind students to quit idle agents and to start a new session for a new task (long
@@ -371,10 +380,11 @@ Free and Go don't list the Codex CLI. These students don't get the key.
 
 **If the key leaks** (posted, committed, screenshotted):
 
-1. **Settings → API Keys**: delete or disable the key right away.
-2. Create a new key with the remaining budget as its limit and assign the guardrail to it.
+1. **Settings → API Keys**: delete or disable that student's key right away.
+2. Create a new key for that student, with the rest of the $25 as its limit, and assign the
+   guardrail to it.
 3. Check **Activity** for requests after the leak.
-4. Hand out the new key privately. Students update it everywhere they put it: see the box
+4. Give the new key to that student privately. They update it everywhere they put it: see the box
    "If the key changes" in [student-setup.md](student-setup.md#4-the-course-key).
 5. If the key was committed, deleting the file is not enough: it stays in the history. Treat
    the old key as public. Revoking it (step 1) is what protects the budget.
@@ -392,8 +402,8 @@ Free and Go don't list the Codex CLI. These students don't get the key.
 | Symptom | Likely cause | Fix |
 |---|---|---|
 | `404` "… matching your guardrail restrictions …" (or `403`, model not allowed) | The tool requested a model outside the allowlist: OpenCode without `small_model`, Claude Code without all model variables, or a typo | Fix the student's config (student guide, sections 5 to 7) |
-| `403` "Budget limit exceeded (daily limit)…" | Guardrail budget reached today | Wait until midnight UTC, or raise the budget in the guardrail |
-| `402` or `403` "Key limit exceeded" | The key's $350 limit is used up | Raise the key's credit limit |
+| `403` "Budget limit exceeded (daily limit)…" | This key's $3 for today are used up | Wait until midnight UTC, or raise the budget in the guardrail (it applies to every key) |
+| `402` or `403` "Key limit exceeded" | The key's $25 limit is used up | Raise the key's credit limit |
 | `402` "insufficient credits" | Account balance empty | Buy credits |
 | `401` "User not found" | Wrong or deleted key, or the terminal doesn't see the variable | Run `node tools/check-openrouter.mjs` in the student's terminal |
 | Guardrail page greyed out | Free plan | Buy credits (pay-as-you-go plan) |
@@ -424,9 +434,9 @@ step, so input dominates:
 - total: **about $0.80**
 
 **15 students × 10 days ≈ $120**, plus the 5.5% fee. Heavy days, long sessions and some GLM-5.3
-use can double or triple that, so plan for **$100–300**. The $40 daily
-budget is about $2.70 per student per day, three times the estimate, with room for heavy days.
-That assumes all 15 students use the key. Students on their own plan cost the course nothing:
+use can double or triple that, so plan for **$100–300**. The $3 daily
+budget per key is almost four times the estimate, with room for heavy days; all keys together
+can spend at most 15 × $3 = $45 a day. That assumes all 15 students use a course key. Students on their own plan cost the course nothing:
 count only those without a plan.
 
 Biggest cost drivers: long sessions (start fresh for each task), GLM-5.3 instead of Flash, idle

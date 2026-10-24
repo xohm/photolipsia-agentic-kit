@@ -187,7 +187,7 @@ back as it was before the pull.
 The agent is a program on your laptop. The AI model it talks to runs at a company, so the agent
 needs an account there. There are two kinds:
 
-- **The course key:** a key the whole class shares and the course pays for. It reaches the model
+- **The course key:** your own key from your teacher; the course pays for it. It reaches the model
   GLM-5.3 Flash through OpenRouter. Most of you use this.
 - **Your own plan:** a paid Claude or ChatGPT subscription you already have. It costs you nothing
   extra, but it counts against your plan's limits.
@@ -249,8 +249,8 @@ Switzerland and the EU.
 - **What OpenRouter stores:** for every request the model, tokens, cost, time and API key, but no
   content. It keeps content only if the account owner switches on input and output logging, or
   lets OpenRouter use the content in exchange for a 1% discount. Both are off by default.
-- **Who can tell it was you:** these records show the key, not the person, and the class shares
-  one key. Whether Claude Code and Codex send anything else that names you, we didn't check.
+- **Who can tell it was you:** these records show the key. Each of you has your own, so your
+  teacher can see how much your key used. Whether Claude Code and Codex send anything else that names you, we didn't check.
 - **Training:** OpenRouter does not train on your data, and every company listed for these two
   models says it doesn't either. A few keep prompts for a while (one says 30 days, the others
   don't say how long). The course account can exclude them with "zero data retention": ask your
@@ -305,16 +305,17 @@ Two things follow from how the kit is built:
 
 ### What it costs
 
-**The course key:** the course pays for it: you pay nothing. The whole class shares one key and
-one budget: **$40 a day for everyone together**, and $350 for the whole course.
+**The course key:** the course pays for it: you pay nothing. Each of you gets your own key, with
+**$3 a day** and $25 for the whole course.
 
 - A normal day of work with GLM-5.3 Flash costs about **$0.80 per person** (our estimate).
 - GLM-5.3 costs more: up to about ten times as much.
 - In tokens, Flash costs $0.15 per million tokens in and $0.50 per million out.
-- When the day's budget is used up, every request gets a `403` until midnight UTC (1 or 2 am in
-  Zurich), for the whole class.
-- **A leaked key costs the course, not you.** Anyone who has it can spend the budget until your
-  teacher replaces it. So keep the rules in [section 4](#4-the-course-key).
+- When your key's $3 for the day are used up, every request gets a `403` until midnight UTC (1 or
+  2 am in Zurich). Only your key stops; everyone else goes on.
+- **A leaked key costs the course, not you.** Anyone who has your key can spend its budget until
+  your teacher replaces it. So keep the rules in [section 4](#4-the-course-key), and don't share
+  your key.
 
 **Your own plan:** no extra cost. The agent's work counts against your plan's limits: a 5-hour
 window and a weekly limit, shared with the chat app (Claude Pro and Max; ChatGPT Plus has a
@@ -344,14 +345,15 @@ test.
 For everyone without a plan: most of you. Skip this section if you use your own Claude or
 ChatGPT plan.
 
-With the course key, your agent talks to one model provider, OpenRouter, through a key the whole
-class shares. Your teacher gives you the key privately. It looks like `sk-or-v1-…`.
+With the course key, your agent talks to one model provider, OpenRouter, through your own key.
+Your teacher gives it to you privately. It looks like `sk-or-v1-…`.
 
 **Rules for the key**
 
 - Put it only in your environment (below) or in your personal tool config in your home folder.
 - **Never** put it in a project folder, a commit, a screenshot, a chat or a prompt.
 - Never ask the agent to print it.
+- Don't share it, not even with classmates: it is yours, and so is its daily budget.
 
 Don't type the key into a command: commands are saved in your shell history.
 
@@ -843,7 +845,7 @@ What this means:
 | Problem | Fix |
 |---|---|
 | `404` "… matching your guardrail restrictions …", or `403` "not allowed" | The tool asked for a model the course key doesn't allow. Check the model name in your config. OpenCode: is `small_model` set? In `/models`, pick **GLM-5.3-Flash**, not FlashX or Prime. Claude Code: are all model variables set? |
-| `403` "Budget limit exceeded" | Today's course budget is used up. It resets at midnight UTC (1 or 2 am in Zurich). Tell your teacher. |
+| `403` "Budget limit exceeded" | Your key's $3 for today are used up. It resets at midnight UTC (1 or 2 am in Zurich). Tell your teacher if it happens often. |
 | `401` "User not found" or "invalid key" | Typo in the key, or the terminal doesn't see it. Windows: open a new terminal after setting the key. Mac: `source ~/.zshrc`. Run `node tools/check-openrouter.mjs`. |
 | `model_not_found`, `404` | Typo in the model name. OpenCode needs `openrouter/z-ai/glm-5.3-flash`, Claude Code and Codex need `z-ai/glm-5.3-flash`. |
 | Images are rejected or ignored | GLM-5.3 can't see images. Switch back to GLM-5.3 Flash. |
