@@ -1519,7 +1519,7 @@ A page where you paste text and see live counts.
   <div class="d1-co-cols">
     <div>
       <p><strong>The course pays:</strong> $350 for the whole course. A leaked key costs the course, not you: anyone with it can spend the budget.</p>
-      <p><strong>Used up?</strong> Every request gets <code>403</code> until midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich), for the whole class.</p>
+      <p><strong>Used up?</strong> The key stops until midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich), for the whole class.</p>
     </div>
     <div>
       <p><strong>Per million tokens:</strong> GLM-5.3 Flash $0.15 in, $0.50 out. <span class="nowrap">GLM-5.3:</span> about 3× to 10× that, depending on the provider.</p>
@@ -2125,7 +2125,7 @@ git config --global pull.rebase false</pre>
   </div>
   <p class="label">Windows · PowerShell · paste the key when asked, then open a new terminal</p>
 <pre class="c22">[Environment]::SetEnvironmentVariable('OPENROUTER_API_KEY', (Read-Host 'Paste the key'), 'User')</pre>
-  <p class="s26">Paste the export line, don't type it: TextEdit can turn typed quotes into curly ones. Claude Code: the key goes in <code>~/.claude/settings.json</code>, in your home folder, never in a project. Test it later in your fork: <code>node tools/check-openrouter.mjs</code> should end with All good. Its “403 OK” is right: that model must be blocked.</p>
+  <p class="s26">Paste the export line, don't type it: TextEdit can turn typed quotes into curly ones. Claude Code: the key goes in <code>~/.claude/settings.json</code>, in your home folder, never in a project. Test it later in your fork: <code>node tools/check-openrouter.mjs</code> should end with All good.</p>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
@@ -2386,98 +2386,12 @@ cd 01-text-stats
 npm install
 npx playwright install chromium
 npm run check</pre>
-      <p class="s26">The first line tests the course key: you want 200 OK, 404 OK, All good. Own plan? Skip it. Then <b>FAILED: Nothing rendered yet</b>: correct, no app yet.</p>
+      <p class="s26">The first line tests the course key: you want All good. Own plan? Skip it. Then <b>FAILED: Nothing rendered yet</b>: correct, no app yet.</p>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
-<!-- S9 When it fails -->
-<section class="slide light">
-  <style>
-    .d1-wf-svg { display: block; width: 100%; height: auto; flex: none; }
-    .d1-wf-svg .nd { fill: #fbfaf7; stroke: #d3cfc6; stroke-width: 2; }
-    .d1-wf-svg .nm { font: 600 26px var(--sans); fill: #1d1d1d; }
-    .d1-wf-svg .tx { font: 400 22px var(--sans); fill: #555; }
-    .d1-wf-svg .code { font: 600 30px var(--mono); fill: #c4383d; }
-    .d1-wf-svg .okc { font: 600 24px var(--mono); fill: #2f8a46; }
-    .d1-wf-pk { fill: none; stroke-width: 18; stroke-linecap: round; stroke-dasharray: 0 200; opacity: 0; }
-    @keyframes d1-wf-a1 { 0%, 1% { stroke-dashoffset: 0; opacity: 0; } 2% { opacity: 1; } 12% { stroke-dashoffset: -100; opacity: 1; } 18%, 100% { stroke-dashoffset: -100; opacity: 0; } }
-    @keyframes d1-wf-a2 { 0%, 24% { stroke-dashoffset: 0; opacity: 0; } 25% { opacity: 1; } 37% { stroke-dashoffset: -100; opacity: 1; } 43%, 100% { stroke-dashoffset: -100; opacity: 0; } }
-    @keyframes d1-wf-a3 { 0%, 49% { stroke-dashoffset: 0; opacity: 0; } 50% { opacity: 1; } 63% { stroke-dashoffset: -100; opacity: 1; } 69%, 100% { stroke-dashoffset: -100; opacity: 0; } }
-    @keyframes d1-wf-a4 { 0%, 74% { stroke-dashoffset: 0; opacity: 0; } 75% { opacity: 1; } 92% { stroke-dashoffset: -100; opacity: 1; } 96%, 100% { stroke-dashoffset: -100; opacity: 0; } }
-    @keyframes d1-wf-s1 { 0%, 11% { transform: scale(1); } 13% { transform: scale(1.25); } 17%, 100% { transform: scale(1); } }
-    @keyframes d1-wf-s2 { 0%, 36% { transform: scale(1); } 38% { transform: scale(1.25); } 42%, 100% { transform: scale(1); } }
-    @keyframes d1-wf-s3 { 0%, 62% { transform: scale(1); } 64% { transform: scale(1.25); } 68%, 100% { transform: scale(1); } }
-    .d1-wf-p1 { animation: d1-wf-a1 12s linear infinite; }
-    .d1-wf-p2 { animation: d1-wf-a2 12s linear infinite; }
-    .d1-wf-p3 { animation: d1-wf-a3 12s linear infinite; }
-    .d1-wf-p4 { animation: d1-wf-a4 12s linear infinite; }
-    .d1-wf-svg .stamp { transform-box: fill-box; transform-origin: center; }
-    .d1-wf-s1 { animation: d1-wf-s1 12s ease-in-out infinite; }
-    .d1-wf-s2 { animation: d1-wf-s2 12s ease-in-out infinite; }
-    .d1-wf-s3 { animation: d1-wf-s3 12s ease-in-out infinite; }
-    .d1-wf-cards { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 24px; margin-top: 22px; }
-    .d1-wf-card { padding: 16px 22px 18px; border-radius: 14px; background: #fbfaf7; border: 2px solid #e8b9ba; }
-    .d1-wf-card p { margin: 0 0 10px; font-size: 26px; line-height: 1.38; color: var(--grey); }
-    .d1-wf-card p.h { margin: 0 0 4px; font-size: 26px; color: var(--ink); font-weight: 600; }
-    .d1-wf-card p.h b { font-family: var(--mono); color: #c4383d; margin-right: 8px; }
-    .d1-wf-card code { font-size: 0.92em; white-space: nowrap; }
-    .d1-wf-key { margin: -20px 0 30px; font-size: 28px; line-height: 1.42; color: var(--grey); }
-  </style>
-  <p class="eyebrow">Setup · when it fails · the course key</p>
-  <h2>The error says where it stopped.</h2>
-  <p class="d1-wf-key">With the course key, a request passes three checks. The error says which one stopped it. Your own plan: next slide.</p>
-  <svg class="d1-wf-svg d1-anim" viewBox="0 0 1664 150" role="img" aria-label="Your tool sends a request. OpenRouter checks the key: 401 if it is missing or wrong. The course guardrail checks the model and the budget: 404 if the model is not allowed, 403 if the budget is used up. The model: 404 if the name is wrong. Otherwise: 200 OK.">
-    <defs>
-      <marker id="d1-wf-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#9a968e" /></marker>
-    </defs>
-    <path class="d1-wf-pk d1-wf-p1" d="M250 55 H330" pathLength="100" stroke="#e8875b" />
-    <path class="d1-wf-pk d1-wf-p2" d="M250 55 H720" pathLength="100" stroke="#e8875b" />
-    <path class="d1-wf-pk d1-wf-p3" d="M250 55 H1140" pathLength="100" stroke="#e8875b" />
-    <path class="d1-wf-pk d1-wf-p4" d="M250 55 H1500" pathLength="100" stroke="#46a758" />
-    <line x1="252" y1="55" x2="324" y2="55" stroke="#9a968e" stroke-width="3" marker-end="url(#d1-wf-head)" />
-    <line x1="642" y1="55" x2="714" y2="55" stroke="#9a968e" stroke-width="3" marker-end="url(#d1-wf-head)" />
-    <line x1="1062" y1="55" x2="1134" y2="55" stroke="#9a968e" stroke-width="3" marker-end="url(#d1-wf-head)" />
-    <line x1="1422" y1="55" x2="1494" y2="55" stroke="#9a968e" stroke-width="3" marker-end="url(#d1-wf-head)" />
-    <rect class="nd" x="1" y="1" width="248" height="108" rx="14" />
-    <text class="nm" x="22" y="46">Your tool</text>
-    <text class="tx" x="22" y="82">sends a request</text>
-    <rect class="nd" x="330" y="1" width="310" height="108" rx="14" />
-    <text class="nm" x="352" y="46">OpenRouter</text>
-    <text class="tx" x="352" y="82">checks the key</text>
-    <rect class="nd" x="720" y="1" width="340" height="108" rx="14" />
-    <text class="nm" x="742" y="40">Course guardrail</text>
-    <text class="tx" x="742" y="72">model allowed?</text>
-    <text class="tx" x="742" y="100">budget left?</text>
-    <rect class="nd" x="1140" y="1" width="280" height="108" rx="14" />
-    <text class="nm" x="1162" y="46">The model</text>
-    <text class="tx" x="1162" y="82">is the name right?</text>
-    <rect class="nd" x="1500" y="1" width="163" height="108" rx="14" style="stroke: #46a758; stroke-width: 3" />
-    <text class="nm" x="1522" y="46">Answer</text>
-    <text class="okc" x="1522" y="86">200 OK</text>
-    <text class="code stamp d1-wf-s1" x="485" y="146" text-anchor="middle">401</text>
-    <text class="code stamp d1-wf-s2" x="890" y="146" text-anchor="middle">404 · 403</text>
-    <text class="code stamp d1-wf-s3" x="1280" y="146" text-anchor="middle">404</text>
-  </svg>
-  <div class="d1-wf-cards">
-    <div class="d1-wf-card">
-      <p class="h"><b>401</b>“User not found”, “invalid key”</p>
-      <p>Typo in the key, or the terminal doesn't see it: open a new one (Mac: <code>source ~/.zshrc</code>).</p>
-    </div>
-    <div class="d1-wf-card">
-      <p class="h"><b>404</b>“… guardrail restrictions …”</p>
-      <p>The key blocks this model (e.g. FlashX). OpenCode: pick GLM-5.3-Flash in <code>/models</code>; is <code>small_model</code> set? Claude Code: are all model variables set?</p>
-      <p class="h"><b>403</b>“Budget limit exceeded”</p>
-      <p>Used up for today. It resets at midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich).</p>
-    </div>
-    <div class="d1-wf-card">
-      <p class="h"><b>404</b><code>model_not_found</code></p>
-      <p>Typo in the model name. OpenCode: <code>openrouter/z-ai/glm-5.3-flash</code>. Claude Code, Codex: <code>z-ai/glm-5.3-flash</code>.</p>
-    </div>
-  </div>
-  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
-</section>
 <!-- S9b Own plan and other errors -->
 <section class="slide light">
   <style>
@@ -2506,7 +2420,8 @@ npm run check</pre>
       <tr><td>Windows: “running scripts is disabled”</td><td><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force</code>, new terminal</td></tr>
       <tr><td><code>node</code> “not recognized”</td><td>Open a new terminal. Still not found: reinstall Node LTS.</td></tr>
       <tr><td>“Chromium for Playwright is missing”</td><td><code>npx playwright install chromium</code></td></tr>
-      <tr><td>Mac: <code>git push</code> asks for a password</td><td><code>gh auth login</code>, once. More: <code>docs/student-setup.md</code>, section 10.</td></tr>
+      <tr><td>Mac: <code>git push</code> asks for a password</td><td><code>gh auth login</code>, once.</td></tr>
+      <tr><td>Any other error, or one with the course key</td><td><code>docs/student-setup.md</code>, section 10, or ask your teacher.</td></tr>
     </table>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
