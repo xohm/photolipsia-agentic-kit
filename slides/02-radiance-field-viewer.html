@@ -356,6 +356,16 @@ a.jump {
   text-underline-offset: 6px;
 }
 
+/* Topic links (build.py): the first mention of a topic on a page links to a good source. Quieter than
+   a jump link, as they sit in running text: same colour and weight, a thin dotted coral line. */
+a.topic {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--coral);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
 /* Code in a label keeps its spelling and the label's size. */
 .label code {
   text-transform: none;
@@ -714,7 +724,7 @@ td:first-child {
   <div class="text">
     <p class="eyebrow">MA Interaction Design · ZHdK · HS 2026</p>
     <h1>Radiance Fields<br />in the Browser</h1>
-    <p class="cover-sub2">three.js + Spark</p>
+    <p class="cover-sub2"><a class="topic" href="https://threejs.org/" target="_blank" rel="noopener">three.js</a> + <a class="topic" href="https://sparkjs.dev/" target="_blank" rel="noopener">Spark</a></p>
     <div class="sub">
       <p>Your own scan, full window, in a page you built.</p>
       <p>Same loop as before: plan → build → introspect → fix → log.</p>
@@ -855,7 +865,7 @@ td:first-child {
       <p>Trained from photos: a radiance field you can look around in.</p>
     </div>
   </div>
-  <p class="d2-sp-rf"><strong>A radiance field</strong> is a 3D scene learned from photos: from any point of view, it gives the colours you would see. Gaussian splats store one as soft blobs.</p>
+  <p class="d2-sp-rf"><strong>A radiance field</strong> is a 3D scene learned from photos: from any point of view, it gives the colours you would see. <a class="topic" href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noopener">Gaussian splats</a> store one as soft blobs.</p>
   <p class="small" style="margin: 10px 0 0">Files: <code>.ply</code> <code>.spz</code> <code>.splat</code> <code>.ksplat</code> <code>.sog</code> <code>.rad</code>. Spark reads all of them.</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
@@ -940,7 +950,7 @@ td:first-child {
   <p class="eyebrow">Example 2</p>
   <h1>Your scan.<br />Your viewer.</h1>
   <p class="after">A splat viewer with three.js and Spark, in nine prompts.</p>
-  <p class="after run">We ran prompts 1 to 8 in OpenCode with GLM-5.3 Flash: 11.6 minutes of agent time, $0.26.</p>
+  <p class="after run">We ran prompts 1 to 8 in <a class="topic" href="https://opencode.ai/docs/" target="_blank" rel="noopener">OpenCode</a> with <a class="topic" href="https://openrouter.ai/z-ai/glm-5.3-flash" target="_blank" rel="noopener">GLM-5.3 Flash</a>: 11.6 minutes of agent time, $0.26.</p>
 </section>
 
 <!-- s05-skeleton.html -->
@@ -964,7 +974,7 @@ td:first-child {
 └── src/ · tests/                 <span class="c">empty: your agent fills them</span></pre>
     <div class="body">
       <p><strong>ai/spark-facts.md</strong>: how Spark 2.4.0 works. Models may remember an older&nbsp;Spark.</p>
-      <p><strong>public/splats/</strong>: ignored by git, off limits for the agent (a deny rule in OpenCode and Claude Code). Reading big binaries wastes tokens and tells it nothing.</p>
+      <p><strong>public/splats/</strong>: ignored by git, off limits for the agent (a deny rule in OpenCode and <a class="topic" href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code</a>). Reading big binaries wastes tokens and tells it nothing.</p>
       <p><strong>make-test-splat.mjs</strong>: writes a small test splat, so the check always has something to draw.</p>
       <p><strong>src/config.js</strong> comes later: your agent makes it in prompt 4.</p>
     </div>
@@ -1011,10 +1021,10 @@ check: <span class="bad">FAILED</span> (0.4 s)
     <div class="side">
       <p class="label">Agent terminal · always inside 02-splat-viewer</p>
 <pre class="tight" data-copy="lines">cd ~/photolipsia-agentic-kit/02-splat-viewer</pre>
-      <p class="note">Then <code>opencode</code>, <code>claude</code> or <code>codex</code>. Codex asks if you trust this folder: yes.</p>
+      <p class="note">Then <code>opencode</code>, <code>claude</code> or <code>codex</code>. <a class="topic" href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener">Codex</a> asks if you trust this folder: yes.</p>
       <p class="label">Before prompt 1 · try the boundaries</p>
 <pre class="prompt" style="max-width: 680px">Open public/splats/test.ply and tell me what is in it.</pre>
-      <p class="note">OpenCode refuses. In our test it then tried the shell (<code>ls</code>): blocked too. Claude Code has deny rules too. Codex has none and may read it: <code>AGENTS.md</code> rules are requests, deny rules are locks. Not perfect ones: a script the agent runs can still open any file.</p>
+      <p class="note">OpenCode refuses. In our test it then tried the shell (<code>ls</code>): blocked too. Claude Code has deny rules too. Codex has none and may read it: <a class="topic" href="https://agents.md/" target="_blank" rel="noopener"><code>AGENTS.md</code></a> rules are requests, deny rules are locks. Not perfect ones: a script the agent runs can still open any file.</p>
     </div>
     <div class="pcol">
 <pre class="prompt">Read AGENTS.md, ai/strategy.md and <span class="nw">ai/spark-facts.md</span>. We are building a <mark class="dd">full-window viewer</mark> for Gaussian splat files with Vite, three.js and Spark. The packages are already in package.json. Write a plan of 5 to 7 small steps into ai/strategy.md: scaffold, load the test splat in <span class="nw">public/splats/test.ply</span>, then my own file, then <mark class="dd">camera controls and an orientation toggle</mark>. Never open files in public/splats/. Don't write code yet.</pre>
@@ -1240,7 +1250,7 @@ splat.quaternion.set(1, 0, 0, 0);</pre>
 <pre class="prompt" style="margin-top: 14px">Is the VR scale a pure function with a unit test, as <span class="nw">ai/spark-facts.md</span> says?</pre>
       </div>
       <p class="note"><strong>No headset?</strong> Meta’s Immersive Web Emulator extension for Chrome shows the Enter VR button on your laptop. In VR: left stick moves, right stick turns.</p>
-      <p class="note">Tested with Meta’s emulation runtime on Linux, not yet on a real Quest 3.</p>
+      <p class="note">Tested with Meta’s emulation runtime on Linux, not yet on a real <a class="topic" href="https://www.meta.com/quest/quest-3/" target="_blank" rel="noopener">Quest 3</a>.</p>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1683,7 +1693,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
 </style>
   <p class="eyebrow">Extension · Blender MCP · set up once</p>
   <h2>Set up the Blender MCP once.</h2>
-  <p class="d2-ms-lead">Optional: tools for your agent inside Blender 5.3, <a class="jump" href="https://builder.blender.org/download/daily/" target="_blank" rel="noopener">the 5.3 beta</a> until its release (planned for November 2026). Steps 1 to 3 are the same for every agent.</p>
+  <p class="d2-ms-lead">Optional: tools for your agent inside <a class="topic" href="https://www.blender.org/" target="_blank" rel="noopener">Blender</a> 5.3, <a class="jump" href="https://builder.blender.org/download/daily/" target="_blank" rel="noopener">the 5.3 beta</a> until its release (planned for November 2026). Steps 1 to 3 are the same for every agent.</p>
   <div class="d2-ms">
     <div class="os">
       <div><p class="label">1 · Mac</p>
@@ -1695,7 +1705,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
       <div class="side">
         <p class="note">2 · Close the terminal and open a new one. Open Blender once and close it. Then, on both:</p>
 <pre data-copy="lines">uvx mcp-for-blender@2.2.4 install-addon</pre>
-        <p class="note">3 · In Blender: Edit → Preferences → Add-ons, turn on <strong>MCP for Blender</strong>. Press <strong>N</strong> in the 3D view: <span class="nw">“Connected on port 9876”.</span></p>
+        <p class="note">3 · In Blender: Edit → Preferences → Add-ons, turn on <strong><a class="topic" href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">MCP</a> for Blender</strong>. Press <strong>N</strong> in the 3D view: <span class="nw">“Connected on port 9876”.</span></p>
       </div>
       <div class="side">
         <p class="note"><strong>Before you try:</strong> save your <code>.blend</code>. In our test, OpenCode ran the Blender tools without asking, and <code>look</code> sends a picture of your viewport to the model. One agent at a time.</p>
@@ -1931,7 +1941,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
 <pre class="prompt">Use the Blender tools. Plan a training set for Spirula from the open scene: render it from <mark class="dd">48 cameras on a sphere</mark> around the objects, with a transparent background, into <span class="nw">public/splats/training/images/</span>. Write <span class="nw">public/splats/training/transforms.json</span> with w, h, fl_x, fl_y, cx, cy and one frame per image: file_path with .png, and transform_matrix = the camera's matrix_world turned <span class="nw">y-down</span> like a scan (rotate +90 degrees about X). Use absolute paths. Don't change anything yet.</pre>
       <p class="label">Then “Go.” Then</p>
 <pre class="prompt">Check: count the images, check transforms.json, and use look on one of the images.</pre>
-      <p class="note">Spirula gets the pictures <strong>and</strong> the exact cameras, so it doesn’t have to guess where each picture was taken.</p>
+      <p class="note"><a class="topic" href="https://github.com/harry7557558/spirula-studio" target="_blank" rel="noopener">Spirula</a> gets the pictures <strong>and</strong> the exact cameras, so it doesn’t have to guess where each picture was taken.</p>
     </div>
   </div>
   <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux with OpenCode, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -2018,7 +2028,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
     </div>
     <div>
       <p class="lead">Plan → build → <span class="grad">introspect</span> → fix → log.</p>
-      <div class="d2-rc-done"><strong>Done when</strong> <code>npm test</code> passes, <code>npm run check</code> says OK, and your scan opens when you drop it on the page. Commit and push after every working step. Then send your teacher the link to your fork.</div>
+      <div class="d2-rc-done"><strong>Done when</strong> <code>npm test</code> passes, <code>npm run check</code> says OK, and your scan opens when you drop it on the page. Commit and push after every working step. Then send your teacher the link to your <a class="topic" href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo" target="_blank" rel="noopener">fork</a>.</div>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>

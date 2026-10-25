@@ -356,6 +356,16 @@ a.jump {
   text-underline-offset: 6px;
 }
 
+/* Topic links (build.py): the first mention of a topic on a page links to a good source. Quieter than
+   a jump link, as they sit in running text: same colour and weight, a thin dotted coral line. */
+a.topic {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--coral);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
 /* Code in a label keeps its spelling and the label's size. */
 .label code {
   text-transform: none;
@@ -717,7 +727,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   <div class="d1-su">
     <p class="eyebrow">Before day one</p>
     <h1>Setup</h1>
-    <p class="after d1-su-first">Once per laptop, about 45 minutes. Best before day one. You need one agent: OpenCode with the course key (most of you), or Claude Code or Codex with your own plan.</p>
+    <p class="after d1-su-first">Once per laptop, about 45 minutes. Best before day one. You need one agent: <a class="topic" href="https://opencode.ai/docs/" target="_blank" rel="noopener">OpenCode</a> with the course key (most of you), or <a class="topic" href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code</a> or <a class="topic" href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener">Codex</a> with your own plan.</p>
     <p class="after">Tested on Linux. The Mac and Windows commands follow each tool's own instructions, but nobody has run them on a real Mac or Windows laptop yet. If a step fails: <a class="jump" href="troubleshooting.html">troubleshooting</a>, or <a class="jump" href="#s-ask">ask in writing</a>.</p>
     <p class="after">Every step in detail: <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md" target="_blank" rel="noopener"><code>docs/student-setup.md</code></a></p>
     <p class="after d1-su-jump">Jump to: <a class="jump" href="#s-terminal">terminal</a> · <a class="jump" href="#s-git-node">Git and Node.js</a> · <a class="jump" href="#s-github">GitHub</a> · <a class="jump" href="#s-key">course key</a> · <a class="jump" href="#s-opencode">OpenCode</a> · <a class="jump" href="#s-claude">Claude Code</a> · <a class="jump" href="#s-codex">Codex</a> · <a class="jump" href="#s-key-tools">course key in Claude Code or Codex</a> · <a class="jump" href="#s-first-run">first run</a> · <a class="jump" href="#s-commands">commands</a> · <a class="jump" href="#s-fork">your fork</a> · <a class="jump" href="troubleshooting.html">when it fails</a> · <a class="jump" href="#s-ask">asking a question</a></p>
@@ -736,9 +746,9 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   <h2>What you install, and why.</h2>
   <table class="d1-wy">
     <tr><td><a class="jump" href="#s-terminal">Terminal</a></td><td>Where you type commands. The agent runs in it too. Already on your laptop.</td></tr>
-    <tr><td><a class="jump" href="#s-git-node">Git</a></td><td>Saves every step of your work. Sends it to GitHub, brings your teacher's updates.</td></tr>
-    <tr><td><a class="jump" href="#s-git-node">Node.js</a></td><td>Runs JavaScript on your laptop. Its <code>npm</code> installs the tools and the project's parts, and runs the check and your app.</td></tr>
-    <tr><td><a class="jump" href="#s-github">A GitHub account</a></td><td>Your copy of the course, your fork, lives there. Questions go to its Discussions.</td></tr>
+    <tr><td><a class="jump" href="#s-git-node">Git</a></td><td>Saves every step of your work. Sends it to <a class="topic" href="https://docs.github.com/en/get-started/start-your-journey/about-github-and-git" target="_blank" rel="noopener">GitHub</a>, brings your teacher's updates.</td></tr>
+    <tr><td><a class="jump" href="#s-git-node">Node.js</a></td><td>Runs JavaScript on your laptop. Its <a class="topic" href="https://docs.npmjs.com/about-npm" target="_blank" rel="noopener"><code>npm</code></a> installs the tools and the project's parts, and runs the check and your app.</td></tr>
+    <tr><td><a class="jump" href="#s-github">A GitHub account</a></td><td>Your copy of the course, your <a class="topic" href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo" target="_blank" rel="noopener">fork</a>, lives there. Questions go to its <a class="topic" href="https://docs.github.com/en/discussions" target="_blank" rel="noopener">Discussions</a>.</td></tr>
     <tr><td><a class="jump" href="#s-key">The course key</a></td><td>Pays for the AI model, $3 a day. With your own plan you don't need it.</td></tr>
     <tr><td><a class="jump" href="#s-opencode">One agent</a></td><td>OpenCode, Claude Code or Codex: reads your files, writes the code, runs the check.</td></tr>
     <tr><td><a class="jump" href="#s-fork">A browser for the check</a></td><td>Chromium, about 300 MB. The check opens your page in it, hidden, and takes a screenshot.</td></tr>
@@ -781,7 +791,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
         <tr><th>Type</th><th>It does</th></tr>
         <tr><td><code>cd folder</code></td><td>go into a folder</td></tr>
         <tr><td><code>cd ..</code></td><td>go up one folder</td></tr>
-        <tr><td><code>ls</code></td><td>list the files (PowerShell too)</td></tr>
+        <tr><td><code>ls</code></td><td>list the files (<a class="topic" href="https://learn.microsoft.com/en-us/powershell/" target="_blank" rel="noopener">PowerShell</a> too)</td></tr>
         <tr><td><code>pwd</code></td><td>where am I?</td></tr>
         <tr><td><b>Ctrl+C</b></td><td>stop a running program</td></tr>
       </table>
@@ -863,15 +873,15 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
     <div>
       <p class="label">Mac · Terminal</p>
 <pre class="c22" data-copy="lines">xcode-select --install</pre>
-      <p class="s26">A dialog opens: Install. That gives you Git.</p>
-      <p class="s26">Node.js: the LTS installer from <a class="jump" href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a>. With Homebrew: <code>brew install node gh</code>.</p>
+      <p class="s26">A dialog opens: Install. That gives you <a class="topic" href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>.</p>
+      <p class="s26"><a class="topic" href="https://nodejs.org/en/learn/getting-started/introduction-to-nodejs" target="_blank" rel="noopener">Node.js</a>: the LTS installer from <a class="jump" href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a>. With <a class="topic" href="https://brew.sh/" target="_blank" rel="noopener">Homebrew</a>: <code>brew install node gh</code>.</p>
     </div>
     <div>
       <p class="label">Windows · PowerShell · one line at a time</p>
 <pre class="c22" data-copy="lines">Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
 winget install --id Git.Git -e
 winget install --id OpenJS.NodeJS.LTS -e</pre>
-      <p class="s26">The first line lets npm run. The first time, winget asks to accept its agreements: <b>Y</b>. “winget is not recognized”? Install <a class="jump" href="https://apps.microsoft.com/detail/9NBLGGH4NNS1" target="_blank" rel="noopener">App Installer</a> from the Microsoft Store.</p>
+      <p class="s26">The first line lets npm run. The first time, <a class="topic" href="https://learn.microsoft.com/en-us/windows/package-manager/winget/" target="_blank" rel="noopener">winget</a> asks to accept its agreements: <b>Y</b>. “winget is not recognized”? Install <a class="jump" href="https://apps.microsoft.com/detail/9NBLGGH4NNS1" target="_blank" rel="noopener">App Installer</a> from the Microsoft Store.</p>
     </div>
   </div>
   <div class="d1-in-r2">
@@ -1124,7 +1134,7 @@ codex --version</pre>
       </div>
     </div>
     <p class="d1-tl-chk"><b>“Do you trust this folder?”</b> Yes, in your project folders. Otherwise Codex ignores the project's <code>.codex/config.toml</code>, and the check can't run in its sandbox.</p>
-    <p class="d1-tl-chk">Codex has no deny rules: it relies on <code>AGENTS.md</code>, the ignore files and its sandbox. <b>Check:</b> <code>/status</code> shows the account and model.</p>
+    <p class="d1-tl-chk">Codex has no deny rules: it relies on <a class="topic" href="https://agents.md/" target="_blank" rel="noopener"><code>AGENTS.md</code></a>, the ignore files and its sandbox. <b>Check:</b> <code>/status</code> shows the account and model.</p>
   </div>
   <p class="next">Next · <b>your plan:</b> <a class="jump" href="#s-first-run">first run</a> · <b>the course key:</b> <a class="jump" href="#s-key-tools">the key file</a></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1214,8 +1224,8 @@ cd "$HOME\hello-agent"</pre>
     </div>
     <div class="d1-fr-m">
       <p class="label">3 · Which model is it using?</p>
-      <p><b>OpenCode:</b> type <code>/models</code>. <b>GLM-5.3-Flash</b> (OpenRouter) must be selected. Not “GLM 5.3 FlashX”, not “GLM 5.3 Prime”: they look alike, and the course key blocks them.</p>
-      <p><b>GLM-5.3</b>, not Flash: only for a hard problem, then switch back. Up to about 10× the cost, and it can't see images.</p>
+      <p><b>OpenCode:</b> type <code>/models</code>. <b><a class="topic" href="https://openrouter.ai/z-ai/glm-5.3-flash" target="_blank" rel="noopener">GLM-5.3-Flash</a></b> (<a class="topic" href="https://openrouter.ai/docs/quickstart" target="_blank" rel="noopener">OpenRouter</a>) must be selected. Not “GLM 5.3 FlashX”, not “GLM 5.3 Prime”: they look alike, and the course key blocks them.</p>
+      <p><b><a class="topic" href="https://openrouter.ai/z-ai/glm-5.3" target="_blank" rel="noopener">GLM-5.3</a></b>, not Flash: only for a hard problem, then switch back. Up to about 10× the cost, and it can't see images.</p>
       <p>Asks for a key? <code>/connect</code>, choose OpenRouter, paste it.</p>
       <p class="d1-fr-tool"><b>Claude Code:</b> <code>/status</code> shows your Claude account, or the auth token with the course key.</p>
       <p><b>Codex:</b> <code>/status</code> shows the account and model.</p>

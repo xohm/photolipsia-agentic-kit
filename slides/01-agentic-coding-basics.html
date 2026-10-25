@@ -356,6 +356,16 @@ a.jump {
   text-underline-offset: 6px;
 }
 
+/* Topic links (build.py): the first mention of a topic on a page links to a good source. Quieter than
+   a jump link, as they sit in running text: same colour and weight, a thin dotted coral line. */
+a.topic {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--coral);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
 /* Code in a label keeps its spelling and the label's size. */
 .label code {
   text-transform: none;
@@ -758,7 +768,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   <h2>The agent writes. You decide.<br />The check shows what happened.</h2>
   <div class="d1-th-body">
     <p class="d1-th-first">An agent writes code fast. It can also be wrong in ways that look right.</p>
-    <p>In our own test, the agent prepared a 3D training set from Blender. The result came out upside down. No check caught it: we saw it by looking.</p>
+    <p>In our own test, the agent prepared a 3D training set from <a class="topic" href="https://www.blender.org/" target="_blank" rel="noopener">Blender</a>. The result came out upside down. No check caught it: we saw it by looking.</p>
     <p>So nothing counts as done until the check has run and you have looked.</p>
   </div>
   <div class="d1-th-row">
@@ -913,7 +923,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   </style>
   <p class="eyebrow">Your setup</p>
   <h2>Pick your tool and account.</h2>
-  <p class="d1-pk-lead">Most of you have no plan: use the course key with OpenCode. We ran every example with it.</p>
+  <p class="d1-pk-lead">Most of you have no plan: use the course key with <a class="topic" href="https://opencode.ai/docs/" target="_blank" rel="noopener">OpenCode</a>. We ran every example with it.</p>
   <div class="d1-pk d1-anim">
     <svg viewBox="0 0 1664 452" role="img" aria-label="No plan, most of you: the course key, with OpenCode, model GLM-5.3 Flash via OpenRouter. A Claude plan, Pro, Max, Team or Enterprise: Claude Code, signed in with your plan, model Claude by Anthropic. A ChatGPT plan, Plus or higher: Codex, signed in with ChatGPT, model GPT by OpenAI.">
       <defs>
@@ -970,7 +980,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
       <g class="d1-pk-lit d1-pk-r3"><rect x="0" y="322" width="470" height="118" rx="16" /><rect x="590" y="322" width="480" height="118" rx="16" /><rect x="1190" y="322" width="474" height="118" rx="16" /></g>
     </svg>
   </div>
-  <p class="d1-pk-note">Claude Code and Codex can also run on the course key. Jump to the setup: <a class="jump" href="00-setup.html#s-opencode">OpenCode</a> · <a class="jump" href="00-setup.html#s-claude">Claude Code</a> · <a class="jump" href="00-setup.html#s-codex">Codex</a></p>
+  <p class="d1-pk-note"><a class="topic" href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code</a> and <a class="topic" href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener">Codex</a> can also run on the course key. Jump to the setup: <a class="jump" href="00-setup.html#s-opencode">OpenCode</a> · <a class="jump" href="00-setup.html#s-claude">Claude Code</a> · <a class="jump" href="00-setup.html#s-codex">Codex</a></p>
   <p class="d1-pk-same">Whatever you pick, the loop and the files are the same.</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
@@ -1010,7 +1020,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
         <path class="d1-pv-pk" pathLength="100" d="M62 28 H146" />
         <text x="166" y="40">OpenRouter, USA</text>
       </svg>
-      <p class="d1-pv-t">Then to one of many companies running GLM, chosen by price, not country. OpenRouter keeps no content by default. A few companies keep prompts a while <span class="nowrap">(one says 30 days).</span></p>
+      <p class="d1-pv-t">Then to one of many companies running GLM, chosen by price, not country. <a class="topic" href="https://openrouter.ai/docs/quickstart" target="_blank" rel="noopener">OpenRouter</a> keeps no content by default. A few companies keep prompts a while <span class="nowrap">(one says 30 days).</span></p>
       <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Nothing to switch:</b> the companies listed say they don't train on it.</span></p>
     </div>
     <div class="d1-pv-card">
@@ -1064,7 +1074,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
     <p class="d1-ff-fix"><code>ai/strategy.md</code><span>memory you can read</span></p>
     <p class="d1-ff-proof"><b>Prompt 6:</b> quit, start fresh</p>
     <p class="d1-ff-fail">drifts: skips the plan, takes big steps.</p>
-    <p class="d1-ff-fix"><code>AGENTS.md</code><span>rules, read by every tool</span></p>
+    <p class="d1-ff-fix"><a class="topic" href="https://agents.md/" target="_blank" rel="noopener"><code>AGENTS.md</code></a><span>rules, read by every tool</span></p>
     <p class="d1-ff-proof"><b>Prompt 6:</b> add a rule of your own</p>
     <p class="d1-ff-fail">reads what it shouldn't: keys, thousands of library files.</p>
     <p class="d1-ff-fix"><code>.ignore + deny rules</code><span>hidden from search, blocked from opening</span></p>
@@ -1596,7 +1606,7 @@ A page where you paste text and see live counts.
       <p><strong>Used up?</strong> Your key stops until midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich). The others go on.</p>
     </div>
     <div>
-      <p><strong>Per million tokens:</strong> GLM-5.3 Flash $0.15 in, $0.50 out. <span class="nowrap">GLM-5.3:</span> about 3× to 10× that, depending on the provider.</p>
+      <p><strong>Per million tokens:</strong> <a class="topic" href="https://openrouter.ai/z-ai/glm-5.3-flash" target="_blank" rel="noopener">GLM-5.3 Flash</a> $0.15 in, $0.50 out. <span class="nowrap"><a class="topic" href="https://openrouter.ai/z-ai/glm-5.3" target="_blank" rel="noopener">GLM-5.3</a>:</span> about 3× to 10× that, depending on the provider.</p>
       <p><strong>Measured:</strong> all of Example 1, $0.05. Example 2, prompts 1 to 8, $0.26 (GLM-5.3 Flash, Linux).</p>
     </div>
   </div>
@@ -1827,7 +1837,7 @@ git diff --cached</pre>
       <p class="label">Then</p>
 <pre class="c22" data-copy="lines">git commit -m "Text stats"
 git push</pre>
-      <p class="s26"><code>git push</code> saves it in your fork on GitHub. Your teacher can follow it there.</p>
+      <p class="s26"><code>git push</code> saves it in your <a class="topic" href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo" target="_blank" rel="noopener">fork</a> on <a class="topic" href="https://docs.github.com/en/get-started/start-your-journey/about-github-and-git" target="_blank" rel="noopener">GitHub</a>. Your teacher can follow it there.</p>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
