@@ -22,6 +22,7 @@
 //   limit <who> <usd>   disable <who>   enable <who>
 //   rename <who> <student>   a key made by hand becomes that student's course key
 //   replace <who>            a leaked key: disable it, make a new one with the rest of its limit
+//   mail [students.csv]      one email per student with their key, opened in your mail program
 //   delete-all               at the end of the course
 //
 // <who> is a student (anna), a key number (7) or the start of a key hash.
@@ -29,6 +30,7 @@
 // --out <keys file>, --map <students file>, --yes (setup without questions: give it the student
 // list and --expires). The Management key can also come from OPENROUTER_MANAGEMENT_KEY.
 
+import { spawn } from 'node:child_process';
 import { appendFileSync, chmodSync, existsSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
@@ -44,9 +46,34 @@ const LEAKED = '-leaked';
 const GUARDRAILS_PAGE = 'https://openrouter.ai/workspaces/default/guardrails';
 const CREDITS_PAGE = 'https://openrouter.ai/settings/credits';
 const MANAGEMENT_PAGE = 'https://openrouter.ai/settings/management-keys';
+const KIT = 'https://github.com/xohm/photolipsia-agentic-kit';
+
+// The email `mail` opens for each student. {first name} and {key} are filled in.
+const MAIL_SUBJECT = 'Photolipsia: your course key for tomorrow';
+const MAIL_BODY = `Hi {first name},
+
+Tomorrow we go deeper into agentic coding. If you want to look at it beforehand:
+
+- Course kit: ${KIT}
+  Fork it: your fork is where you work. It is public.
+- Setup guide: ${KIT}/blob/main/docs/student-setup.md
+  or as slides: https://xohm.github.io/photolipsia-agentic-kit/slides/00-setup.html
+- Your personal course key: {key}
+  Section 4 of the guide shows where to put it. $10 a day, $25 for the whole course.
+  Keep it to yourself: never in a project, a commit, a screenshot, a chat or a prompt,
+  and don't forward this email.
+
+If you have your own Claude or ChatGPT plan, you don't need the key: tell me and I'll
+switch it off.
+
+Questions: ${KIT}/discussions, or tomorrow in class.
+
+Max
+`;
 
 const { command, args, options } = parseArgs(process.argv.slice(2));
-const COMMANDS = { setup, create, list, check, fix, assign, limit, disable, enable, rename, replace, 'delete-all': deleteAll };
+const COMMANDS = { setup, create, list, check, fix, assign, limit, disable, enable, rename, replace, mail, 'delete-all': deleteAll };
+const OFFLINE = ['mail'];
 
 if (!COMMANDS[command]) {
   if (command && command !== 'help') console.log(`Unknown command: ${command}\n`);
@@ -62,7 +89,7 @@ const budget = dollars('--budget', options.budget ?? '10');
 const names = readMap();
 const prompts = { reader: null, lines: [], waiting: null, ended: false, muted: false };
 
-const managementKey = process.env.OPENROUTER_MANAGEMENT_KEY?.trim() || await askManagementKey();
+const managementKey = OFFLINE.includes(command) ? '' : process.env.OPENROUTER_MANAGEMENT_KEY?.trim() || await askManagementKey();
 const headers = { Authorization: `Bearer ${managementKey}`, 'Content-Type': 'application/json' };
 
 try {
@@ -258,6 +285,42 @@ async function replace(who) {
   if (remaining === 0) console.log(`The old key had used its whole limit. Raise it: node tools/student-keys.mjs limit ${number(key.name)} <usd>`);
 }
 
+// One email per student, opened in your mail program with the key filled in: you press Send.
+// The keys come from the --out file and never show in the terminal.
+async function mail(file) {
+  if (!existsSync(out)) fail(`No keys file at ${out}. Keys are shown only once: give a student a new one with replace <who>.`);
+  const saved = new Map(readFileSync(out, 'utf8').split(/\r?\n/).slice(1).map((line) => splitCsv(line, ',')).map((row) => [row[1], row[2]]));
+  const students = readStudents(await askStudentFile(file));
+  const ready = students.filter((student) => saved.get(names.get(student.slug)?.keyName));
+  const without = students.filter((student) => !ready.includes(student));
+  if (without.length) console.log(`No key in ${out} for: ${without.map((student) => student.label).join(', ')}`);
+  if (!ready.length) fail('Nobody to write to.');
+
+  console.log(`\n${ready.length} students with a key:`);
+  ready.forEach((student, i) => console.log(`  ${String(i + 1).padStart(2)}  ${student.label}  ${student.email || '(no address in the list)'}`));
+  const picked = await askNumbers('Write to whom? Enter: all of them, or their numbers, e.g. 1 or 2-21: ', ready.length);
+  const chosen = picked.length ? ready.filter((_, i) => picked.includes(i + 1)) : ready;
+
+  console.log('\nEach email opens in your mail program. Check it, press Send, then come back here.');
+  for (const [i, student] of chosen.entries()) {
+    const body = MAIL_BODY.replace('{first name}', () => student.given).replace('{key}', () => saved.get(names.get(student.slug).keyName));
+    openMail(student.email ?? '', MAIL_SUBJECT, body);
+    const missing = student.email ? '' : ' Fill in the address: the list has none.';
+    const answer = await ask(`${i + 1}/${chosen.length} ${student.label}: email opened.${missing} Enter for the next (q to stop): `);
+    if (answer.toLowerCase() === 'q') fail('Stopped.');
+  }
+  console.log(`\nDone: ${chosen.length} emails opened. Once they are sent, move the keys to your password manager and delete ${out}.`);
+}
+
+// A mailto: link, handed to the default mail program. Nothing goes through a shell.
+function openMail(to, subject, body) {
+  const url = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body.replace(/\n/g, '\r\n'))}`;
+  const [program, ...rest] = process.platform === 'darwin' ? ['open', url]
+    : process.platform === 'win32' ? ['rundll32', 'url.dll,FileProtocolHandler', url]
+      : ['xdg-open', url];
+  spawn(program, rest, { detached: true, stdio: 'ignore' }).on('error', () => console.log(`Could not start ${program}.`)).unref();
+}
+
 async function deleteAll() {
   const course = (await allKeys()).filter((key) => key.name.startsWith(PREFIX));
   if (!course.length) {
@@ -291,27 +354,39 @@ async function askManagementKey() {
   return key;
 }
 
-async function chooseStudents(file) {
+async function askStudentFile(file) {
   let path = file;
   while (!path || !existsSync(expandHome(path))) {
     if (path) console.log(`Can't find ${path}.`);
     if (options.yes) fail('setup --yes needs the student list: node tools/student-keys.mjs setup students.csv --expires YYYY-MM-DD --yes');
     path = cleanPath(await ask('Student list: the ZHdK export or a CSV with the header "name" (you can drag the file here): '));
   }
-  const students = readStudents(path);
+  return path;
+}
+
+async function chooseStudents(file) {
+  const students = readStudents(await askStudentFile(file));
   if (options.yes) return students;
   console.log(`\n${students.length} students:`);
   students.forEach((student, i) => {
     const entry = names.get(student.slug);
     console.log(`  ${String(i + 1).padStart(2)}  ${student.label}${entry ? `  (has key ${number(entry.keyName)})` : ''}`);
   });
+  const picked = await askNumbers('Who uses their own Claude or ChatGPT plan and gets no key? Their numbers, e.g. 3 7 (Enter: nobody): ', students.length);
+  return students.filter((_, i) => !picked.includes(i + 1));
+}
+
+// Numbers from a list: "3 7", "2-21" or both. Enter gives an empty list.
+async function askNumbers(question, max) {
   for (;;) {
-    const answer = await ask('Who uses their own Claude or ChatGPT plan and gets no key? Their numbers, e.g. 3 7 (Enter: nobody): ');
-    const picked = answer.split(/[\s,;]+/).filter(Boolean).map(Number);
-    if (picked.every((n) => Number.isInteger(n) && n >= 1 && n <= students.length)) {
-      return students.filter((_, i) => !picked.includes(i + 1));
+    const picked = [];
+    for (const part of (await ask(question)).split(/[\s,;]+/).filter(Boolean)) {
+      const [from, to = from] = part.split('-').map(Number);
+      for (let n = from; n <= to; n++) picked.push(n);
+      if (!(from <= to)) picked.push(NaN);
     }
-    console.log(`Use numbers from 1 to ${students.length}.`);
+    if (picked.every((n) => Number.isInteger(n) && n >= 1 && n <= max)) return picked;
+    console.log(`Use numbers from 1 to ${max}, like 3 7 or 2-${max}.`);
   }
 }
 
@@ -789,12 +864,14 @@ function readStudents(file) {
   const column = (name) => header.findIndex((cell) => cell.trim().toLowerCase() === name);
   const first = column('vorname');
   const name = column('name');
+  const email = header.findIndex((cell) => /e-?mail/i.test(cell));
   if (name < 0) fail(`${file} needs a header line with the column "name" (or the ZHdK columns Name and Vorname).`);
 
   const people = rows.map((row) => {
     const given = (first >= 0 ? row[first] : row[name])?.trim() ?? '';
     const surname = first >= 0 ? row[name]?.trim() ?? '' : '';
-    return { given, surname, label: [given, surname].filter(Boolean).join(' '), slug: slug(given) };
+    const address = email >= 0 ? row[email]?.trim() : '';
+    return { given, surname, label: [given, surname].filter(Boolean).join(' '), slug: slug(given), email: address || null };
   }).filter((person) => person.slug);
   if (!people.length) fail(`No names in ${file}.`);
 

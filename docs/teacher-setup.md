@@ -99,6 +99,7 @@ Single steps during the course, `node tools/student-keys.mjs <command>`:
 | `fix` | repairs what `check` marks `[fix]` |
 | `limit anna 30` · `disable anna` · `enable anna` | one key |
 | `replace anna` | a leaked key: see "If the key leaks" in section 8 |
+| `mail` | one email per student with their key and the links to the kit, opened in your mail program (addresses from the ZHdK list); you press Send. Change the text at the top of the script. Needs no Management key |
 | `rename <hash> anna` | a key made by hand in the dashboard becomes Anna's course key |
 | `delete-all` | after the course; asks you to type `delete` |
 
@@ -350,8 +351,9 @@ sources (`slides-src/` in the solutions), then rebuild the slides.
 
 **The key:**
 
-- Hand it out **individually**: printed on a slip, or through a shared password-manager item.
-  Never in a group chat, an email to the class, a slide or the repository.
+- Hand it out **individually**: printed on a slip, through a shared password-manager item, or
+  one email per student (`node tools/student-keys.mjs mail`). Never in a group chat, an email to
+  the class, a slide or the repository.
 - Tell students the rules from the student guide: environment variable or home-folder config
   only, never in a project, a commit, a screenshot or a prompt.
 - Remind them on day one that the key is theirs alone: no sharing. A leaked key costs the course
