@@ -316,7 +316,7 @@ The `summary` at the top of `.check/report.json` tells you why. Common cases (th
 | `App error: "x.jpg" is not a splat file…` | Unsupported format. Export .ply, .spz, .splat, .ksplat, .sog or .rad |
 | `App error: Could not read x.ply (…)` | The file is broken or in a variant Spark can't read, e.g. ASCII `.ply`. Export it again |
 | `check "canvas is not blank" failed` | Nothing drawn: camera points away, splat too small, or no SparkRenderer |
-| `App error: WebGL unavailable…` | The browser could not start WebGL. Close other 3D apps and try another browser; if it persists, ask your teacher |
+| `App error: WebGL unavailable…` | The browser could not start WebGL. Close other 3D apps and try another browser; if it persists, [ask in the Discussions](../docs/student-setup.md#ask-a-question) |
 | `App not ready: … within … ms` | Large file in software WebGL. Check with the test splat: `npm run check "?file=test.ply"` |
 | `check "app checks ran" failed: … Timeout` with a big streamed file | `npm run check` draws in software and can't keep up. Check big files in the browser with `npm run dev` |
 | No **Enter VR** button | The browser can't do VR: a Mac browser never can. Use the Quest browser with `npm run dev:vr`, or a Windows PC with Quest Link |

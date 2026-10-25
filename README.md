@@ -21,6 +21,8 @@ public: anyone can see it.
    - on your own, step by step: [guides/02-splat-viewer-alone.md](guides/02-splat-viewer-alone.md)
 4. **Big scans:** [docs/big-scans.md](docs/big-scans.md)
 5. **Blender, MCP and your own splats:** [docs/blender-and-splats.md](docs/blender-and-splats.md)
+6. **Stuck?** The [troubleshooting page](https://xohm.github.io/photolipsia-agentic-kit/slides/troubleshooting.html) first.
+   Not there? Ask in writing, in the [Discussions](https://github.com/xohm/photolipsia-agentic-kit/discussions): [how](docs/student-setup.md#ask-a-question).
 
 Before you start, read two short sections of the setup guide:
 [where your prompts go, who sees them](docs/student-setup.md#where-your-prompts-go-who-sees-them)
@@ -29,8 +31,11 @@ Before you start, read two short sections of the setup guide:
 
 ## Slides
 
+- [Setup · Before day one](https://xohm.github.io/photolipsia-agentic-kit/slides/00-setup.html)
 - [Agentic Coding · Your first agent loop](https://xohm.github.io/photolipsia-agentic-kit/slides/01-agentic-coding-basics.html)
 - [Radiance Fields in the Browser](https://xohm.github.io/photolipsia-agentic-kit/slides/02-radiance-field-viewer.html)
+- [Troubleshooting](https://xohm.github.io/photolipsia-agentic-kit/slides/troubleshooting.html): a page, not slides.
+  **Help** at the bottom of every slide opens it.
 
 Arrow keys, space or the buttons at the bottom to move, F for full screen, P to save as PDF.
 They are also in `slides/` in your fork: double-click to open them without GitHub.
@@ -42,7 +47,7 @@ They are also in `slides/` in your fork: double-click to open them without GitHu
 02-splat-viewer/    skeleton for example 2
 guides/             what to type into your agent, step by step
 docs/               setup and background
-slides/             the two slide decks
+slides/             the setup, the two decks, the troubleshooting page
 tools/              check-openrouter.mjs: tests the course key
                     blender/splats.py: Gaussian splats in Blender 5.3, for the agent
 ```

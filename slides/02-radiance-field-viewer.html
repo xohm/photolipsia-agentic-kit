@@ -545,6 +545,20 @@ td:first-child {
   font-variant-numeric: tabular-nums;
 }
 
+/* The troubleshooting page, from every slide. deck.js ignores taps on links and on the nav. */
+.nav .help {
+  margin-left: 4px;
+  padding: 0 14px;
+  border-left: 1px solid rgb(241 239 234 / 24%);
+  color: inherit;
+  line-height: 30px;
+  text-decoration: none;
+}
+
+.nav .help:hover {
+  text-decoration: underline;
+}
+
 /* One slide per page when printing or saving as PDF. */
 @page {
   size: 1920px 1080px;
@@ -1963,56 +1977,12 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   <p class="d2-rf-step">One line in <code>ai/strategy.md</code>, under Decisions. If nothing, write that too.</p>
   <p class="d2-rf-loop">Plan → build → introspect → fix → log.</p>
 </section>
-
-<!-- s29-trouble.html -->
-<section class="slide light">
-<style>
-  .d2-tr td, .d2-tr th { padding: 14px 18px 14px 0; }
-  .d2-tr td { font-size: 27px; }
-  .d2-tr code { font-size: 22px; }
-  .d2-tr td:first-child { width: 22%; white-space: normal; }
-</style>
-  <p class="eyebrow">Appendix · Troubleshooting · Mac and Windows</p>
-  <h2>When something goes wrong</h2>
-  <table class="d2-tr">
-    <tr><th>Problem</th><th>Mac</th><th>Windows</th></tr>
-    <tr><td>npm not found</td><td>Install Node LTS, open a new terminal</td><td><code>winget install --id OpenJS.NodeJS.LTS -e</code>, new terminal</td></tr>
-    <tr><td>Scripts disabled</td><td>(does not happen)</td><td><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force</code></td></tr>
-    <tr><td>Port 5173 in use</td><td colspan="2">Find the terminal running <code>npm run dev</code> and press Ctrl+C</td></tr>
-    <tr><td>Chromium missing</td><td colspan="2"><code>npx playwright install chromium</code></td></tr>
-    <tr><td>No Enter VR button</td><td>Mac browsers can’t do VR: <code>npm run dev:vr</code>, Quest browser</td><td>Quest Link + Chrome, or the Quest browser</td></tr>
-    <tr><td>Upside down</td><td colspan="2">Press F, or set <code>flip</code> in <code>src/config.js</code></td></tr>
-  </table>
-  <p class="note" style="margin-top: 26px">Problems with the agent or your account: next slide. All of them: <code>docs/student-setup.md</code>, section 10.</p>
-  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
-</section>
-
-<!-- s30-trouble-agent.html -->
-<section class="slide light">
-<style>
-  .d2-ta td, .d2-ta th { padding: 13px 18px 13px 0; }
-  .d2-ta td { font-size: 26px; }
-  .d2-ta code { font-size: 22px; }
-  .d2-ta td:first-child { width: 30%; white-space: normal; }
-  .d2-ta .d2-ta-acc { display: block; font-size: 20px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); }
-</style>
-  <p class="eyebrow">Appendix · Troubleshooting · the agent and your account</p>
-  <h2>When the agent goes wrong</h2>
-  <table class="d2-ta">
-    <tr><th>Problem</th><th>What to do</th></tr>
-    <tr><td><span class="d2-ta-acc">Any account</span>Agent hangs after <code>npm run dev</code></td><td>Press Esc in the agent, the same in all three. Run <code>npm run dev</code> in your own terminal.</td></tr>
-    <tr><td><span class="d2-ta-acc">Course key (GLM)</span>Agent can’t see the screenshot</td><td>GLM-5.3 can’t see images, GLM-5.3 Flash can. OpenCode: <code>/models</code> → <strong>GLM-5.3-Flash</strong>. Claude Code, Codex: <code>/model</code>.</td></tr>
-    <tr><td><span class="d2-ta-acc">Course key (GLM)</span>An error from the course key</td><td><code>docs/student-setup.md</code>, section 10, or ask your teacher.</td></tr>
-    <tr><td><span class="d2-ta-acc">Your own plan</span>Usage limit reached</td><td>Claude Code, Codex: <code>/usage</code> shows your limits. Wait until it resets.</td></tr>
-    <tr><td><span class="d2-ta-acc">Codex</span>The check fails: “listen EPERM”</td><td>Start Codex in the project folder and answer yes to “Do you trust this folder?”. Otherwise it ignores <code>.codex/config.toml</code>.</td></tr>
-  </table>
-  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
-</section>
 </div>
 <nav class="nav" aria-label="Slides">
   <button class="previous" type="button" aria-label="Previous slide">&larr;</button>
   <span class="count" aria-live="polite"></span>
   <button class="next" type="button" aria-label="Next slide">&rarr;</button>
+  <a class="help" href="troubleshooting.html">Help</a>
 </nav>
 <script>
 // Keyboard: → / Space / PageDown next, ← / PageUp previous, Home / End, P print, F full screen.

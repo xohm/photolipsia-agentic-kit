@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Troubleshooting · Photolipsia</title>
+<meta name="description" content="Photolipsia · ZHdK MA Interaction Design · HS 2026 · When something goes wrong" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+<style>
+:root {
+  --dark: #171717;
+  --dark-panel: #242424;
+  --coral: #e8875b;
+  --paper: #f1efea;
+  --ink: #1d1d1d;
+  --grey: #555;
+  --mute: #a9a59d;
+  --panel: #e6e3dc;
+  --spectrum: linear-gradient(90deg, #e5484d 0%, #e8875b 20%, #f2c94c 40%, #46a758 60%, #3e7bfa 80%, #8e4ec6 100%);
+  --spectrum-text: linear-gradient(90deg, #e8875b 0%, #46a758 50%, #3e7bfa 100%);
+  --sans: 'Space Grotesk', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+/* The troubleshooting page: a normal page that scrolls, not a deck. build.py adds the colours and
+   fonts (:root) from style.css. On a phone each row becomes the problem, then its fix below. */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  font: 18px/1.5 var(--sans);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 56px 32px 64px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(38px, 6vw, 64px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  margin: 20px 0 0;
+  font-size: 21px;
+  color: var(--grey);
+}
+
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 24px 0 0;
+  font-weight: 600;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--coral);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+section {
+  margin-top: 56px;
+  scroll-margin-top: 16px;
+}
+
+h2 {
+  margin: 0 0 8px;
+  padding-top: 14px;
+  border-top: 3px solid var(--coral);
+  font-size: 28px;
+  font-weight: 600;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  padding: 10px 24px 10px 0;
+  border-bottom: 1px solid #d3cfc6;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+td {
+  padding: 14px 24px 14px 0;
+  border-bottom: 1px solid #d3cfc6;
+  vertical-align: top;
+}
+
+td:first-child {
+  width: 38%;
+  font-weight: 600;
+}
+
+section p,
+section ol {
+  max-width: 760px;
+}
+
+ol {
+  padding-left: 1.4em;
+}
+
+li {
+  margin: 0 0 8px;
+}
+
+code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--panel);
+  font: 0.86em var(--mono);
+  overflow-wrap: anywhere;
+}
+
+footer {
+  margin-top: 64px;
+  padding-top: 18px;
+  border-top: 1px solid #d3cfc6;
+  font-size: 16px;
+  color: var(--grey);
+}
+
+footer p {
+  margin: 0 0 8px;
+}
+
+@media (max-width: 700px) {
+  body {
+    padding: 32px 16px 48px;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr,
+  td {
+    display: block;
+  }
+
+  tr {
+    padding: 14px 0;
+    border-bottom: 1px solid #d3cfc6;
+  }
+
+  td,
+  td:first-child {
+    width: auto;
+    padding: 0;
+    border: 0;
+  }
+
+  td:first-child {
+    margin-bottom: 6px;
+  }
+}
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">Photolipsia · Troubleshooting</p>
+  <h1>When something goes wrong</h1>
+  <p class="lead">Look for the message you see: Ctrl+F, or ⌘F on a Mac. Not on this page? <a href="#t-ask-a-question">Ask in writing</a>.</p>
+  <nav class="toc" aria-label="Sections"><a href="#t-course-key">The course key</a><a href="#t-your-own-plan">Your own plan</a><a href="#t-any-account">Any account</a><a href="#t-blender-mcp-and-your-own-splats">Blender, MCP and your own splats</a><a href="#t-ask-a-question">Ask a question</a></nav>
+</header>
+<main>
+<section id="t-course-key">
+  <h2>The course key</h2>
+  <table>
+    <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
+    <tbody>
+    <tr><td><code>404</code> “… matching your guardrail restrictions …”, or <code>403</code> “not allowed”</td><td>The tool asked for a model the course key doesn't allow. Check the model name in your config. OpenCode: is <code>small_model</code> set? In <code>/models</code>, pick <b>GLM-5.3-Flash</b>, not FlashX or Prime. Claude Code: are all model variables set?</td></tr>
+    <tr><td><code>403</code> “Budget limit exceeded”</td><td>Your key's $3 for today are used up. It resets at midnight UTC (1 or 2 am in Zurich). Tell your teacher if it happens often.</td></tr>
+    <tr><td><code>401</code> “User not found” or “invalid key”</td><td>Typo in the key, or the terminal doesn't see it. Windows: open a new terminal after setting the key. Mac: <code>source ~/.zshrc</code>. Run <code>node tools/check-openrouter.mjs</code>.</td></tr>
+    <tr><td><code>model_not_found</code>, <code>404</code></td><td>Typo in the model name. OpenCode needs <code>openrouter/z-ai/glm-5.3-flash</code>, Claude Code and Codex need <code>z-ai/glm-5.3-flash</code>.</td></tr>
+    <tr><td>The agent can't see the screenshot, or images are rejected</td><td>GLM-5.3 can't see images, GLM-5.3 Flash can. OpenCode: <code>/models</code> → <b>GLM-5.3-Flash</b>. Claude Code, Codex: <code>/model</code>.</td></tr>
+    <tr><td>Claude Code still uses your Anthropic login</td><td>Is the <code>env</code> block in <code>~/.claude/settings.json</code>? Then <code>/logout</code>, quit, start again. <code>/status</code> must show <code>https://openrouter.ai/api</code> and <code>Auth token: ANTHROPIC_AUTH_TOKEN</code>.</td></tr>
+    <tr><td>Codex: “wire_api = chat is no longer supported”</td><td>Use <code>wire_api = &quot;responses&quot;</code>.</td></tr>
+    <tr><td>Codex ignores your provider</td><td>It must be in <code>~/.codex/config.toml</code> (Windows <code>$HOME\.codex\config.toml</code>), not in a project's <code>.codex/config.toml</code>.</td></tr>
+    </tbody>
+  </table>
+</section>
+<section id="t-your-own-plan">
+  <h2>Your own plan</h2>
+  <table>
+    <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
+    <tbody>
+    <tr><td>Claude Code or Codex asks you to sign in again, or says you are not logged in</td><td>Claude Code: quit, start <code>claude</code> and sign in in the browser. Codex: <code>codex login</code>. Then check with <code>/status</code>.</td></tr>
+    <tr><td>The agent stops because a usage limit is reached</td><td>Your plan's 5-hour window or weekly limit is used up (shared with the chat app). <code>/usage</code> shows it. Wait until it resets. To make it last: a smaller model with <code>/model</code>, and a new session for each new task.</td></tr>
+    <tr><td>Claude Code doesn't work with your free Claude plan</td><td>The free plan does not include Claude Code. Use the course key with OpenCode: ask your teacher.</td></tr>
+    <tr><td>Codex doesn't work with ChatGPT Free or Go</td><td>The Codex CLI needs Plus or higher. Use the course key with OpenCode: ask your teacher.</td></tr>
+    <tr><td>Claude Code <code>/status</code> shows <code>Auth token</code> although you want your plan</td><td>The course key's <code>env</code> block is still in <code>~/.claude/settings.json</code>: the key beats a plan. Delete the block, then start <code>claude</code> again.</td></tr>
+    </tbody>
+  </table>
+</section>
+<section id="t-any-account">
+  <h2>Any account</h2>
+  <table>
+    <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
+    <tbody>
+    <tr><td>Codex: <code>npm run check</code> fails with “EPERM”, “listen” or browser errors</td><td>Codex doesn't use the project's <code>.codex/config.toml</code>. Start Codex inside the project folder and answer <b>yes</b> to “Do you trust this folder?”. If it still fails, approve running the check outside the sandbox when Codex asks.</td></tr>
+    <tr><td>Windows: “running scripts is disabled on this system”</td><td><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force</code>, then a new terminal.</td></tr>
+    <tr><td><code>node</code> or <code>npm</code> “not recognized” / “command not found”</td><td>Open a new terminal after installing Node. Still not found: reinstall Node LTS.</td></tr>
+    <tr><td><code>opencode</code>, <code>claude</code> or <code>codex</code> “not recognized” / “command not found”</td><td>Open a new terminal after installing the tool.</td></tr>
+    <tr><td>Mac: <code>npm install -g</code> fails with “EACCES”</td><td>See section 1, <a href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#mac-only-npm-says-eacces">Mac only: npm says EACCES</a>.</td></tr>
+    <tr><td><code>npm run check</code>: “Chromium for Playwright is missing”</td><td><code>npx playwright install chromium</code> (about 300 MB, once).</td></tr>
+    <tr><td><code>npm run check</code> says FAILED and npm adds many <code>npm error</code> lines</td><td>Normal: npm reports that the check failed. Read the lines that start with <code>check:</code> and <code>-</code>.</td></tr>
+    <tr><td><code>npm run dev</code>: “Port 5173 is in use”</td><td>Another dev server is still running. Find its terminal and press Ctrl+C. Vite also tries 5174 by itself: read the URL it prints.</td></tr>
+    <tr><td>The agent hangs after starting <code>npm run dev</code></td><td>The server never ends, so the agent waits. Press Esc (or Ctrl+C) in the agent, and run <code>npm run dev</code> in your own terminal.</td></tr>
+    <tr><td><code>npm run check</code>: “App not ready … within 10000 ms”</td><td>The page never set <code>window.__APP_READY__ = true</code>. Look for a page error above it in the report.</td></tr>
+    <tr><td>A big scan is slow or jerky</td><td>Convert it to <code>.rad</code> and/or lower the detail with <code>?detail=0.5</code>. See <a href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/big-scans.md">big-scans.md</a>.</td></tr>
+    <tr><td>No <b>Enter VR</b> button in the splat viewer</td><td>The browser can't do VR. Mac browsers never can: use the Quest browser with <code>npm run dev:vr</code>. On Windows, Quest Link plus Chrome also works. See Example 2, prompt 7.</td></tr>
+    <tr><td>The Quest can't open the <code>https://…</code> address from <code>npm run dev:vr</code></td><td>Same Wi-Fi? University Wi-Fi often isolates devices: try a phone hotspot. Allow <code>node</code> through the firewall (Mac), or private networks (Windows).</td></tr>
+    <tr><td>Mac: <code>git push</code> asks for a username and password</td><td>Git isn't logged in yet: <code>gh auth login</code> (section 1, <a href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#git-and-github-your-own-fork">Git and GitHub</a>). A GitHub password never works here.</td></tr>
+    <tr><td>Windows: <code>git add</code> prints “LF will be replaced by CRLF”</td><td>Harmless. Git stores the file correctly.</td></tr>
+    <tr><td><code>git pull</code>: “Need to specify how to reconcile divergent branches”</td><td>Run <code>git config --global pull.rebase false</code>, then <code>git pull --no-edit upstream main</code> again.</td></tr>
+    <tr><td><code>git pull</code>: “Your local changes … would be overwritten”</td><td>Commit your work first (<code>git add -A</code>, <code>git commit -m &quot;My work&quot;</code>), then pull again.</td></tr>
+    <tr><td><code>git pull</code> prints <code>CONFLICT</code></td><td><code>git merge --abort</code>, then <a href="#t-ask-a-question">ask in the Discussions</a>.</td></tr>
+    <tr><td><code>npm install</code> fails with “Cannot read properties of null (reading 'edgesOut')”</td><td>Old npm with a newer package. Update Node to the current LTS.</td></tr>
+    <tr><td>Windows: a firewall prompt when starting <code>npm run dev</code></td><td>Allow on private networks, or cancel: the local page still works on your own laptop.</td></tr>
+    </tbody>
+  </table>
+</section>
+<section id="t-blender-mcp-and-your-own-splats">
+  <h2>Blender, MCP and your own splats</h2>
+  <table>
+    <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
+    <tbody>
+    <tr><td><code>install-addon</code>: “Could not find a Blender user addons directory”</td><td>Open Blender once and close it. Then run <code>install-addon</code> again.</td></tr>
+    <tr><td>The agent can't connect to Blender, or has no Blender tools</td><td>Blender is open, the add-on is on, the side panel (N) says “Connected on port 9876”. Then restart your agent (<code>/exit</code>, then start it again). Claude Code and Codex: <code>/mcp</code> shows whether <code>blender</code> is there.</td></tr>
+    <tr><td><code>claude mcp add</code>: “Invalid environment variable format: blender”</td><td>Put <code>--scope user</code> between <code>--env DISABLE_TELEMETRY=true</code> and <code>blender</code>, as in section 1, <a href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/blender-and-splats.md#claude-code">Claude Code</a>.</td></tr>
+    <tr><td>Blender doesn't show the scan as splats</td><td>You need Blender 5.3 or newer. Use <b>Material Preview</b> or <b>Rendered</b>.</td></tr>
+    <tr><td>The splats are upside down</td><td>In the viewer: press <b>F</b>. In Blender: <code>splats.load(path, flip=False)</code>, or the default flip.</td></tr>
+    <tr><td>macOS blocks Spirula</td><td>System Settings → Privacy &amp; Security → scroll down → <b>Open Anyway</b>, then run it again.</td></tr>
+    <tr><td>Spirula's output folder is hidden, its name starts with <code>._</code></td><td>Use <code>--output-dir-name scene</code>, as in <a href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/blender-and-splats.md#step-2-spirula-trains">step 2</a>.</td></tr>
+    <tr><td>Training is very slow</td><td>Close other programs that use the GPU.</td></tr>
+    <tr><td><code>git push</code> doesn't upload my splats</td><td>On purpose: <code>public/splats/</code> is ignored by git. Keep your own copies.</td></tr>
+    </tbody>
+  </table>
+</section>
+<section id="t-ask-a-question">
+  <h2>Ask a question</h2>
+  <p>Not in these tables? Ask in writing, in the course <a href="https://github.com/xohm/photolipsia-agentic-kit/discussions">Discussions</a> on GitHub. Your teacher answers there, and the next student finds the answer by searching.</p>
+  <ol>
+    <li>Search the Discussions first: maybe someone asked already.</li>
+    <li>Not there? <b>New discussion</b>, category <b>Q&amp;A</b>. The title: your problem in a few words.</li>
+    <li>Write what you did (the command or the prompt), what you see (copy the message as text, not only a screenshot), Mac or Windows, and your tool and account.</li>
+    <li>Discussions are public: never paste your key, or anything private.</li>
+    <li>Solved? Click <b>Mark as answer</b> under the reply that helped.</li>
+  </ol>
+</section>
+</main>
+<footer>
+  <p>Back to the slides: <a href="00-setup.html">Setup</a> · <a href="01-agentic-coding-basics.html">Deck 1, agentic coding</a> · <a href="02-radiance-field-viewer.html">Deck 2, radiance fields</a></p>
+  <p>The same tables are in <a href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#10-troubleshooting">docs/student-setup.md, section 10</a> and <a href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/blender-and-splats.md#6-troubleshooting">docs/blender-and-splats.md, section 6</a>.</p>
+  <p><b>Photolipsia</b> · ZHdK · MA Interaction Design · HS 2026</p>
+</footer>
+</body>
+</html>

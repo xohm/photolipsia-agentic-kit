@@ -14,8 +14,11 @@ that plan instead; they don't use the key, and the key's budget and guardrail do
 Facts below were checked against the OpenRouter docs on 2026-10-23. Dashboard labels change;
 the links go to the current pages.
 
-**Slides:** [deck 1](https://xohm.github.io/photolipsia-agentic-kit/slides/01-agentic-coding-basics.html) ·
-[deck 2](https://xohm.github.io/photolipsia-agentic-kit/slides/02-radiance-field-viewer.html) (open in the browser).
+**Slides:** [setup](https://xohm.github.io/photolipsia-agentic-kit/slides/00-setup.html) ·
+[deck 1](https://xohm.github.io/photolipsia-agentic-kit/slides/01-agentic-coding-basics.html) ·
+[deck 2](https://xohm.github.io/photolipsia-agentic-kit/slides/02-radiance-field-viewer.html) ·
+[troubleshooting](https://xohm.github.io/photolipsia-agentic-kit/slides/troubleshooting.html) (open in the browser).
+**Questions:** students ask in writing, in the [Discussions](https://github.com/xohm/photolipsia-agentic-kit/discussions) (switch them on: section 8).
 
 Contents
 
@@ -271,12 +274,14 @@ check script) match the finished apps.
 merges and doesn't stop with "divergent branches"). Push updates only to `docs/`, `guides/`,
 `slides/` and `tools/` during the course: a change to a skeleton file (`AGENTS.md`,
 `ai/strategy.md`, `scripts/check.mjs`) can conflict with students' own edits. On `CONFLICT` the
-student docs say `git merge --abort` and ask you.
+student docs say `git merge --abort` and ask in the Discussions.
 
 **The slides** are served from this repository with GitHub Pages (*Settings → Pages*: branch
 `main`, folder `/`; the empty `.nojekyll` file serves the HTML as it is). Link to the addresses at
 the top of this guide. The decks are built from sources in the solutions repository: edit
 `slides-src/` there, never the HTML in `slides/`, and run its `npm run check` (see its README).
+The troubleshooting page is made from the tables in student-setup.md section 10 and
+blender-and-splats.md section 6: change a row there, then build the slides again.
 
 **Your own course:** fork the kit (and ask for the solutions), then replace `xohm/photolipsia-agentic-kit`
 and `xohm.github.io/photolipsia-agentic-kit` with your names in `README.md`, `docs/` and the slide
@@ -349,6 +354,9 @@ Free and Go don't list the Codex CLI. These students don't get the key.
 - [ ] All three tools tested on your machine; both examples run in OpenCode
 - [ ] One Windows laptop tested (PowerShell execution policy with `-Force`, the key command from
       [student-setup.md](student-setup.md#4-the-course-key) section 4, OpenCode, `npm run check`)
+- [ ] Discussions on: *Settings → General → Features → Discussions*. Keep the **Q&A** category
+      (it lets an answer be marked). To get an email for every new question: *Watch → Custom →
+      Discussions*. Discussions are public, like the forks.
 - [ ] Students got the kit link and the setup guide before day one, and know which account to
       use (student-setup.md section 2: no plan, the course key with OpenCode)
 - [ ] Students on their own Claude or ChatGPT plan switched training off and know `/usage`

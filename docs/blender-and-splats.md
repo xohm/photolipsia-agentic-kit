@@ -9,7 +9,7 @@ the Blender MCP, clean up a scan in Blender, and train splats from your own Blen
 
 **Tested on Linux only (October 2026), with OpenCode, a generated test scan and a small test
 scene.** It was not tried on a Mac or Windows when this page was written. If something breaks
-there, tell your teacher. For Claude Code and Codex, see "Connect your agent" in section 1.
+there, [ask in the course Discussions](student-setup.md#ask-a-question). For Claude Code and Codex, see "Connect your agent" in section 1.
 
 Every step works the same way: **plan first, then go, then check.** Commands are shown for
 **Mac** (Terminal) and **Windows** (PowerShell). Where they are the same, there is one block.
@@ -401,10 +401,10 @@ From our run of Example 1 with Codex and a ChatGPT plan:
 |---|---|
 | `install-addon`: "Could not find a Blender user addons directory" | Open Blender once and close it. Then run `install-addon` again. |
 | The agent can't connect to Blender, or has no Blender tools | Blender is open, the add-on is on, the side panel (N) says "Connected on port 9876". Then restart your agent (`/exit`, then start it again). Claude Code and Codex: `/mcp` shows whether `blender` is there. |
-| `claude mcp add`: "Invalid environment variable format: blender" | Put `--scope user` between `--env DISABLE_TELEMETRY=true` and `blender`, as in section 1. |
+| `claude mcp add`: "Invalid environment variable format: blender" | Put `--scope user` between `--env DISABLE_TELEMETRY=true` and `blender`, as in section 1, [Claude Code](#claude-code). |
 | Blender doesn't show the scan as splats | You need Blender 5.3 or newer. Use **Material Preview** or **Rendered**. |
 | The splats are upside down | In the viewer: press **F**. In Blender: `splats.load(path, flip=False)`, or the default flip. |
 | macOS blocks Spirula | System Settings → Privacy & Security → scroll down → **Open Anyway**, then run it again. |
-| Spirula's output folder is hidden, its name starts with `._` | Use `--output-dir-name scene`, as above. |
+| Spirula's output folder is hidden, its name starts with `._` | Use `--output-dir-name scene`, as in [step 2](#step-2-spirula-trains). |
 | Training is very slow | Close other programs that use the GPU. |
 | `git push` doesn't upload my splats | On purpose: `public/splats/` is ignored by git. Keep your own copies. |

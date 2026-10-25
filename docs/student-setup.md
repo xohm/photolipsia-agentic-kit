@@ -19,8 +19,8 @@ pick.
 > Example 1 also ran with Claude Code and with Codex, each on its own plan and on the course key;
 > the checks passed every time. Example 2 did not run with them.
 >
-> The Blender parts ran with GLM-5.3 Flash in OpenCode. If a step fails, tell your teacher: you
-> are probably the first to find it.
+> The Blender parts ran with GLM-5.3 Flash in OpenCode. If a step fails, ask in the course
+> Discussions ([how](#ask-a-question)): you are probably the first to find it.
 
 Contents
 
@@ -177,7 +177,7 @@ git pull --no-edit upstream main
 git push
 ```
 
-If Git prints `CONFLICT`, type `git merge --abort` and ask your teacher. That puts everything
+If Git prints `CONFLICT`, type `git merge --abort` and [ask in the Discussions](#ask-a-question). That puts everything
 back as it was before the pull.
 
 ---
@@ -840,6 +840,9 @@ What this means:
 
 ## 10. Troubleshooting
 
+The same tables, with the Blender ones, as a web page that every slide links to:
+[troubleshooting](https://xohm.github.io/photolipsia-agentic-kit/slides/troubleshooting.html).
+
 **The course key**
 
 | Problem | Fix |
@@ -848,7 +851,7 @@ What this means:
 | `403` "Budget limit exceeded" | Your key's $3 for today are used up. It resets at midnight UTC (1 or 2 am in Zurich). Tell your teacher if it happens often. |
 | `401` "User not found" or "invalid key" | Typo in the key, or the terminal doesn't see it. Windows: open a new terminal after setting the key. Mac: `source ~/.zshrc`. Run `node tools/check-openrouter.mjs`. |
 | `model_not_found`, `404` | Typo in the model name. OpenCode needs `openrouter/z-ai/glm-5.3-flash`, Claude Code and Codex need `z-ai/glm-5.3-flash`. |
-| Images are rejected or ignored | GLM-5.3 can't see images. Switch back to GLM-5.3 Flash. |
+| The agent can't see the screenshot, or images are rejected | GLM-5.3 can't see images, GLM-5.3 Flash can. OpenCode: `/models` → **GLM-5.3-Flash**. Claude Code, Codex: `/model`. |
 | Claude Code still uses your Anthropic login | Is the `env` block in `~/.claude/settings.json`? Then `/logout`, quit, start again. `/status` must show `https://openrouter.ai/api` and `Auth token: ANTHROPIC_AUTH_TOKEN`. |
 | Codex: "wire_api = chat is no longer supported" | Use `wire_api = "responses"`. |
 | Codex ignores your provider | It must be in `~/.codex/config.toml` (Windows `$HOME\.codex\config.toml`), not in a project's `.codex/config.toml`. |
@@ -884,6 +887,19 @@ What this means:
 | Windows: `git add` prints "LF will be replaced by CRLF" | Harmless. Git stores the file correctly. |
 | `git pull`: "Need to specify how to reconcile divergent branches" | Run `git config --global pull.rebase false`, then `git pull --no-edit upstream main` again. |
 | `git pull`: "Your local changes … would be overwritten" | Commit your work first (`git add -A`, `git commit -m "My work"`), then pull again. |
-| `git pull` prints `CONFLICT` | `git merge --abort`, then ask your teacher. |
+| `git pull` prints `CONFLICT` | `git merge --abort`, then [ask in the Discussions](#ask-a-question). |
 | `npm install` fails with "Cannot read properties of null (reading 'edgesOut')" | Old npm with a newer package. Update Node to the current LTS. |
 | Windows: a firewall prompt when starting `npm run dev` | Allow on private networks, or cancel: the local page still works on your own laptop. |
+
+### Ask a question
+
+Not in these tables? Ask in writing, in the course
+[Discussions](https://github.com/xohm/photolipsia-agentic-kit/discussions) on GitHub. Your teacher
+answers there, and the next student finds the answer by searching.
+
+1. Search the Discussions first: maybe someone asked already.
+2. Not there? **New discussion**, category **Q&A**. The title: your problem in a few words.
+3. Write what you did (the command or the prompt), what you see (copy the message as text, not only a
+   screenshot), Mac or Windows, and your tool and account.
+4. Discussions are public: never paste your key, or anything private.
+5. Solved? Click **Mark as answer** under the reply that helped.
