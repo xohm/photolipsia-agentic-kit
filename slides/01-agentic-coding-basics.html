@@ -394,6 +394,65 @@ td code {
   font-size: 26px;
 }
 
+/* Copy buttons (deck.js): in the right padding of a block (26 px or more), so they never cover text.
+   A command block gets one per line, a prompt or a file to paste one in its top right corner. */
+pre[data-copy="lines"] .line {
+  position: relative;
+  display: block;
+}
+
+pre.prompt,
+pre[data-copy="all"] {
+  position: relative;
+}
+
+.copy {
+  position: absolute;
+  top: 50%;
+  right: -25px;
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #8a867e;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+pre.prompt > .copy,
+pre[data-copy="all"] > .copy {
+  top: 6px;
+  right: 2px;
+  transform: none;
+}
+
+.copy svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.copy:hover {
+  background: rgb(0 0 0 / 7%);
+  color: var(--ink);
+}
+
+.dark .copy:hover {
+  background: rgb(255 255 255 / 12%);
+  color: var(--paper);
+}
+
+.copy.done {
+  color: #2f8a46;
+}
+
 /* Tables */
 table {
   width: 100%;
@@ -592,7 +651,8 @@ td:first-child {
     break-after: auto;
   }
 
-  .nav {
+  .nav,
+  .copy {
     display: none;
   }
 
@@ -962,7 +1022,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
         <text x="166" y="40">Anthropic, USA</text>
       </svg>
       <p class="d1-pv-t">Pro and Max: Anthropic trains on your chats and Claude Code sessions while “Help improve Claude” is on, and keeps them 5 years. Off: 30 days.</p>
-      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Turn it off:</b><br /><span class="nowrap">claude.ai → Settings → Privacy</span></span></p>
+      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Turn it off:</b><br /><span class="nowrap"><a class="jump" href="https://claude.ai/" target="_blank" rel="noopener">claude.ai</a> → Settings → Privacy</span></span></p>
     </div>
     <div class="d1-pv-card">
       <p class="d1-pv-acct">Your ChatGPT plan</p>
@@ -973,7 +1033,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
         <text x="166" y="40">OpenAI, USA</text>
       </svg>
       <p class="d1-pv-t">Plus and Pro: ChatGPT and Codex content may be used for training. Business and Edu: not by default.</p>
-      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Turn it off,</b> one switch for both: Settings&nbsp;→ Data&nbsp;controls&nbsp;→ “Improve the model <span class="nowrap">for everyone”</span></span></p>
+      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Turn it off,</b> one switch for both: <a class="jump" href="https://chatgpt.com/" target="_blank" rel="noopener">chatgpt.com</a>&nbsp;→ Settings&nbsp;→ Data&nbsp;controls&nbsp;→ “Improve the model <span class="nowrap">for everyone”</span></span></p>
     </div>
   </div>
   <p class="d1-pv-end">Turn training off before day one. <b>Never give the agent passwords, keys or other people's data.</b></p>
@@ -1643,7 +1703,7 @@ A page where you paste text and see live counts.
       <p class="label">Then</p>
 <pre class="prompt p24">Continue with the next steps: index.html and src/main.js, so the page shows the four numbers <mark class="dd">live while I type</mark>. Mark each number with <span class="nowrap">data-stat="&lt;key&gt;",</span> using the keys from textStats(). Then simple styling: <mark class="dd">calm, readable, large numbers</mark>. Set window.__APP_READY__ = true when the page is ready. One step at a time. After each step run npm test and npm run check, tick it off in ai/strategy.md and tell me what you see in the screenshot.</pre>
       <p class="s26">Only <code>index.html</code>, no <code>main.js</code> yet? The check waits 10 seconds and says <b>App not ready</b>. That is expected.</p>
-      <p class="s26"><strong>Check yourself:</strong> run <code>npm run dev</code> in your terminal, open <code>localhost:5173</code>, type a sentence. Do the numbers change? Ctrl+C stops it.</p>
+      <p class="s26"><strong>Check yourself:</strong> run <code>npm run dev</code> in your terminal, open <a class="jump" href="http://localhost:5173/" target="_blank" rel="noopener"><code>localhost:5173</code></a>, type a sentence. Do the numbers change? Ctrl+C stops it.</p>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1675,9 +1735,9 @@ A page where you paste text and see live counts.
       "detail": "expected 14, page shows 14" },
     …</pre>
       <p class="label d1-p3-cy">Check yourself: open the screenshot · Mac</p>
-<pre class="c22">open .check/screenshot.png</pre>
+<pre class="c22" data-copy="lines">open .check/screenshot.png</pre>
       <p class="label">Windows</p>
-<pre class="c22">start .check\screenshot.png</pre>
+<pre class="c22" data-copy="lines">start .check\screenshot.png</pre>
       <p class="s28">Does it match what the agent described?</p>
     </div>
   </div>
@@ -1756,7 +1816,7 @@ check: <span class="bad">FAILED</span> (0.4 s)
 <pre class="prompt">Summarise what changed since the last commit in five lines.</pre>
       <p class="d1-p5-undo"><strong>Undo, before <code>git add</code>:</strong> <code>git restore .</code> puts every committed file back as it was at the last commit. New files stay: <code>git status</code> lists them.</p>
       <p class="label">Your terminal · Mac and Windows</p>
-<pre class="c22">git add -A
+<pre class="c22" data-copy="lines">git add -A
 git status
 git diff --cached</pre>
       <p class="s26">The diff opens in a viewer: arrow keys scroll, <b>q</b> leaves.</p>
@@ -1765,7 +1825,7 @@ git diff --cached</pre>
       <p>Is every plan step ticked? Does every decision have a <strong>because</strong>?</p>
       <p>Did files change that you didn't expect? Ask why before you commit.</p>
       <p class="label">Then</p>
-<pre class="c22">git commit -m "Text stats"
+<pre class="c22" data-copy="lines">git commit -m "Text stats"
 git push</pre>
       <p class="s26"><code>git push</code> saves it in your fork on GitHub. Your teacher can follow it there.</p>
     </div>
@@ -1787,7 +1847,7 @@ git push</pre>
   <div class="cols d1-p6">
     <div class="body steps">
       <p>1. Add one line of your own to <code>AGENTS.md</code>, under <code>## Code style</code>, for example: <code>- All text on the page is in sentence case.</code> Commit it:</p>
-<pre class="c22 d1-p6-git">git commit -am "My own rule"
+<pre class="c22 d1-p6-git" data-copy="lines">git commit -am "My own rule"
 git push</pre>
       <p>Then write a real step under <code>## Next</code> in <code>ai/strategy.md</code>. In our run it was empty, and the fresh session did nothing.</p>
       <p>2. Quit the agent (<code>/exit</code>, in all three tools) and start it again. It now remembers nothing.</p>
@@ -1935,11 +1995,57 @@ window.addEventListener('pointerdown', (event) => {
 window.addEventListener('pointerup', (event) => {
   const start = pressed;
   pressed = null;
-  if (!start || event.target.closest('a, .nav') || window.getSelection().toString()) return;
+  if (!start || event.target.closest('a, .nav, .copy') || window.getSelection().toString()) return;
   if (Math.hypot(event.clientX - start.x, event.clientY - start.y) > 10) return; // a drag, not a tap
   const width = document.documentElement.clientWidth;
   show(event.clientX > width / 3 ? current + 1 : current - 1);
 });
+
+// Copy buttons: one per line in a command block (data-copy="lines"), one for a whole prompt or a file
+// to paste (data-copy="all"). They copy exactly the text on the slide.
+const COPY_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8" /></svg>';
+const DONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>';
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const area = document.createElement('textarea'); // opened from a file, without clipboard access
+    area.value = text;
+    document.body.append(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+  }
+}
+
+function copyButton(text) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'copy';
+  button.title = 'Copy';
+  button.setAttribute('aria-label', 'Copy');
+  button.innerHTML = COPY_ICON;
+  button.addEventListener('mousedown', (event) => event.preventDefault()); // keeps Space and Enter for slides
+  button.addEventListener('click', async () => {
+    await copyText(text);
+    button.innerHTML = DONE_ICON;
+    button.classList.add('done');
+    setTimeout(() => { button.innerHTML = COPY_ICON; button.classList.remove('done'); }, 1200);
+  });
+  return button;
+}
+
+for (const pre of deck.querySelectorAll('pre.prompt, pre[data-copy]')) {
+  if (pre.dataset.copy === 'lines') {
+    pre.innerHTML = pre.innerHTML.split('\n').map((line) => `<span class="line">${line || ' '}</span>`).join('');
+    for (const line of pre.querySelectorAll('.line')) {
+      if (line.textContent.trim()) line.append(copyButton(line.textContent));
+    }
+  } else {
+    pre.append(copyButton(pre.textContent.trim()));
+  }
+}
 
 // A hash is a slide number (#12) or a slide's id (#s-opencode, for jump links).
 function target(hash) {

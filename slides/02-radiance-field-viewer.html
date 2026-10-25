@@ -394,6 +394,65 @@ td code {
   font-size: 26px;
 }
 
+/* Copy buttons (deck.js): in the right padding of a block (26 px or more), so they never cover text.
+   A command block gets one per line, a prompt or a file to paste one in its top right corner. */
+pre[data-copy="lines"] .line {
+  position: relative;
+  display: block;
+}
+
+pre.prompt,
+pre[data-copy="all"] {
+  position: relative;
+}
+
+.copy {
+  position: absolute;
+  top: 50%;
+  right: -25px;
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #8a867e;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+pre.prompt > .copy,
+pre[data-copy="all"] > .copy {
+  top: 6px;
+  right: 2px;
+  transform: none;
+}
+
+.copy svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.copy:hover {
+  background: rgb(0 0 0 / 7%);
+  color: var(--ink);
+}
+
+.dark .copy:hover {
+  background: rgb(255 255 255 / 12%);
+  color: var(--paper);
+}
+
+.copy.done {
+  color: #2f8a46;
+}
+
 /* Tables */
 table {
   width: 100%;
@@ -592,7 +651,8 @@ td:first-child {
     break-after: auto;
   }
 
-  .nav {
+  .nav,
+  .copy {
     display: none;
   }
 
@@ -857,7 +917,7 @@ td:first-child {
     <div class="d2-ar-pipe"><svg viewBox="0 0 74 60" width="74" height="60" aria-hidden="true"><line x1="6" y1="30" x2="58" y2="30" class="d2-ar-line"/><path d="M56 21 L68 30 L56 39" class="d2-ar-head"/><ellipse cx="32" cy="30" rx="10" ry="6.5" class="d2-ar-dot d2-ar-d1" fill="url(#d2-ar-pk)"/></svg></div>
     <div class="box d2-ar-vite">
       <h3>Vite dev server</h3>
-      <p>npm run dev<br /><span class="d2-ar-k d2-ar-k2">localhost:5173</span><br />serves src/, public/<br />reloads on save</p>
+      <p>npm run dev<br /><span class="d2-ar-k d2-ar-k2"><a class="jump" href="http://localhost:5173/" target="_blank" rel="noopener">localhost:5173</a></span><br />serves src/, public/<br />reloads on save</p>
     </div>
     <div class="d2-ar-pipe"><svg viewBox="0 0 74 60" width="74" height="60" aria-hidden="true"><line x1="6" y1="30" x2="58" y2="30" class="d2-ar-line"/><path d="M56 21 L68 30 L56 39" class="d2-ar-head"/><ellipse cx="32" cy="30" rx="10" ry="6.5" class="d2-ar-dot d2-ar-d2" fill="url(#d2-ar-pk)"/></svg></div>
     <div class="box d2-ar-browser">
@@ -919,13 +979,13 @@ td:first-child {
   <div class="os">
     <div>
       <p class="label">Your terminal · Mac and Windows</p>
-<pre>cd ~/photolipsia-agentic-kit/02-splat-viewer
+<pre data-copy="lines">cd ~/photolipsia-agentic-kit/02-splat-viewer
 npm install
 npm run check</pre>
     </div>
     <div>
       <p class="label">After every prompt that works · name the commit after it</p>
-<pre>git add -A
+<pre data-copy="lines">git add -A
 git commit -m "Prompt 2: scaffold"
 git push</pre>
     </div>
@@ -950,7 +1010,7 @@ check: <span class="bad">FAILED</span> (0.4 s)
   <div class="cols prompt-right" style="grid-template-columns: 1fr 1fr">
     <div class="side">
       <p class="label">Agent terminal · always inside 02-splat-viewer</p>
-<pre class="tight">cd ~/photolipsia-agentic-kit/02-splat-viewer</pre>
+<pre class="tight" data-copy="lines">cd ~/photolipsia-agentic-kit/02-splat-viewer</pre>
       <p class="note">Then <code>opencode</code>, <code>claude</code> or <code>codex</code>. Codex asks if you trust this folder: yes.</p>
       <p class="label">Before prompt 1 · try the boundaries</p>
 <pre class="prompt" style="max-width: 680px">Open public/splats/test.ply and tell me what is in it.</pre>
@@ -1019,11 +1079,11 @@ scene.add(spark);
     <div class="side">
       <div>
         <p class="label">First, your terminal · Mac · your own file name</p>
-<pre class="tight">cp ~/Downloads/my-scan.spz public/splats/</pre>
+<pre class="tight" data-copy="lines">cp ~/Downloads/my-scan.spz public/splats/</pre>
       </div>
       <div>
         <p class="label">Windows</p>
-<pre class="tight">Copy-Item $HOME\Downloads\my-scan.spz public\splats\</pre>
+<pre class="tight" data-copy="lines">Copy-Item $HOME\Downloads\my-scan.spz public\splats\</pre>
       </div>
       <p class="note is-check"><strong>Check:</strong> <code>missing.ply</code> and <code>photo.jpg</code> should fail, each with a clear message. <code>my-scan.spz</code> may fail with “App not ready”: the check can’t keep up with a big scan. If the agent starts “fixing” it:</p>
 <pre class="prompt">My scan is too big for npm run check. Use the test splat for checks.</pre>
@@ -1113,14 +1173,14 @@ scene.add(spark);
         <div class="d2-dv-bar">
           <span class="d2-dv-dots"><i style="background: #e5484d"></i><i style="background: #f2c94c"></i><i style="background: #46a758"></i></span>
           <svg class="d2-dv-icon" viewBox="0 0 30 30" aria-hidden="true"><path d="M24 15 A9 9 0 1 1 21.4 8.6"/><path d="M22.5 3.5 L22 9.4 L16.2 9"/></svg>
-          <span class="d2-dv-url">localhost:5173/?file=my-scan.spz</span>
+          <span class="d2-dv-url"><a class="jump" href="http://localhost:5173/?file=my-scan.spz" target="_blank" rel="noopener">localhost:5173/?file=my-scan.spz</a></span>
         </div>
         <div class="d2-dv-view"><svg viewBox="0 0 696 206" role="img" aria-label="Your scan in the page"><defs><radialGradient id="d2-dv-g0"><stop offset="0" stop-color="#6664e0" stop-opacity="1"/><stop offset="0.55" stop-color="#6664e0" stop-opacity="0.55"/><stop offset="1" stop-color="#6664e0" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g1"><stop offset="0" stop-color="#9cb852" stop-opacity="1"/><stop offset="0.55" stop-color="#9cb852" stop-opacity="0.55"/><stop offset="1" stop-color="#9cb852" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g2"><stop offset="0" stop-color="#e8875b" stop-opacity="1"/><stop offset="0.55" stop-color="#e8875b" stop-opacity="0.55"/><stop offset="1" stop-color="#e8875b" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g3"><stop offset="0" stop-color="#46a758" stop-opacity="1"/><stop offset="0.55" stop-color="#46a758" stop-opacity="0.55"/><stop offset="1" stop-color="#46a758" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g4"><stop offset="0" stop-color="#e5484d" stop-opacity="1"/><stop offset="0.55" stop-color="#e5484d" stop-opacity="0.55"/><stop offset="1" stop-color="#e5484d" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g5"><stop offset="0" stop-color="#eda854" stop-opacity="1"/><stop offset="0.55" stop-color="#eda854" stop-opacity="0.55"/><stop offset="1" stop-color="#eda854" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g6"><stop offset="0" stop-color="#f2c94c" stop-opacity="1"/><stop offset="0.55" stop-color="#f2c94c" stop-opacity="0.55"/><stop offset="1" stop-color="#f2c94c" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g7"><stop offset="0" stop-color="#e66854" stop-opacity="1"/><stop offset="0.55" stop-color="#e66854" stop-opacity="0.55"/><stop offset="1" stop-color="#e66854" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g8"><stop offset="0" stop-color="#8e4ec6" stop-opacity="1"/><stop offset="0.55" stop-color="#8e4ec6" stop-opacity="0.55"/><stop offset="1" stop-color="#8e4ec6" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g9"><stop offset="0" stop-color="#3e7bfa" stop-opacity="1"/><stop offset="0.55" stop-color="#3e7bfa" stop-opacity="0.55"/><stop offset="1" stop-color="#3e7bfa" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g10"><stop offset="0" stop-color="#4291a9" stop-opacity="1"/><stop offset="0.55" stop-color="#4291a9" stop-opacity="0.55"/><stop offset="1" stop-color="#4291a9" stop-opacity="0"/></radialGradient><radialGradient id="d2-dv-g11"><stop offset="0" stop-color="#f1efea" stop-opacity="1"/><stop offset="0.55" stop-color="#f1efea" stop-opacity="0.55"/><stop offset="1" stop-color="#f1efea" stop-opacity="0"/></radialGradient></defs><ellipse cx="428" cy="86" rx="15" ry="8" transform="rotate(78 428 86)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="269" cy="116" rx="15" ry="8" transform="rotate(270 269 116)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="274" cy="110" rx="15" ry="8" transform="rotate(283 274 110)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="283" cy="105" rx="15" ry="8" transform="rotate(296 283 105)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="295" cy="99" rx="15" ry="8" transform="rotate(309 295 99)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="310" cy="94" rx="15" ry="8" transform="rotate(322 310 94)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="326" cy="89" rx="15" ry="8" transform="rotate(335 326 89)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="344" cy="85" rx="15" ry="8" transform="rotate(348 344 85)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="362" cy="81" rx="15" ry="8" transform="rotate(360 362 81)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="379" cy="79" rx="15" ry="8" transform="rotate(373 379 79)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="395" cy="78" rx="15" ry="8" transform="rotate(386 395 78)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="408" cy="78" rx="15" ry="8" transform="rotate(399 408 78)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="418" cy="80" rx="15" ry="8" transform="rotate(412 418 80)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="425" cy="82" rx="15" ry="8" transform="rotate(425 425 82)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="351" cy="149" rx="15" ry="11" transform="rotate(11 351 149)" fill="url(#d2-dv-g0)"/><ellipse cx="405" cy="108" rx="12" ry="10" transform="rotate(84 405 108)" fill="url(#d2-dv-g1)"/><ellipse cx="370" cy="66" rx="11" ry="8" transform="rotate(156 370 66)" fill="url(#d2-dv-g2)"/><ellipse cx="295" cy="95" rx="11" ry="8" transform="rotate(106 295 95)" fill="url(#d2-dv-g1)"/><ellipse cx="345" cy="113" rx="14" ry="11" transform="rotate(158 345 113)" fill="url(#d2-dv-g3)"/><ellipse cx="335" cy="45" rx="17" ry="11" transform="rotate(168 335 45)" fill="url(#d2-dv-g4)"/><ellipse cx="362" cy="90" rx="12" ry="10" transform="rotate(78 362 90)" fill="url(#d2-dv-g5)"/><ellipse cx="324" cy="79" rx="13" ry="8" transform="rotate(105 324 79)" fill="url(#d2-dv-g5)"/><ellipse cx="297" cy="73" rx="18" ry="15" transform="rotate(178 297 73)" fill="url(#d2-dv-g5)"/><ellipse cx="336" cy="81" rx="19" ry="15" transform="rotate(102 336 81)" fill="url(#d2-dv-g6)"/><ellipse cx="342" cy="75" rx="15" ry="9" transform="rotate(11 342 75)" fill="url(#d2-dv-g5)"/><ellipse cx="385" cy="54" rx="17" ry="11" transform="rotate(27 385 54)" fill="url(#d2-dv-g7)"/><ellipse cx="333" cy="155" rx="10" ry="7" transform="rotate(8 333 155)" fill="url(#d2-dv-g8)"/><ellipse cx="341" cy="68" rx="19" ry="13" transform="rotate(179 341 68)" fill="url(#d2-dv-g5)"/><ellipse cx="342" cy="119" rx="10" ry="6" transform="rotate(73 342 119)" fill="url(#d2-dv-g3)"/><ellipse cx="329" cy="87" rx="18" ry="11" transform="rotate(172 329 87)" fill="url(#d2-dv-g5)"/><ellipse cx="378" cy="80" rx="15" ry="11" transform="rotate(107 378 80)" fill="url(#d2-dv-g5)"/><ellipse cx="303" cy="85" rx="15" ry="9" transform="rotate(129 303 85)" fill="url(#d2-dv-g6)"/><ellipse cx="351" cy="137" rx="15" ry="10" transform="rotate(2 351 137)" fill="url(#d2-dv-g9)"/><ellipse cx="307" cy="127" rx="16" ry="11" transform="rotate(10 307 127)" fill="url(#d2-dv-g3)"/><ellipse cx="319" cy="73" rx="13" ry="10" transform="rotate(132 319 73)" fill="url(#d2-dv-g5)"/><ellipse cx="363" cy="105" rx="19" ry="11" transform="rotate(82 363 105)" fill="url(#d2-dv-g1)"/><ellipse cx="319" cy="84" rx="13" ry="8" transform="rotate(107 319 84)" fill="url(#d2-dv-g5)"/><ellipse cx="336" cy="139" rx="10" ry="7" transform="rotate(132 336 139)" fill="url(#d2-dv-g9)"/><ellipse cx="337" cy="130" rx="12" ry="7" transform="rotate(78 337 130)" fill="url(#d2-dv-g9)"/><ellipse cx="342" cy="84" rx="13" ry="10" transform="rotate(78 342 84)" fill="url(#d2-dv-g5)"/><ellipse cx="364" cy="83" rx="16" ry="13" transform="rotate(81 364 83)" fill="url(#d2-dv-g5)"/><ellipse cx="351" cy="124" rx="12" ry="9" transform="rotate(150 351 124)" fill="url(#d2-dv-g10)"/><ellipse cx="361" cy="133" rx="16" ry="12" transform="rotate(62 361 133)" fill="url(#d2-dv-g9)"/><ellipse cx="371" cy="127" rx="12" ry="8" transform="rotate(75 371 127)" fill="url(#d2-dv-g10)"/><ellipse cx="313" cy="122" rx="11" ry="6" transform="rotate(169 313 122)" fill="url(#d2-dv-g10)"/><ellipse cx="393" cy="61" rx="19" ry="15" transform="rotate(39 393 61)" fill="url(#d2-dv-g2)"/><ellipse cx="346" cy="46" rx="15" ry="9" transform="rotate(61 346 46)" fill="url(#d2-dv-g7)"/><ellipse cx="350" cy="119" rx="13" ry="10" transform="rotate(8 350 119)" fill="url(#d2-dv-g3)"/><ellipse cx="390" cy="74" rx="18" ry="15" transform="rotate(103 390 74)" fill="url(#d2-dv-g5)"/><ellipse cx="401" cy="107" rx="13" ry="9" transform="rotate(94 401 107)" fill="url(#d2-dv-g1)"/><ellipse cx="297" cy="134" rx="13" ry="8" transform="rotate(155 297 134)" fill="url(#d2-dv-g9)"/><ellipse cx="294" cy="111" rx="12" ry="8" transform="rotate(147 294 111)" fill="url(#d2-dv-g1)"/><ellipse cx="374" cy="152" rx="17" ry="14" transform="rotate(1 374 152)" fill="url(#d2-dv-g0)"/><ellipse cx="308" cy="61" rx="12" ry="7" transform="rotate(94 308 61)" fill="url(#d2-dv-g7)"/><ellipse cx="310" cy="123" rx="10" ry="5" transform="rotate(22 310 123)" fill="url(#d2-dv-g10)"/><ellipse cx="359" cy="114" rx="18" ry="9" transform="rotate(90 359 114)" fill="url(#d2-dv-g3)"/><ellipse cx="334" cy="135" rx="16" ry="11" transform="rotate(64 334 135)" fill="url(#d2-dv-g10)"/><ellipse cx="361" cy="136" rx="15" ry="11" transform="rotate(68 361 136)" fill="url(#d2-dv-g10)"/><ellipse cx="371" cy="116" rx="15" ry="12" transform="rotate(68 371 116)" fill="url(#d2-dv-g3)"/><ellipse cx="363" cy="57" rx="13" ry="9" transform="rotate(126 363 57)" fill="url(#d2-dv-g7)"/><ellipse cx="303" cy="128" rx="12" ry="8" transform="rotate(125 303 128)" fill="url(#d2-dv-g10)"/><ellipse cx="384" cy="121" rx="18" ry="15" transform="rotate(67 384 121)" fill="url(#d2-dv-g3)"/><ellipse cx="392" cy="70" rx="14" ry="8" transform="rotate(146 392 70)" fill="url(#d2-dv-g2)"/><ellipse cx="317" cy="53" rx="16" ry="12" transform="rotate(101 317 53)" fill="url(#d2-dv-g7)"/><ellipse cx="386" cy="132" rx="11" ry="9" transform="rotate(7 386 132)" fill="url(#d2-dv-g10)"/><ellipse cx="364" cy="114" rx="12" ry="6" transform="rotate(151 364 114)" fill="url(#d2-dv-g3)"/><ellipse cx="389" cy="142" rx="18" ry="15" transform="rotate(104 389 142)" fill="url(#d2-dv-g9)"/><ellipse cx="352" cy="92" rx="15" ry="11" transform="rotate(19 352 92)" fill="url(#d2-dv-g6)"/><ellipse cx="348" cy="43" rx="13" ry="9" transform="rotate(149 348 43)" fill="url(#d2-dv-g4)"/><ellipse cx="349" cy="129" rx="16" ry="12" transform="rotate(70 349 129)" fill="url(#d2-dv-g10)"/><ellipse cx="322" cy="132" rx="14" ry="7" transform="rotate(90 322 132)" fill="url(#d2-dv-g10)"/><ellipse cx="387" cy="96" rx="11" ry="8" transform="rotate(136 387 96)" fill="url(#d2-dv-g1)"/><ellipse cx="327" cy="63" rx="16" ry="13" transform="rotate(26 327 63)" fill="url(#d2-dv-g2)"/><ellipse cx="392" cy="133" rx="15" ry="10" transform="rotate(129 392 133)" fill="url(#d2-dv-g9)"/><ellipse cx="361" cy="133" rx="15" ry="9" transform="rotate(41 361 133)" fill="url(#d2-dv-g10)"/><ellipse cx="326" cy="47" rx="16" ry="11" transform="rotate(153 326 47)" fill="url(#d2-dv-g4)"/><ellipse cx="320" cy="87" rx="10" ry="7" transform="rotate(68 320 87)" fill="url(#d2-dv-g5)"/><ellipse cx="365" cy="136" rx="17" ry="9" transform="rotate(178 365 136)" fill="url(#d2-dv-g10)"/><ellipse cx="300" cy="109" rx="18" ry="14" transform="rotate(100 300 109)" fill="url(#d2-dv-g1)"/><ellipse cx="296" cy="109" rx="14" ry="10" transform="rotate(172 296 109)" fill="url(#d2-dv-g3)"/><ellipse cx="319" cy="109" rx="16" ry="12" transform="rotate(172 319 109)" fill="url(#d2-dv-g1)"/><ellipse cx="367" cy="79" rx="12" ry="7" transform="rotate(126 367 79)" fill="url(#d2-dv-g5)"/><ellipse cx="385" cy="57" rx="18" ry="11" transform="rotate(76 385 57)" fill="url(#d2-dv-g7)"/><ellipse cx="346" cy="85" rx="18" ry="11" transform="rotate(64 346 85)" fill="url(#d2-dv-g5)"/><ellipse cx="427" cy="90" rx="15" ry="8" transform="rotate(90 427 90)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="422" cy="96" rx="15" ry="8" transform="rotate(103 422 96)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="413" cy="101" rx="15" ry="8" transform="rotate(116 413 101)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="401" cy="107" rx="15" ry="8" transform="rotate(129 401 107)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="386" cy="112" rx="15" ry="8" transform="rotate(142 386 112)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="370" cy="117" rx="15" ry="8" transform="rotate(155 370 117)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="352" cy="121" rx="15" ry="8" transform="rotate(168 352 121)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="334" cy="125" rx="15" ry="8" transform="rotate(180 334 125)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="317" cy="127" rx="15" ry="8" transform="rotate(193 317 127)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="301" cy="128" rx="15" ry="8" transform="rotate(206 301 128)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="288" cy="128" rx="15" ry="8" transform="rotate(219 288 128)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="278" cy="126" rx="15" ry="8" transform="rotate(232 278 126)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="271" cy="124" rx="15" ry="8" transform="rotate(245 271 124)" fill="url(#d2-dv-g11)" opacity=".7"/><ellipse cx="268" cy="120" rx="15" ry="8" transform="rotate(258 268 120)" fill="url(#d2-dv-g11)" opacity=".7"/></svg></div>
       </div>
     </div>
   </div>
   <div class="d2-dv-text">
-    <p>Open <strong>localhost:5173/?file=my-scan.spz</strong> in your browser: your scan, in your page.</p>
+    <p>Open <a class="jump" href="http://localhost:5173/?file=my-scan.spz" target="_blank" rel="noopener">localhost:5173/?file=my-scan.spz</a> in your browser: your scan, in your page.</p>
     <p>Leave it running in your own terminal, never in the agent. The page reloads when files change. <strong>Ctrl+C</strong> stops it.</p>
     <p><strong>Windows:</strong> a firewall prompt may appear the first time. “Allow” on private networks is fine.</p>
   </div>
@@ -1242,7 +1302,7 @@ splat.quaternion.set(1, 0, 0, 0);</pre>
 <rect x="660" y="0" width="96" height="32" rx="16" fill="#1d1d1d"/><text x="708" y="23" class="d2-vr2-badge">draws</text>
 <text x="626" y="188" class="d2-vr2-cap">Quest draws</text>
 </svg>
-<pre class="tight">npm run dev:vr</pre>
+<pre class="tight" data-copy="lines">npm run dev:vr</pre>
       <p class="note">Open the <code>https://…:5173</code> address it prints in the Quest browser. <strong>Advanced → Proceed</strong>, then Enter VR.</p>
       <p class="note">Laptop and Quest on the same Wi-Fi. University Wi-Fi often blocks it: use a phone hotspot.</p>
       <p class="d2-vr2-max">With levels of detail (prompt 8): at most <strong>500,000</strong> splats.</p>
@@ -1265,7 +1325,7 @@ splat.quaternion.set(1, 0, 0, 0);</pre>
 <text x="626" y="188" class="d2-vr2-cap">Quest only displays</text>
 </svg>
       <p class="note"><strong>Meta Horizon Link</strong> app: OpenXR Runtime → Set as active, Unknown Sources on. Connect a USB-C cable.</p>
-      <p class="note">Run <code>npm run dev</code>. In <strong>Chrome</strong>: <code>localhost:5173</code> → Enter VR → allow VR <em>on the monitor</em>.</p>
+      <p class="note">Run <code>npm run dev</code>. In <strong>Chrome</strong>: <a class="jump" href="http://localhost:5173/" target="_blank" rel="noopener"><code>localhost:5173</code></a> → Enter VR → allow VR <em>on the monitor</em>.</p>
       <p class="d2-vr2-max">With levels of detail: at most <strong>2,500,000</strong> splats. PC VR does not exist on a Mac.</p>
     </div>
   </div>
@@ -1523,7 +1583,7 @@ splat.quaternion.set(1, 0, 0, 0);</pre>
   <p class="eyebrow">Big scans · .rad</p>
   <h2>Convert to .rad. It streams in pieces.</h2>
   <p class="label">Your terminal · Mac and Windows · the first time, answer y</p>
-<pre>cd ~/Downloads
+<pre data-copy="lines">cd ~/Downloads
 npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   <div class="d2-rd2-row">
     <div class="d2-anim">
@@ -1623,18 +1683,18 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
 </style>
   <p class="eyebrow">Extension · Blender MCP · set up once</p>
   <h2>Set up the Blender MCP once.</h2>
-  <p class="d2-ms-lead">Optional: tools for your agent inside Blender 5.3, the 5.3 beta until its release (planned for November 2026). Steps 1 to 3 are the same for every agent.</p>
+  <p class="d2-ms-lead">Optional: tools for your agent inside Blender 5.3, <a class="jump" href="https://builder.blender.org/download/daily/" target="_blank" rel="noopener">the 5.3 beta</a> until its release (planned for November 2026). Steps 1 to 3 are the same for every agent.</p>
   <div class="d2-ms">
     <div class="os">
       <div><p class="label">1 · Mac</p>
-<pre>curl -LsSf https://astral.sh/uv/install.sh | sh</pre></div>
+<pre data-copy="lines">curl -LsSf https://astral.sh/uv/install.sh | sh</pre></div>
       <div><p class="label">1 · Windows</p>
-<pre>winget install --id astral-sh.uv -e</pre></div>
+<pre data-copy="lines">winget install --id astral-sh.uv -e</pre></div>
     </div>
     <div class="d2-ms-cols">
       <div class="side">
         <p class="note">2 · Close the terminal and open a new one. Open Blender once and close it. Then, on both:</p>
-<pre>uvx mcp-for-blender@2.2.4 install-addon</pre>
+<pre data-copy="lines">uvx mcp-for-blender@2.2.4 install-addon</pre>
         <p class="note">3 · In Blender: Edit → Preferences → Add-ons, turn on <strong>MCP for Blender</strong>. Press <strong>N</strong> in the 3D view: <span class="nw">“Connected on port 9876”.</span></p>
       </div>
       <div class="side">
@@ -1661,7 +1721,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   <div class="d2-mc">
     <div class="side">
       <p class="label">4 · OpenCode · in <code>~/.config/opencode/opencode.json</code>, after <code>"provider": {…}</code></p>
-<pre>"mcp": {
+<pre data-copy="all">"mcp": {
   "blender": {
     "type": "local",
     "command": ["uvx", "mcp-for-blender@2.2.4"],
@@ -1673,11 +1733,11 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
     </div>
     <div class="side">
       <p class="label">4 · Claude Code · your terminal · one line</p>
-<pre class="d2-mc-cmd"><span class="nw">claude mcp add</span> <span class="nw">--env DISABLE_TELEMETRY=true</span> <span class="nw">--scope user</span> <span class="nw">blender</span> <span class="nw">-- uvx mcp-for-blender@2.2.4</span></pre>
+<pre class="d2-mc-cmd" data-copy="lines"><span class="nw">claude mcp add</span> <span class="nw">--env DISABLE_TELEMETRY=true</span> <span class="nw">--scope user</span> <span class="nw">blender</span> <span class="nw">-- uvx mcp-for-blender@2.2.4</span></pre>
       <p class="note">Check: start <code>claude</code>, type <code>/mcp</code>.</p>
       <p class="note d2-mc-t">Tested: adding it. Not yet with Blender.</p>
       <p class="label">4 · Codex · your terminal · one line</p>
-<pre class="d2-mc-cmd"><span class="nw">codex mcp add</span> <span class="nw">blender</span> <span class="nw">--env DISABLE_TELEMETRY=true</span> <span class="nw">-- uvx mcp-for-blender@2.2.4</span></pre>
+<pre class="d2-mc-cmd" data-copy="lines"><span class="nw">codex mcp add</span> <span class="nw">blender</span> <span class="nw">--env DISABLE_TELEMETRY=true</span> <span class="nw">-- uvx mcp-for-blender@2.2.4</span></pre>
       <p class="note">Check: start <code>codex</code>, type <code>/mcp</code>.</p>
       <p class="note d2-mc-t">Not tested yet.</p>
     </div>
@@ -1889,19 +1949,19 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   .d2-sp2 .pair figcaption { display: flex; justify-content: space-around; margin-top: 10px; font-size: 24px; color: var(--grey); }
   .d2-sp2 .pair p { margin: 14px 0 0; font-size: 25px; line-height: 1.4; color: var(--grey); }
 </style>
-  <p class="eyebrow">Extension · Spirula Studio v2026.10.16 · free · Mac (Apple Silicon), Windows, Linux</p>
+  <p class="eyebrow">Extension · <a class="jump" href="https://github.com/harry7557558/spirula-studio/releases/tag/v2026.10.16" target="_blank" rel="noopener">Spirula Studio v2026.10.16</a> · free · Mac (Apple Silicon), Windows, Linux</p>
   <h2>Train splats: Spirula learns, you look.</h2>
   <div class="d2-sp2">
     <p class="label">Mac · your terminal, in 02-splat-viewer · blocked? Privacy &amp; Security → Open Anyway</p>
-<pre>cd public/splats/training
+<pre data-copy="lines">cd public/splats/training
 "/Applications/Spirula Studio.app/Contents/MacOS/spirula" train synthetic --data . --output-dir-name scene</pre>
     <p class="label" style="margin-top: 22px">Windows · right-click spirula.exe → Copy as path, and replace <code>"C:\path\to\spirula.exe"</code> with it, quotes included</p>
-<pre>cd public/splats/training
+<pre data-copy="lines">cd public/splats/training
 &amp; "C:\path\to\spirula.exe" train synthetic --data . --output-dir-name scene</pre>
     <div class="d2-sp2-row">
       <div>
         <p class="note">When it says <strong>Training complete</strong>, press <strong>Ctrl+C</strong>.</p>
-        <p class="note">About 10 minutes on a strong NVIDIA laptop GPU, in our test on Linux. Other laptops: much longer (not measured). Progress: <code>localhost:7007</code>, open to everyone on your Wi-Fi.</p>
+        <p class="note">About 10 minutes on a strong NVIDIA laptop GPU, in our test on Linux. Other laptops: much longer (not measured). Progress: <a class="jump" href="http://localhost:7007" target="_blank" rel="noopener"><code>localhost:7007</code></a>, open to everyone on your Wi-Fi.</p>
         <p class="note">Result: 0.92 million splats in <code>outputs/scene/step-000030000.ckpt/splat.ply</code>. Copy it to <code>public/splats/</code> under a name you’ll recognise, then open it in your viewer, or in Blender with <code>splats.load()</code>.</p>
       </div>
       <figure class="pair">
@@ -2041,11 +2101,57 @@ window.addEventListener('pointerdown', (event) => {
 window.addEventListener('pointerup', (event) => {
   const start = pressed;
   pressed = null;
-  if (!start || event.target.closest('a, .nav') || window.getSelection().toString()) return;
+  if (!start || event.target.closest('a, .nav, .copy') || window.getSelection().toString()) return;
   if (Math.hypot(event.clientX - start.x, event.clientY - start.y) > 10) return; // a drag, not a tap
   const width = document.documentElement.clientWidth;
   show(event.clientX > width / 3 ? current + 1 : current - 1);
 });
+
+// Copy buttons: one per line in a command block (data-copy="lines"), one for a whole prompt or a file
+// to paste (data-copy="all"). They copy exactly the text on the slide.
+const COPY_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8" /></svg>';
+const DONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>';
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const area = document.createElement('textarea'); // opened from a file, without clipboard access
+    area.value = text;
+    document.body.append(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+  }
+}
+
+function copyButton(text) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'copy';
+  button.title = 'Copy';
+  button.setAttribute('aria-label', 'Copy');
+  button.innerHTML = COPY_ICON;
+  button.addEventListener('mousedown', (event) => event.preventDefault()); // keeps Space and Enter for slides
+  button.addEventListener('click', async () => {
+    await copyText(text);
+    button.innerHTML = DONE_ICON;
+    button.classList.add('done');
+    setTimeout(() => { button.innerHTML = COPY_ICON; button.classList.remove('done'); }, 1200);
+  });
+  return button;
+}
+
+for (const pre of deck.querySelectorAll('pre.prompt, pre[data-copy]')) {
+  if (pre.dataset.copy === 'lines') {
+    pre.innerHTML = pre.innerHTML.split('\n').map((line) => `<span class="line">${line || ' '}</span>`).join('');
+    for (const line of pre.querySelectorAll('.line')) {
+      if (line.textContent.trim()) line.append(copyButton(line.textContent));
+    }
+  } else {
+    pre.append(copyButton(pre.textContent.trim()));
+  }
+}
 
 // A hash is a slide number (#12) or a slide's id (#s-opencode, for jump links).
 function target(hash) {

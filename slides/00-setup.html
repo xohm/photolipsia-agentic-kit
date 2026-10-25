@@ -394,6 +394,65 @@ td code {
   font-size: 26px;
 }
 
+/* Copy buttons (deck.js): in the right padding of a block (26 px or more), so they never cover text.
+   A command block gets one per line, a prompt or a file to paste one in its top right corner. */
+pre[data-copy="lines"] .line {
+  position: relative;
+  display: block;
+}
+
+pre.prompt,
+pre[data-copy="all"] {
+  position: relative;
+}
+
+.copy {
+  position: absolute;
+  top: 50%;
+  right: -25px;
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #8a867e;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+pre.prompt > .copy,
+pre[data-copy="all"] > .copy {
+  top: 6px;
+  right: 2px;
+  transform: none;
+}
+
+.copy svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.copy:hover {
+  background: rgb(0 0 0 / 7%);
+  color: var(--ink);
+}
+
+.dark .copy:hover {
+  background: rgb(255 255 255 / 12%);
+  color: var(--paper);
+}
+
+.copy.done {
+  color: #2f8a46;
+}
+
 /* Tables */
 table {
   width: 100%;
@@ -592,7 +651,8 @@ td:first-child {
     break-after: auto;
   }
 
-  .nav {
+  .nav,
+  .copy {
     display: none;
   }
 
@@ -639,6 +699,10 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   .slide .d1-tl-card code, .slide .d1-tl-chk code { font-size: 0.88em; }
   .slide .d1-tl-chk { margin: 24px 0 0; font-size: 28px; line-height: 1.42; color: var(--grey); }
   .slide .d1-tl-chk b { color: var(--ink); font-weight: 600; }
+  /* Where to go next, by path: under the content, above the footer line. */
+  .slide p.next { position: absolute; right: 128px; bottom: 100px; margin: 0; font-size: 24px; color: var(--grey); }
+  .slide p.next b { color: var(--ink); font-weight: 600; }
+  .dark p.next, .dark p.next b { color: var(--paper); }
 </style>
 </head>
 <body>
@@ -658,6 +722,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
     <p class="after">Every step in detail: <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md" target="_blank" rel="noopener"><code>docs/student-setup.md</code></a></p>
     <p class="after d1-su-jump">Jump to: <a class="jump" href="#s-terminal">terminal</a> · <a class="jump" href="#s-git-node">Git and Node.js</a> · <a class="jump" href="#s-github">GitHub</a> · <a class="jump" href="#s-key">course key</a> · <a class="jump" href="#s-opencode">OpenCode</a> · <a class="jump" href="#s-claude">Claude Code</a> · <a class="jump" href="#s-codex">Codex</a> · <a class="jump" href="#s-key-tools">course key in Claude Code or Codex</a> · <a class="jump" href="#s-first-run">first run</a> · <a class="jump" href="#s-commands">commands</a> · <a class="jump" href="#s-fork">your fork</a> · <a class="jump" href="troubleshooting.html">when it fails</a> · <a class="jump" href="#s-ask">asking a question</a></p>
   </div>
+  <p class="next">Next: <a class="jump" href="#s-why">what you install, and why</a> →</p>
 </section>
 
 <!-- S0b What you install, and why -->
@@ -678,6 +743,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
     <tr><td><a class="jump" href="#s-opencode">One agent</a></td><td>OpenCode, Claude Code or Codex: reads your files, writes the code, runs the check.</td></tr>
     <tr><td><a class="jump" href="#s-fork">A browser for the check</a></td><td>Chromium, about 300 MB. The check opens your page in it, hidden, and takes a screenshot.</td></tr>
   </table>
+  <p class="next">Next: <a class="jump" href="#s-terminal">your terminal</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -751,6 +817,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
       <p class="small">New tab: Cmd+T on a Mac, Ctrl+Shift+T on Windows.</p>
     </div>
   </div>
+  <p class="next">Next: <a class="jump" href="#s-git-node">Git and Node.js</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -795,28 +862,29 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   <div class="d1-in-r1">
     <div>
       <p class="label">Mac · Terminal</p>
-<pre class="c22">xcode-select --install</pre>
+<pre class="c22" data-copy="lines">xcode-select --install</pre>
       <p class="s26">A dialog opens: Install. That gives you Git.</p>
-      <p class="s26">Node.js: the LTS installer from <b>nodejs.org</b>. With Homebrew: <code>brew install node gh</code>.</p>
+      <p class="s26">Node.js: the LTS installer from <a class="jump" href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a>. With Homebrew: <code>brew install node gh</code>.</p>
     </div>
     <div>
       <p class="label">Windows · PowerShell · one line at a time</p>
-<pre class="c22">Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
+<pre class="c22" data-copy="lines">Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
 winget install --id Git.Git -e
 winget install --id OpenJS.NodeJS.LTS -e</pre>
-      <p class="s26">The first line lets npm run. The first time, winget asks to accept its agreements: <b>Y</b>. “winget is not recognized”? Install <b>App Installer</b> from the Microsoft Store.</p>
+      <p class="s26">The first line lets npm run. The first time, winget asks to accept its agreements: <b>Y</b>. “winget is not recognized”? Install <a class="jump" href="https://apps.microsoft.com/detail/9NBLGGH4NNS1" target="_blank" rel="noopener">App Installer</a> from the Microsoft Store.</p>
     </div>
   </div>
   <div class="d1-in-r2">
     <div>
       <p class="label">Then, in a new terminal · both</p>
-<pre class="c22">node -v
+<pre class="c22" data-copy="lines">node -v
 git --version</pre>
     </div>
     <div>
       <p class="s26" style="margin-top: 44px">Close the terminal and open a new one after installing, or it won't find the new tools. You want Node <b>v22.12</b> or newer.</p>
     </div>
   </div>
+  <p class="next">Next: <a class="jump" href="#s-github">GitHub</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -834,10 +902,10 @@ git --version</pre>
   </style>
   <p class="eyebrow">Setup · once per laptop</p>
   <h2>A GitHub account, and your name in Git.</h2>
-  <div class="d1-gh-step" style="margin-bottom: 26px"><span class="d1-gh-n">1</span><p class="d1-gh-say"><b>github.com</b> → Sign up. Free. Click the link in the email GitHub sends: you can't fork before that.</p></div>
+  <div class="d1-gh-step" style="margin-bottom: 26px"><span class="d1-gh-n">1</span><p class="d1-gh-say"><a class="jump" href="https://github.com/signup" target="_blank" rel="noopener">github.com</a> → Sign up. Free. Click the link in the email GitHub sends: you can't fork before that.</p></div>
   <div class="d1-gh-step"><span class="d1-gh-n">2</span><p class="label">In a new terminal · Mac and Windows</p></div>
   <div class="d1-gh-row">
-<pre class="c22">git config --global user.name "Your Name"
+<pre class="c22" data-copy="lines">git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 git config --global pull.rebase false</pre>
     <div>
@@ -848,14 +916,15 @@ git config --global pull.rebase false</pre>
   <div class="d1-gh-step"><span class="d1-gh-n">3</span><p class="label">Log in once, so <code>git push</code> works</p></div>
   <div class="d1-gh-os">
     <div>
-      <p class="s26" style="margin-top: 0"><b>Mac:</b> install the GitHub tool once: the installer from <b>cli.github.com</b> (or <code>brew install gh</code>). Then, in a new terminal:</p>
-<pre class="c22" style="margin-top: 12px">gh auth login</pre>
+      <p class="s26" style="margin-top: 0"><b>Mac:</b> install the GitHub tool once: the installer from <a class="jump" href="https://cli.github.com/" target="_blank" rel="noopener">cli.github.com</a> (or <code>brew install gh</code>). Then, in a new terminal:</p>
+<pre class="c22" style="margin-top: 12px" data-copy="lines">gh auth login</pre>
       <p class="s26">Answer: GitHub.com, HTTPS, Yes, Login with a web browser. Copy the one-time code, paste it in the browser, Authorize.</p>
     </div>
     <div>
       <p class="s26" style="margin-top: 0"><b>Windows:</b> nothing to install. At your first <code>git push</code>, Git opens a GitHub login in your browser.</p>
     </div>
   </div>
+  <p class="next">Next · <b>course key:</b> <a class="jump" href="#s-key">the key</a> · <b>own plan:</b> <a class="jump" href="#s-claude">Claude Code</a> or <a class="jump" href="#s-codex">Codex</a></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -924,16 +993,17 @@ git config --global pull.rebase false</pre>
   <p class="label">Mac · Terminal</p>
   <div class="d1-ky-mac">
     <div><p class="d1-ky-cap">1 · Open the file</p>
-<pre class="c22">touch ~/.zshrc && open -e ~/.zshrc</pre></div>
+<pre class="c22" data-copy="lines">touch ~/.zshrc && open -e ~/.zshrc</pre></div>
     <div><p class="d1-ky-cap">2 · Paste at the end, real key, save</p>
-<pre class="c22">export OPENROUTER_API_KEY="sk-or-..."</pre></div>
+<pre class="c22" data-copy="lines">export OPENROUTER_API_KEY="sk-or-..."</pre></div>
     <div><p class="d1-ky-cap">3 · Reload</p>
-<pre class="c22">source ~/.zshrc</pre></div>
+<pre class="c22" data-copy="lines">source ~/.zshrc</pre></div>
   </div>
   <p class="label">Windows · PowerShell · paste the key when asked, then open a new terminal</p>
-<pre class="c22">[Environment]::SetEnvironmentVariable('OPENROUTER_API_KEY', (Read-Host 'Paste the key'), 'User')</pre>
+<pre class="c22" data-copy="lines">[Environment]::SetEnvironmentVariable('OPENROUTER_API_KEY', (Read-Host 'Paste the key'), 'User')</pre>
   <p class="s26">Paste the export line, don't type it: TextEdit can turn typed quotes into curly ones. Claude Code: the key goes in <code>~/.claude/settings.json</code>, in your home folder, never in a project. Test it later in your fork: <code>node tools/check-openrouter.mjs</code> should end with All good. Own plan? Skip to <a class="jump" href="#s-claude">Claude Code</a> or <a class="jump" href="#s-codex">Codex</a>.</p>
   </div>
+  <p class="next">Next · <b>OpenCode:</b> <a class="jump" href="#s-opencode">install it</a> · <b>on the key:</b> <a class="jump" href="#s-claude">Claude Code</a> or <a class="jump" href="#s-codex">Codex</a></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -952,7 +1022,7 @@ git config --global pull.rebase false</pre>
     <div class="d1-oc-os">
       <div>
         <p class="label">Mac · Terminal</p>
-<pre class="c22">npm install -g opencode-ai@1
+<pre class="c22" data-copy="lines">npm install -g opencode-ai@1
 opencode --version
 mkdir -p ~/.config/opencode
 touch ~/.config/opencode/opencode.json
@@ -960,7 +1030,7 @@ open -e ~/.config/opencode/opencode.json</pre>
       </div>
       <div>
         <p class="label">Windows · PowerShell</p>
-<pre class="c22">npm install -g opencode-ai@1
+<pre class="c22" data-copy="lines">npm install -g opencode-ai@1
 opencode --version
 New-Item -ItemType Directory -Force "$HOME\.config\opencode"
 notepad "$HOME\.config\opencode\opencode.json"</pre>
@@ -969,7 +1039,7 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
     <p class="s26">You want version 1.x. Not <code>brew install opencode</code>: that is OpenCode 2. Mac says “EACCES”? <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#mac-only-npm-says-eacces" target="_blank" rel="noopener"><code>docs/student-setup.md</code></a>, section 1.</p>
     <p class="label d1-oc-paste">Paste this into the file (don't type it) and save</p>
     <div class="d1-oc-cfg">
-<pre class="c22">{
+<pre class="c22" data-copy="all">{
   "$schema": "https://opencode.ai/config.json",
   "model": "openrouter/z-ai/glm-5.3-flash",
   "small_model": "openrouter/z-ai/glm-5.3-flash",
@@ -985,6 +1055,7 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
       </div>
     </div>
   </div>
+  <p class="next">Next: <a class="jump" href="#s-first-run">first run</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -999,11 +1070,11 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
     <div class="d1-tl-os">
       <div>
         <p class="label">Mac · Terminal</p>
-<pre class="c22">curl -fsSL https://claude.ai/install.sh | bash</pre>
+<pre class="c22" data-copy="lines">curl -fsSL https://claude.ai/install.sh | bash</pre>
       </div>
       <div>
         <p class="label">Windows · PowerShell</p>
-<pre class="c22">irm https://claude.ai/install.ps1 | iex</pre>
+<pre class="c22" data-copy="lines">irm https://claude.ai/install.ps1 | iex</pre>
       </div>
     </div>
     <p class="s26">Open a new terminal, then <code>claude --version</code>.</p>
@@ -1021,6 +1092,7 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
     </div>
     <p class="d1-tl-chk"><b>Check:</b> <code>/status</code> shows your Claude account, or <code>Auth token: ANTHROPIC_AUTH_TOKEN</code> with the course key.</p>
   </div>
+  <p class="next">Next · <b>your plan:</b> <a class="jump" href="#s-first-run">first run</a> · <b>the course key:</b> <a class="jump" href="#s-key-tools">the key file</a></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -1036,7 +1108,7 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
     <div class="d1-cx-top">
       <div>
         <p class="label">Mac and Windows</p>
-<pre class="c22">npm install -g @openai/codex
+<pre class="c22" data-copy="lines">npm install -g @openai/codex
 codex --version</pre>
       </div>
       <p class="s26">Mac says “EACCES”? <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#mac-only-npm-says-eacces" target="_blank" rel="noopener"><code>docs/student-setup.md</code></a>, section 1.</p>
@@ -1054,6 +1126,7 @@ codex --version</pre>
     <p class="d1-tl-chk"><b>“Do you trust this folder?”</b> Yes, in your project folders. Otherwise Codex ignores the project's <code>.codex/config.toml</code>, and the check can't run in its sandbox.</p>
     <p class="d1-tl-chk">Codex has no deny rules: it relies on <code>AGENTS.md</code>, the ignore files and its sandbox. <b>Check:</b> <code>/status</code> shows the account and model.</p>
   </div>
+  <p class="next">Next · <b>your plan:</b> <a class="jump" href="#s-first-run">first run</a> · <b>the course key:</b> <a class="jump" href="#s-key-tools">the key file</a></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -1070,13 +1143,13 @@ codex --version</pre>
   <div class="d1-kt">
     <div>
       <p class="label">Claude Code · Mac</p>
-<pre class="c22">mkdir -p ~/.claude &amp;&amp; touch ~/.claude/settings.json
+<pre class="c22" data-copy="lines">mkdir -p ~/.claude &amp;&amp; touch ~/.claude/settings.json
 open -e ~/.claude/settings.json</pre>
       <p class="label">Claude Code · Windows</p>
-<pre class="c22">New-Item -ItemType Directory -Force "$HOME\.claude"
+<pre class="c22" data-copy="lines">New-Item -ItemType Directory -Force "$HOME\.claude"
 notepad "$HOME\.claude\settings.json"</pre>
       <p class="label">Paste, put in the real key, save</p>
-<pre class="c22">{ "env": {
+<pre class="c22" data-copy="all">{ "env": {
   "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
   "ANTHROPIC_AUTH_TOKEN": "sk-or-...",
   "ANTHROPIC_API_KEY": "",
@@ -1090,13 +1163,13 @@ notepad "$HOME\.claude\settings.json"</pre>
     </div>
     <div>
       <p class="label">Codex · Mac</p>
-<pre class="c22">mkdir -p ~/.codex &amp;&amp; touch ~/.codex/config.toml
+<pre class="c22" data-copy="lines">mkdir -p ~/.codex &amp;&amp; touch ~/.codex/config.toml
 open -e ~/.codex/config.toml</pre>
       <p class="label">Codex · Windows</p>
-<pre class="c22">New-Item -ItemType Directory -Force "$HOME\.codex"
+<pre class="c22" data-copy="lines">New-Item -ItemType Directory -Force "$HOME\.codex"
 notepad "$HOME\.codex\config.toml"</pre>
       <p class="label">Paste and save · the key comes from your environment</p>
-<pre class="c22">model = "z-ai/glm-5.3-flash"
+<pre class="c22" data-copy="all">model = "z-ai/glm-5.3-flash"
 model_provider = "openrouter"
 model_reasoning_effort = "high"
 [model_providers.openrouter]
@@ -1108,6 +1181,7 @@ env_key = "OPENROUTER_API_KEY"
 auto_recap = false</pre>
     </div>
   </div>
+  <p class="next">Next: <a class="jump" href="#s-first-run">first run</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -1130,9 +1204,9 @@ auto_recap = false</pre>
   <div class="d1-fr">
     <div>
       <p class="label">1 · An empty test folder · Mac · Terminal</p>
-<pre class="c22">mkdir -p ~/hello-agent && cd ~/hello-agent</pre>
+<pre class="c22" data-copy="lines">mkdir -p ~/hello-agent && cd ~/hello-agent</pre>
       <p class="label d1-fr-l">Windows · PowerShell</p>
-<pre class="c22">New-Item -ItemType Directory -Force "$HOME\hello-agent"
+<pre class="c22" data-copy="lines">New-Item -ItemType Directory -Force "$HOME\hello-agent"
 cd "$HOME\hello-agent"</pre>
       <p class="label d1-fr-l">2 · Start <code>opencode</code>, <code>claude</code> or <code>codex</code>, then type</p>
 <pre class="prompt">Create hello.js that prints "Hello from GLM", then run it with node.</pre>
@@ -1148,6 +1222,7 @@ cd "$HOME\hello-agent"</pre>
     </div>
   </div>
   <p class="d1-fr-end">Later, start the agent in the folder you work in, never in your home folder: the rules and deny rules are in the project folder.</p>
+  <p class="next">Next: <a class="jump" href="#s-commands">the commands</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -1175,6 +1250,7 @@ cd "$HOME\hello-agent"</pre>
     <tr><td>see your plan's limits</td><td class="d1-cs-n">none: your key has $3 a day</td><td><code>/usage</code></td><td><code>/usage</code></td></tr>
   </table>
   <p class="d1-cs-note"><b>New task, new session:</b> the agent sends the whole conversation again with every step. Long sessions cost more and use up plan limits faster.</p>
+  <p class="next">Next: <a class="jump" href="#s-fork">your fork</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -1232,7 +1308,7 @@ cd "$HOME\hello-agent"</pre>
   <div class="d1-fk-grid">
     <div>
       <p class="label">2 · Clone, once · Mac and Windows</p>
-<pre class="c22">cd ~
+<pre class="c22" data-copy="lines">cd ~
 git clone https://github.com/YOUR-NAME/photolipsia-agentic-kit.git
 cd photolipsia-agentic-kit
 git remote add upstream https://github.com/xohm/photolipsia-agentic-kit.git</pre>
@@ -1242,7 +1318,7 @@ git remote add upstream https://github.com/xohm/photolipsia-agentic-kit.git</pre
     </div>
     <div>
       <p class="label">3 · First check</p>
-<pre class="c22">node tools/check-openrouter.mjs
+<pre class="c22" data-copy="lines">node tools/check-openrouter.mjs
 cd 01-text-stats
 npm install
 npx playwright install chromium
@@ -1250,6 +1326,7 @@ npm run check</pre>
       <p class="s26">The first line tests the course key: you want All good. Own plan? Skip it. Then <b>FAILED: Nothing rendered yet</b>: correct, no app yet.</p>
     </div>
   </div>
+  <p class="next">Next: <a class="jump" href="#s-ask">when you are stuck</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -1279,7 +1356,8 @@ npm run check</pre>
       <p class="s26">Your teacher answers there, and the next student finds the answer by searching.</p>
     </div>
   </div>
-  <p class="d1-as-url">The course Discussions: <code>github.com/xohm/photolipsia-agentic-kit/discussions</code></p>
+  <p class="d1-as-url">The course Discussions: <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/discussions" target="_blank" rel="noopener"><code>github.com/xohm/photolipsia-agentic-kit/discussions</code></a></p>
+  <p class="next">Setup done. Next: <a class="jump" href="01-agentic-coding-basics.html">the course, deck 1</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 </div>
@@ -1346,11 +1424,57 @@ window.addEventListener('pointerdown', (event) => {
 window.addEventListener('pointerup', (event) => {
   const start = pressed;
   pressed = null;
-  if (!start || event.target.closest('a, .nav') || window.getSelection().toString()) return;
+  if (!start || event.target.closest('a, .nav, .copy') || window.getSelection().toString()) return;
   if (Math.hypot(event.clientX - start.x, event.clientY - start.y) > 10) return; // a drag, not a tap
   const width = document.documentElement.clientWidth;
   show(event.clientX > width / 3 ? current + 1 : current - 1);
 });
+
+// Copy buttons: one per line in a command block (data-copy="lines"), one for a whole prompt or a file
+// to paste (data-copy="all"). They copy exactly the text on the slide.
+const COPY_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8" /></svg>';
+const DONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>';
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const area = document.createElement('textarea'); // opened from a file, without clipboard access
+    area.value = text;
+    document.body.append(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+  }
+}
+
+function copyButton(text) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'copy';
+  button.title = 'Copy';
+  button.setAttribute('aria-label', 'Copy');
+  button.innerHTML = COPY_ICON;
+  button.addEventListener('mousedown', (event) => event.preventDefault()); // keeps Space and Enter for slides
+  button.addEventListener('click', async () => {
+    await copyText(text);
+    button.innerHTML = DONE_ICON;
+    button.classList.add('done');
+    setTimeout(() => { button.innerHTML = COPY_ICON; button.classList.remove('done'); }, 1200);
+  });
+  return button;
+}
+
+for (const pre of deck.querySelectorAll('pre.prompt, pre[data-copy]')) {
+  if (pre.dataset.copy === 'lines') {
+    pre.innerHTML = pre.innerHTML.split('\n').map((line) => `<span class="line">${line || ' '}</span>`).join('');
+    for (const line of pre.querySelectorAll('.line')) {
+      if (line.textContent.trim()) line.append(copyButton(line.textContent));
+    }
+  } else {
+    pre.append(copyButton(pre.textContent.trim()));
+  }
+}
 
 // A hash is a slide number (#12) or a slide's id (#s-opencode, for jump links).
 function target(hash) {
