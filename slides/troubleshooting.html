@@ -200,7 +200,7 @@ footer p {
     <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
     <tbody>
     <tr><td><code>404</code> “… matching your guardrail restrictions …”, or <code>403</code> “not allowed”</td><td>The tool asked for a model the course key doesn't allow. Check the model name in your config. OpenCode: is <code>small_model</code> set? In <code>/models</code>, pick <b>GLM-5.3-Flash</b>, not FlashX or Prime. Claude Code: are all model variables set?</td></tr>
-    <tr><td><code>403</code> “Budget limit exceeded”</td><td>Your key's $3 for today are used up. It resets at midnight UTC (1 or 2 am in Zurich). Tell your teacher if it happens often.</td></tr>
+    <tr><td><code>403</code> “Budget limit exceeded”</td><td>Your key's $10 for today are used up. It resets at midnight UTC (1 or 2 am in Zurich). Tell your teacher if it happens often.</td></tr>
     <tr><td><code>401</code> “User not found” or “invalid key”</td><td>Typo in the key, or the terminal doesn't see it. Windows: open a new terminal after setting the key. Mac: <code>source ~/.zshrc</code>. Run <code>node tools/check-openrouter.mjs</code>.</td></tr>
     <tr><td><code>model_not_found</code>, <code>404</code></td><td>Typo in the model name. OpenCode needs <code>openrouter/z-ai/glm-5.3-flash</code>, Claude Code and Codex need <code>z-ai/glm-5.3-flash</code>.</td></tr>
     <tr><td>The agent can't see the screenshot, or images are rejected</td><td>GLM-5.3 can't see images, GLM-5.3 Flash can. OpenCode: <code>/models</code> → <b>GLM-5.3-Flash</b>. Claude Code, Codex: <code>/model</code>.</td></tr>

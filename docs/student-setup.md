@@ -47,7 +47,7 @@ Contents
 | Git | Saves every step of your work. Sends it to GitHub, brings your teacher's updates. |
 | Node.js | Runs JavaScript on your laptop. Its `npm` installs the tools and the project's parts, and runs the check (`npm run check`) and your app (`npm run dev`). |
 | A GitHub account | Your copy of the course, your fork, lives there. Questions go to its [Discussions](#ask-a-question). |
-| The course key | Pays for the AI model, $3 a day ([section 4](#4-the-course-key)). With your own plan you don't need it. |
+| The course key | Pays for the AI model, $10 a day ([section 4](#4-the-course-key)). With your own plan you don't need it. |
 | One agent | OpenCode, Claude Code or Codex ([section 2](#2-pick-your-tool-and-account)): reads your files, writes the code, runs the check. |
 | A browser for the check | Chromium, about 300 MB (`npx playwright install chromium`). The check opens your page in it, hidden, and takes a screenshot. |
 
@@ -318,12 +318,12 @@ Two things follow from how the kit is built:
 ### What it costs
 
 **The course key:** the course pays for it: you pay nothing. Each of you gets your own key, with
-**$3 a day** and $25 for the whole course.
+**$10 a day** and $25 for the whole course.
 
 - A normal day of work with GLM-5.3 Flash costs about **$0.80 per person** (our estimate).
 - GLM-5.3 costs more: up to about ten times as much.
 - In tokens, Flash costs $0.15 per million tokens in and $0.50 per million out.
-- When your key's $3 for the day are used up, every request gets a `403` until midnight UTC (1 or
+- When your key's $10 for the day are used up, every request gets a `403` until midnight UTC (1 or
   2 am in Zurich). Only your key stops; everyone else goes on.
 - **A leaked key costs the course, not you.** Anyone who has your key can spend its budget until
   your teacher replaces it. So keep the rules in [section 4](#4-the-course-key), and don't share
@@ -874,7 +874,7 @@ The same tables, with the Blender ones, as a web page that every slide links to:
 | Problem | Fix |
 |---|---|
 | `404` "… matching your guardrail restrictions …", or `403` "not allowed" | The tool asked for a model the course key doesn't allow. Check the model name in your config. OpenCode: is `small_model` set? In `/models`, pick **GLM-5.3-Flash**, not FlashX or Prime. Claude Code: are all model variables set? |
-| `403` "Budget limit exceeded" | Your key's $3 for today are used up. It resets at midnight UTC (1 or 2 am in Zurich). Tell your teacher if it happens often. |
+| `403` "Budget limit exceeded" | Your key's $10 for today are used up. It resets at midnight UTC (1 or 2 am in Zurich). Tell your teacher if it happens often. |
 | `401` "User not found" or "invalid key" | Typo in the key, or the terminal doesn't see it. Windows: open a new terminal after setting the key. Mac: `source ~/.zshrc`. Run `node tools/check-openrouter.mjs`. |
 | `model_not_found`, `404` | Typo in the model name. OpenCode needs `openrouter/z-ai/glm-5.3-flash`, Claude Code and Codex need `z-ai/glm-5.3-flash`. |
 | The agent can't see the screenshot, or images are rejected | GLM-5.3 can't see images, GLM-5.3 Flash can. OpenCode: `/models` → **GLM-5.3-Flash**. Claude Code, Codex: `/model`. |
