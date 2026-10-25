@@ -45,7 +45,8 @@ Contents
 3. **Auto top-up** (same page) refills when the balance drops below a threshold. For a course, a
    fixed budget is easier to reason about: leave auto top-up **off** and use the alert instead.
 4. **Low balance alert:** **Settings → Notifications**. Email only. The default threshold is
-   $100: set it to about $40, about one day of all keys at their daily limit (15 × $3).
+   $100. Keep it, or set it so that you have time to top up: a normal day of 15 students costs
+   about $12 (section 10), and all keys at their daily budget could use 15 × $10 = $150.
 
 Spending controls (budgets and guardrails) are not available on the **Free** plan. Once you buy
 credits you are on the pay-as-you-go plan, which includes them. Check https://openrouter.ai/pricing
@@ -59,12 +60,61 @@ Every student without a plan gets their own key. A mistake (an agent left runnin
 then stops only that student's key, and **Activity** shows each student's use. One shared key
 also works, but then one student can use up the day for everyone.
 
+### With the script
+
+One command in the kit folder, the same on Mac and Windows:
+
+```bash
+node tools/student-keys.mjs setup
+```
+
+It needs a **Management key**: https://openrouter.ai/settings/management-keys → create one. It is
+shown only once: keep it in your password manager. A Management key can create and change keys
+but can't call models. The script asks for it (the input stays hidden) and keeps it only while it
+runs. Then it asks for:
+
+1. The student list: the ZHdK course list as exported (columns `Name` and `Vorname`), or a CSV
+   with one student per line under the header `name`. It holds personal data: keep it outside the
+   repository (`.gitignore` lists `students.csv`).
+2. Who uses their own Claude or ChatGPT plan: they get no key.
+3. The last day the keys work: a few days after the course. It can't be changed later.
+
+It shows what it will do and waits for `yes`. It sets up the guardrail (section 3: creates it, or
+corrects its budget and models) and makes a test key for you (`photolipsia-hs26-teacher`). It
+tries that key like section 4 does. Only if that works does it make one key per student: $25, no
+reset, with the guardrail. It ends with the same report as `check`. Run it again at any time: it
+only does what is missing.
+
+**No student names go to OpenRouter.** Keys are numbered: `photolipsia-hs26-01`, `-02`, … Which
+number belongs to whom is only on your computer, in `~/photolipsia-hs26-students.csv`. Keep that
+file until the course is over. The new keys go to `~/photolipsia-hs26-keys.csv` (readable only by
+you), never to the terminal. Move them to your password manager, then delete that file.
+
+Single steps during the course, `node tools/student-keys.mjs <command>`:
+
+| Command | What it does |
+|---|---|
+| `list` | every course key with its student, used, left, limit, status, expiry; and the credits |
+| `check` | what differs from this guide: the guardrail's budget and models, keys without the guardrail, limits that reset, broadcast destinations. Run it after every change in the dashboard |
+| `fix` | repairs what `check` marks `[fix]` |
+| `limit anna 30` · `disable anna` · `enable anna` | one key |
+| `replace anna` | a leaked key: see "If the key leaks" in section 8 |
+| `rename <hash> anna` | a key made by hand in the dashboard becomes Anna's course key |
+| `delete-all` | after the course; asks you to type `delete` |
+
+A student is `anna` (as in the students file), the key number (`7`), or the start of the hash that
+`list` shows. `--budget 12` gives `setup`, `check` and `fix` another daily amount. The script
+doesn't touch the account settings (privacy, auto top-up, the low-balance alert), and the API
+can't change the expiry of an existing key: those stay in the dashboard.
+
+### By hand
+
 **Settings → API Keys** (https://openrouter.ai/settings/keys) → **Create API Key**, once per
 student:
 
 | Field | Value |
 |---|---|
-| Name | `photolipsia-hs26-<name>` |
+| Name | `photolipsia-hs26-01`, `-02`, … (no student names; note who has which number) |
 | Credit limit | `25` (dollars) |
 | Reset | none: the limit is for the whole course |
 | Expiry | a few days after the last course day, if offered |
@@ -86,11 +136,13 @@ guardrail (next step) adds a daily ceiling per key and the model allowlist. Your
 | Setting | Value |
 |---|---|
 | Name | `photolipsia` |
-| Budget limit | `$3`, reset **daily** (resets at midnight UTC), for each key on its own |
+| Budget limit | `$10`, reset **daily** (resets at midnight UTC), for each key on its own |
 | Model allowlist | `z-ai/glm-5.3-flash` and `z-ai/glm-5.3` |
 | Provider allowlist | empty (all providers), or see the note below |
 
 Save it, then **assign** it: open the guardrail and add every student key under **API Keys**.
+The script does all of this for you: `setup` creates the guardrail with these settings (or
+corrects them) and assigns it to every course key; `check` shows any key without it.
 The budget counts per key, not for all of them together: "Guardrail budgets are enforced
 per-user and per-key" (OpenRouter's docs).
 A guardrail does nothing until it is assigned. A key can have one directly assigned guardrail.
@@ -333,9 +385,11 @@ Free and Go don't list the Codex CLI. These students don't get the key.
 
 ### Before
 
-- [ ] Credits bought, auto top-up off, low-balance alert at ~$40
-- [ ] One key per student, each with a $25 limit (and an expiry, if offered)
-- [ ] Guardrail with both models, $3 daily budget, assigned to every student key
+- [ ] Credits bought, auto top-up off, low-balance alert set (section 1)
+- [ ] `node tools/student-keys.mjs setup` ran (section 2): guardrail with both models and $10 a
+      day, your test key tried, one key per student with a $25 limit and an expiry
+- [ ] `node tools/student-keys.mjs check` says "All good" (run it again after any change in the
+      dashboard)
 - [ ] Privacy settings of the course account (students read about them in student-setup.md,
       "Where your prompts go"). Recommended:
       - Settings › Observability: **Input & Output Logging off** (off by default; when on,
@@ -379,28 +433,36 @@ Free and Go don't list the Codex CLI. These students don't get the key.
 ### During
 
 - [ ] **After day 1 and day 2:** **Activity** (https://openrouter.ai/activity), per key.
-      Is any key at its $3 every day? Any requests from unexpected models?
+      Is any key at its $10 every day? Any requests from unexpected models?
+      `node tools/student-keys.mjs list` shows each key's use and what is left.
 - [ ] **Logs** (https://openrouter.ai/logs): many 404s that name the guardrail mean a student's tool config is wrong.
       Many 402s mean the key limit or balance is reached.
 - [ ] Remind students to quit idle agents and to start a new session for a new task (long
       sessions resend a long history with every request).
-- [ ] Adjust the daily budget if the cohort needs more or less.
+- [ ] Adjust the daily budget if the cohort needs more or less: on the guardrail page, or
+      `node tools/student-keys.mjs fix --budget 12` (then give later `setup`, `check` and `fix` runs
+      the same `--budget`).
 
 **If the key leaks** (posted, committed, screenshotted):
 
-1. **Settings → API Keys**: delete or disable that student's key right away.
-2. Create a new key for that student, with the rest of the $25 as its limit, and assign the
-   guardrail to it.
-3. Check **Activity** for requests after the leak.
-4. Give the new key to that student privately. They update it everywhere they put it: see the box
+1. Right away: `node tools/student-keys.mjs replace <name>`. It disables the old key (renamed to
+   `photolipsia-hs26-<number>-leaked`), creates a new one with the rest of the $25 and the same
+   expiry, saves it to `~/photolipsia-hs26-keys.csv` and assigns the guardrail. By hand:
+   **Settings → API Keys**, disable that student's key, create a new one with the rest of the $25
+   as its limit, and assign the guardrail to it.
+2. Check **Activity** for requests after the leak.
+3. Give the new key to that student privately. They update it everywhere they put it: see the box
    "If the key changes" in [student-setup.md](student-setup.md#4-the-course-key).
-5. If the key was committed, deleting the file is not enough: it stays in the history. Treat
-   the old key as public. Revoking it (step 1) is what protects the budget.
+4. If the key was committed, deleting the file is not enough: it stays in the history. Treat
+   the old key as public. Disabling it (step 1) is what protects the budget.
 
 ### After
 
-- [ ] Delete the key.
-- [ ] Export the Activity as CSV for the course report.
+- [ ] Export the Activity as CSV for the course report. `node tools/student-keys.mjs list` shows
+      each key's total use.
+- [ ] Delete the keys: `node tools/student-keys.mjs delete-all` (it asks you to type `delete`).
+      Then delete the Management key (https://openrouter.ai/settings/management-keys) and, on your
+      computer, `~/photolipsia-hs26-students.csv`.
 - [ ] Check that auto top-up is off and note the remaining credits.
 
 ---
@@ -410,12 +472,12 @@ Free and Go don't list the Codex CLI. These students don't get the key.
 | Symptom | Likely cause | Fix |
 |---|---|---|
 | `404` "… matching your guardrail restrictions …" (or `403`, model not allowed) | The tool requested a model outside the allowlist: OpenCode without `small_model`, Claude Code without all model variables, or a typo | Fix the student's config (student guide, sections 5 to 7) |
-| `403` "Budget limit exceeded (daily limit)…" | This key's $3 for today are used up | Wait until midnight UTC, or raise the budget in the guardrail (it applies to every key) |
-| `402` or `403` "Key limit exceeded" | The key's $25 limit is used up | Raise the key's credit limit |
+| `403` "Budget limit exceeded (daily limit)…" | This key's $10 for today are used up | Wait until midnight UTC, or raise the budget in the guardrail (it applies to every key) |
+| `402` or `403` "Key limit exceeded" | The key's $25 limit is used up | Raise the key's credit limit: `node tools/student-keys.mjs limit <name> <usd>` |
 | `402` "insufficient credits" | Account balance empty | Buy credits |
 | `401` "User not found" | Wrong or deleted key, or the terminal doesn't see the variable | Run `node tools/check-openrouter.mjs` in the student's terminal |
 | Guardrail page greyed out | Free plan | Buy credits (pay-as-you-go plan) |
-| Other models still answer | Guardrail not assigned to the key | Guardrail → API Keys → add the key |
+| Other models still answer | Guardrail not assigned to the key | `node tools/student-keys.mjs assign`, or Guardrail → API Keys → add the key |
 | Images rejected or ignored | GLM-5.3 is text-only | Use GLM-5.3 Flash when the agent needs to look at screenshots |
 | Responses API `400` about `store` or `previous_response_id` | OpenRouter's Responses API is stateless | Should not happen with current Codex. Update Codex |
 | Slow answers | `max` reasoning | Set effort `high` or `low` in the tool config |
@@ -442,9 +504,10 @@ step, so input dominates:
 - total: **about $0.80**
 
 **15 students × 10 days ≈ $120**, plus the 5.5% fee. Heavy days, long sessions and some GLM-5.3
-use can double or triple that, so plan for **$100–300**. The $3 daily
-budget per key is almost four times the estimate, with room for heavy days; all keys together
-can spend at most 15 × $3 = $45 a day. That assumes all 15 students use a course key. Students on their own plan cost the course nothing:
+use can double or triple that, so plan for **$100–300**. The $10 daily budget per key is far
+above the estimate: it only stops a runaway agent. The real ceiling is each key's $25 for the
+whole course: a student who spends $10 a day has used it up in three days. All keys together can
+spend at most 15 × $10 = $150 a day. That assumes all 15 students use a course key. Students on their own plan cost the course nothing:
 count only those without a plan.
 
 Biggest cost drivers: long sessions (start fresh for each task), GLM-5.3 instead of Flash, idle

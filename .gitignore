@@ -8,3 +8,5 @@ Thumbs.db
 !**/public/splats/.gitkeep
 __pycache__/
 *.blend1
+students.csv
+*-keys.csv
