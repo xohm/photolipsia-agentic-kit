@@ -39,6 +39,18 @@ Contents
 
 ## 1. Prerequisites
 
+### What you install, and why
+
+| What | Why |
+|---|---|
+| Terminal | Where you type commands. The agent runs in it too. Already on your laptop. |
+| Git | Saves every step of your work. Sends it to GitHub, brings your teacher's updates. |
+| Node.js | Runs JavaScript on your laptop. Its `npm` installs the tools and the project's parts, and runs the check (`npm run check`) and your app (`npm run dev`). |
+| A GitHub account | Your copy of the course, your fork, lives there. Questions go to its [Discussions](#ask-a-question). |
+| The course key | Pays for the AI model, $3 a day ([section 4](#4-the-course-key)). With your own plan you don't need it. |
+| One agent | OpenCode, Claude Code or Codex ([section 2](#2-pick-your-tool-and-account)): reads your files, writes the code, runs the check. |
+| A browser for the check | Chromium, about 300 MB (`npx playwright install chromium`). The check opens your page in it, hidden, and takes a screenshot. |
+
 ### Terminal basics
 
 - **Mac:** open *Terminal*: press Cmd+Space, type Terminal, press Enter.
