@@ -768,13 +768,13 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   <h2>The agent writes. You decide.<br />The check shows what happened.</h2>
   <div class="d1-th-body">
     <p class="d1-th-first">An agent writes code fast. It can also be wrong in ways that look right.</p>
-    <p>In our own test, the agent prepared a 3D training set from <a class="topic" href="https://www.blender.org/" target="_blank" rel="noopener">Blender</a>. The result came out upside down. No check caught it: we saw it by looking.</p>
+    <p>In our test, a 3D training set the agent made in <a class="topic" href="https://www.blender.org/" target="_blank" rel="noopener">Blender</a> came out upside down. No check caught it: we saw it by looking.</p>
     <p>So nothing counts as done until the check has run and you have looked.</p>
   </div>
   <div class="d1-th-row">
-    <div class="d1-th-card"><p class="d1-th-who">The agent writes</p><p class="d1-th-file">src/ · tests/</p><p class="d1-th-what">the code and the tests, one small step at a time</p></div>
-    <div class="d1-th-card"><p class="d1-th-who">You decide</p><p class="d1-th-file">ai/strategy.md</p><p class="d1-th-what">the goal, the plan, and when to say “go”</p></div>
-    <div class="d1-th-card d1-th-check"><p class="d1-th-who">The check shows</p><p class="d1-th-file">npm run check</p><p class="d1-th-what">a report and a screenshot after every step</p></div>
+    <div class="d1-th-card"><p class="d1-th-who">The agent writes</p><p class="d1-th-file">src/ · tests/</p><p class="d1-th-what">code and tests, in small steps</p></div>
+    <div class="d1-th-card"><p class="d1-th-who">You decide</p><p class="d1-th-file">ai/strategy.md</p><p class="d1-th-what">the goal, the plan, <span class="nowrap">when to say “go”</span></p></div>
+    <div class="d1-th-card d1-th-check"><p class="d1-th-who">The check shows</p><p class="d1-th-file">npm run check</p><p class="d1-th-what">a report and a screenshot, <span class="nowrap">every step</span></p></div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
@@ -1020,8 +1020,8 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
         <path class="d1-pv-pk" pathLength="100" d="M62 28 H146" />
         <text x="166" y="40">OpenRouter, USA</text>
       </svg>
-      <p class="d1-pv-t">Then to one of many companies running GLM, chosen by price, not country. <a class="topic" href="https://openrouter.ai/docs/quickstart" target="_blank" rel="noopener">OpenRouter</a> keeps no content by default. A few companies keep prompts a while <span class="nowrap">(one says 30 days).</span></p>
-      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Nothing to switch:</b> the companies listed say they don't train on it.</span></p>
+      <p class="d1-pv-t">Then to a company running GLM, picked by price, not country. <a class="topic" href="https://openrouter.ai/docs/quickstart" target="_blank" rel="noopener">OpenRouter</a> keeps no content by default; a few companies keep prompts a while <span class="nowrap">(one says 30 days).</span></p>
+      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Nothing to switch:</b> all say they don't train on it.</span></p>
     </div>
     <div class="d1-pv-card">
       <p class="d1-pv-acct">Your Claude plan</p>
@@ -1031,7 +1031,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
         <path class="d1-pv-pk d1-pv-d2" pathLength="100" d="M62 28 H146" />
         <text x="166" y="40">Anthropic, USA</text>
       </svg>
-      <p class="d1-pv-t">Pro and Max: Anthropic trains on your chats and Claude Code sessions while “Help improve Claude” is on, and keeps them 5 years. Off: 30 days.</p>
+      <p class="d1-pv-t">Pro and Max: with “Help improve Claude” on, Anthropic trains on your chats and Claude Code sessions and keeps them 5 years. Off: 30 days.</p>
       <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Turn it off:</b><br /><span class="nowrap"><a class="jump" href="https://claude.ai/" target="_blank" rel="noopener">claude.ai</a> → Settings → Privacy</span></span></p>
     </div>
     <div class="d1-pv-card">
@@ -1042,18 +1042,17 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
         <path class="d1-pv-pk d1-pv-d3" pathLength="100" d="M62 28 H146" />
         <text x="166" y="40">OpenAI, USA</text>
       </svg>
-      <p class="d1-pv-t">Plus and Pro: ChatGPT and Codex content may be used for training. Business and Edu: not by default.</p>
-      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Turn it off,</b> one switch for both: <a class="jump" href="https://chatgpt.com/" target="_blank" rel="noopener">chatgpt.com</a>&nbsp;→ Settings&nbsp;→ Data&nbsp;controls&nbsp;→ “Improve the model <span class="nowrap">for everyone”</span></span></p>
+      <p class="d1-pv-t">Plus and Pro: ChatGPT and Codex content may be used for training.</p>
+      <p class="d1-pv-sw"><svg viewBox="0 0 52 30" aria-hidden="true"><rect x="1" y="1" width="50" height="28" rx="14" fill="#e6e3dc" stroke="#9a968e" stroke-width="2" /><circle cx="15" cy="15" r="9" fill="#fbfaf7" stroke="#9a968e" stroke-width="2" /></svg><span><b>Turn it off:</b><br /><a class="jump" href="https://chatgpt.com/" target="_blank" rel="noopener">chatgpt.com</a>&nbsp;→ Settings&nbsp;→ Data&nbsp;controls&nbsp;→ “Improve the model <span class="nowrap">for everyone”</span></span></p>
     </div>
   </div>
-  <p class="d1-pv-end">Turn training off before day one. <b>Never give the agent passwords, keys or other people's data.</b></p>
+  <p class="d1-pv-end"><b>Never give the agent passwords, keys or other people's data.</b> <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#where-your-prompts-go-who-sees-them" target="_blank" rel="noopener">Sources</a></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
 <!-- 5 Four ways an agent fails, four fixes -->
 <section class="slide light">
   <style>
-  .d1-ff-intro { margin: -12px 0 30px; font-size: 30px; line-height: 1.4; color: var(--grey); }
   .d1-ff { display: grid; grid-template-columns: 1.12fr 1fr 0.8fr; column-gap: 40px; }
   .d1-ff > p { margin: 0; padding: 20px 0; border-bottom: 1px solid #d3cfc6; }
   .d1-ff .d1-ff-h { padding: 0 0 12px; font-size: 22px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey); }
@@ -1067,7 +1066,6 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   </style>
   <p class="eyebrow">The skeleton</p>
   <h2>Four ways an agent fails. Four fixes.</h2>
-  <p class="d1-ff-intro">Every project in this course has the same few files. Each one answers one way agents fail.</p>
   <div class="d1-ff">
     <p class="d1-ff-h">The agent…</p><p class="d1-ff-h">The fix, a plain file</p><p class="d1-ff-h">You test it in</p>
     <p class="d1-ff-fail">forgets. Every session starts empty.</p>
@@ -1075,12 +1073,12 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
     <p class="d1-ff-proof"><b>Prompt 6:</b> quit, start fresh</p>
     <p class="d1-ff-fail">drifts: skips the plan, takes big steps.</p>
     <p class="d1-ff-fix"><a class="topic" href="https://agents.md/" target="_blank" rel="noopener"><code>AGENTS.md</code></a><span>rules, read by every tool</span></p>
-    <p class="d1-ff-proof"><b>Prompt 6:</b> add a rule of your own</p>
+    <p class="d1-ff-proof"><b>Prompt 6:</b> add your own rule</p>
     <p class="d1-ff-fail">reads what it shouldn't: keys, thousands of library files.</p>
     <p class="d1-ff-fix"><code>.ignore + deny rules</code><span>hidden from search, blocked from opening</span></p>
     <p class="d1-ff-proof"><b>Example 2:</b> try the boundaries</p>
     <p class="d1-ff-fail">says “done” when it isn't.</p>
-    <p class="d1-ff-fix check-mark"><code>npm run check</code><span>opens the page, writes a report and a screenshot</span></p>
+    <p class="d1-ff-fix check-mark"><code>npm run check</code><span>opens the page: a report, a screenshot</span></p>
     <p class="d1-ff-proof"><b>Prompt 4:</b> break it on purpose</p>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1156,12 +1154,9 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   .d1-sk-name { font-size: 24px; color: #262626; white-space: pre; }
   .d1-sk-note { font-size: 22px; color: #555; white-space: nowrap; }
   .d1-sk-tag { display: inline-flex; align-items: center; gap: 8px; padding: 1px 14px 2px 10px; border-radius: 999px; font: 600 22px var(--sans); color: var(--ink); }
-  .d1-sk-tag i, .d1-sk-g i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; flex: none; }
-  .d1-sk-side { display: flex; flex-direction: column; gap: 6px; }
-  .d1-sk-g { display: block; margin: 0; padding: 9px 14px; border-radius: 12px; font-size: 28px; line-height: 1.3; color: var(--grey); }
-  .d1-sk-g i { margin-right: 12px; transform: translateY(-3px); }
-  .d1-sk-g strong { white-space: nowrap; }
-  .d1-sk-side p.d1-sk-note2 { margin: 24px 0 0 14px; font-size: 26px; line-height: 1.42; color: var(--grey); }
+  .d1-sk-tag i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; flex: none; }
+  .d1-sk-side { display: flex; flex-direction: column; gap: 28px; padding-top: 16px; }
+  .d1-sk-side p.d1-sk-note2 { margin: 0; font-size: 30px; line-height: 1.42; color: var(--grey); }
   @keyframes d1-sk-hl { 0% { background-color: transparent; } 3%, 17% { background-color: var(--d1-sk-c); } 20%, 100% { background-color: transparent; } }
   .d1-sk-rules { --d1-sk-c: rgba(232, 135, 91, .24); animation: d1-sk-hl 10s ease-in-out 0s infinite; }
   .d1-sk-memory { --d1-sk-c: rgba(242, 201, 76, .34); animation: d1-sk-hl 10s ease-in-out 2s infinite; }
@@ -1190,12 +1185,8 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
       <div class="d1-sk-row d1-sk-app"><span class="d1-sk-name">└── index.html</span><span class="d1-sk-note">the page</span><span class="d1-sk-tag" style="background: rgba(62,123,250,.15)"><i style="background: #3e7bfa"></i>App</span></div>
     </div>
     <div class="d1-sk-side">
-      <p class="d1-sk-g d1-sk-rules"><i style="background: #e8875b"></i><strong>Rules:</strong> AGENTS.md, CLAUDE.md</p>
-      <p class="d1-sk-g d1-sk-memory"><i style="background: #d9a91a"></i><strong>Memory:</strong> ai/strategy.md</p>
-      <p class="d1-sk-g d1-sk-bounds"><i style="background: #e5484d"></i><strong>Boundaries:</strong> ignore files, deny rules, sandbox</p>
-      <p class="d1-sk-g d1-sk-check"><i style="background: #46a758"></i><strong>Check:</strong> npm test, npm run check</p>
-      <p class="d1-sk-g d1-sk-app"><i style="background: #3e7bfa"></i><strong>App:</strong> src/, index.html</p>
-      <p class="d1-sk-note2">In the skeleton, <code>src/</code> and <code>tests/</code> are empty and there is no page yet. You build those with your agent.</p>
+      <p class="d1-sk-note2"><code>src/</code> and <code>tests/</code> start empty, with no page yet. You build them with your agent.</p>
+      <p class="d1-sk-note2"><a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#9-the-project-skeleton-explained" target="_blank" rel="noopener">Every file explained</a></p>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1602,8 +1593,8 @@ A page where you paste text and see live counts.
   </div>
   <div class="d1-co-cols">
     <div>
-      <p><strong>The course pays:</strong> up to $25 per key for the whole course. Don't share your key: anyone with it can spend its budget.</p>
-      <p><strong>Used up?</strong> Your key stops until midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich). The others go on.</p>
+      <p><strong>The course pays:</strong> up to $25 per key for the whole course. Don't share it: anyone with it can spend its budget.</p>
+      <p><strong>Used up?</strong> Your key stops until midnight UTC (1&nbsp;or&nbsp;2&nbsp;am in Zurich).</p>
     </div>
     <div>
       <p><strong>Per million tokens:</strong> <a class="topic" href="https://openrouter.ai/z-ai/glm-5.3-flash" target="_blank" rel="noopener">GLM-5.3 Flash</a> $0.15 in, $0.50 out. <span class="nowrap"><a class="topic" href="https://openrouter.ai/z-ai/glm-5.3" target="_blank" rel="noopener">GLM-5.3</a>:</span> about 3× to 10× that, depending on the provider.</p>
@@ -1611,9 +1602,9 @@ A page where you paste text and see live counts.
     </div>
   </div>
   <div class="d1-co-plan">
-    <p><strong>Your own plan:</strong> no extra cost, but it uses your plan's limits, shared with the chat app: a 5-hour window and a weekly limit (ChatGPT Plus: weekly limits may apply). <code>/usage</code> shows them. Big models use them faster.</p>
+    <p><strong>Your own plan:</strong> no extra cost, but it uses <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#what-it-costs" target="_blank" rel="noopener">your plan's limits</a>, shared with the chat app. <code>/usage</code> shows them. Big models use them faster.</p>
   </div>
-  <p class="d1-co-both"><strong>Energy:</strong> no reliable number per request, so we give none. Fewer tokens save money and computing: quit idle agents, a new session per task, effort high (never max).</p>
+  <p class="d1-co-both"><strong>Energy:</strong> no reliable number per request, so we give none. <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#energy" target="_blank" rel="noopener">Fewer tokens save money and computing.</a></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -1770,7 +1761,7 @@ A page where you paste text and see live counts.
       <p>2. Run <code>npm test</code>, then <code>npm run check</code>. Read the summary it prints.</p>
       <p>3. Then:</p>
 <pre class="prompt">npm run check fails. Read .check/report.json, find the cause and fix it. Don't change the tests or <span class="nowrap">scripts/app-checks.mjs.</span></pre>
-      <p>4. Fixed? Run <code>git diff</code>. Only your own change undone? Good. Anything else changed? Ask why.</p>
+      <p>4. Fixed? Run <code>git diff</code>: only your change undone? Good. Anything else? Ask why.</p>
     </div>
     <div class="stack">
 <pre class="tight">$ npm test
@@ -1780,8 +1771,8 @@ A page where you paste text and see live counts.
 check: <span class="bad">FAILED</span> (0.4 s)
   - check "page shows sentences" failed:
     expected 3, page shows undefined</pre>
-      <p class="s26" style="margin-top: 22px">Or a page error: <code>Cannot set properties of null … (at /src/main.js:…)</code>, depending on how <code>main.js</code> was written.</p>
-      <p class="s26" style="margin-top: 14px">The agent wrote this check in Prompt 3. Breaking the page on purpose is how you find out it can fail.</p>
+      <p class="s26" style="margin-top: 22px">Or a page error: <code>Cannot set properties of null … (at /src/main.js:…)</code></p>
+      <p class="s26" style="margin-top: 14px">The agent wrote this check. Break the page to see that <span class="nowrap">it can fail.</span></p>
       <p class="proof check-mark"><b>Tests:</b> it says “done” when it isn't → <code>npm run check</code></p>
     </div>
   </div>
@@ -1859,15 +1850,15 @@ git push</pre>
       <p>1. Add one line of your own to <code>AGENTS.md</code>, under <code>## Code style</code>, for example: <code>- All text on the page is in sentence case.</code> Commit it:</p>
 <pre class="c22 d1-p6-git" data-copy="lines">git commit -am "My own rule"
 git push</pre>
-      <p>Then write a real step under <code>## Next</code> in <code>ai/strategy.md</code>. In our run it was empty, and the fresh session did nothing.</p>
-      <p>2. Quit the agent (<code>/exit</code>, in all three tools) and start it again. It now remembers nothing.</p>
+      <p>Then write a real step under <code>## Next</code> in <code>ai/strategy.md</code>. Ours was empty: the fresh session did nothing.</p>
+      <p>2. Quit the agent (<code>/exit</code>) and start it again. It now remembers nothing.</p>
       <p>3. Ask:</p>
 <pre class="prompt">Read AGENTS.md and ai/strategy.md, then do the step under ## Next.</pre>
     </div>
     <div class="body">
       <p class="lead">Does it know where you stopped? Does it follow your new rule?</p>
       <p class="proof coral"><b>Tests:</b> it forgets → <code>ai/strategy.md</code>. It drifts → <code>AGENTS.md</code>.</p>
-      <p class="d1-p6-done"><strong>Done when:</strong> <code>npm test</code> passes · <code>npm run check</code> says OK and the screenshot shows your page · <code>ai/strategy.md</code> has the plan ticked off, one line per decision and a current <code>## Next</code>.</p>
+      <p class="d1-p6-done"><a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/guides/01-text-stats.md#done-when" target="_blank" rel="noopener"><strong>Done when</strong></a> the tests pass, the check says OK, the screenshot shows your page and <code>ai/strategy.md</code> is up to date.</p>
     </div>
   </div>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1877,32 +1868,27 @@ git push</pre>
 <section class="slide light">
   <style>
   .d1-lo { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
-  .d1-lo .label { margin-bottom: 14px; }
-  .d1-lo .label.d1-lo-l2 { margin-top: 26px; }
-  .d1-lo p.d1-lo-i { margin: 0 0 14px; font-size: 28px; line-height: 1.36; color: var(--grey); }
+  .d1-lo .label { margin-bottom: 18px; }
+  .d1-lo p.d1-lo-i { margin: 0 0 22px; font-size: 32px; line-height: 1.36; color: var(--grey); }
   .d1-lo p.d1-lo-i b { color: var(--ink); font-weight: 600; }
   .d1-lo code { font-size: 0.88em; }
+  .d1-lo p.d1-lo-more { margin-top: 36px; font-size: 28px; }
   </style>
   <p class="eyebrow">Limits</p>
   <h2>What agents get wrong, and when not to use one.</h2>
   <div class="d1-lo">
     <div>
       <p class="label">Our runs of Example 1 · OpenCode with GLM-5.3 Flash</p>
-      <p class="d1-lo-i"><b>Its first tests expected wrong numbers.</b> <code>npm test</code> caught it, before any page existed.</p>
-      <p class="d1-lo-i"><b>Asked for one step, it wrote three files at once.</b> Read the plan, then each change.</p>
+      <p class="d1-lo-i"><b>Its first tests expected wrong numbers.</b> <span class="nowrap"><code>npm test</code> caught it.</span></p>
+      <p class="d1-lo-i"><b>Asked for one step, it wrote three files at once.</b></p>
       <p class="d1-lo-i"><b>A fresh session did nothing</b>, and said it couldn't see images without trying. <code>## Next</code> was empty.</p>
-      <p class="label d1-lo-l2">With our own plans · Claude Code, Codex</p>
-      <p class="d1-lo-i"><b>A fake <code>.env</code>:</b> Claude Code refused to open it. Codex read it with a script, and hid the value only because <span class="nowrap">AGENTS.md says so.</span></p>
-      <p class="d1-lo-i"><b>Codex couldn't run the check in its sandbox,</b> so it saw no screenshot. Now fixed in <code>.codex/config.toml</code>.</p>
+      <p class="d1-lo-i d1-lo-more">More: <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/guides/01-text-stats.md#what-agents-often-get-wrong" target="_blank" rel="noopener">what agents often get wrong</a> · <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/blender-and-splats.md#5-what-went-wrong-when-we-tried-it" target="_blank" rel="noopener">all our runs</a></p>
     </div>
     <div>
-      <p class="label">And often</p>
-      <p class="d1-lo-i"><b>It changes the test instead of the code.</b> Say “Don't change the tests”.</p>
-      <p class="d1-lo-i"><b>It starts <code>npm run dev</code> and waits forever.</b> Press Esc, run it in your own terminal.</p>
-      <p class="label d1-lo-l2">When to leave the agent out</p>
-      <p class="d1-lo-i"><b>When you can't check the result.</b> How a scan feels in VR: no check sees it.</p>
+      <p class="label">When to leave the agent out</p>
+      <p class="d1-lo-i"><b>When you can't check the result:</b> how a scan feels in VR.</p>
       <p class="d1-lo-i"><b>When the task is what you want to learn.</b> Write it <span class="nowrap">yourself first.</span></p>
-      <p class="d1-lo-i"><b>When the material isn't yours.</b> Interviews, participants, clients: what the agent opens leaves your laptop.</p>
+      <p class="d1-lo-i"><b>When the material isn't yours:</b> interviews, participants, clients.</p>
       <p class="d1-lo-i"><b>After two failed attempts.</b> Stop, <code>git restore .</code>, then a <span class="nowrap">smaller step.</span></p>
     </div>
   </div>

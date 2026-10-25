@@ -727,7 +727,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   <div class="d1-su">
     <p class="eyebrow">Before day one</p>
     <h1>Setup</h1>
-    <p class="after d1-su-first">Once per laptop, about 45 minutes. Best before day one. You need one agent: <a class="topic" href="https://opencode.ai/docs/" target="_blank" rel="noopener">OpenCode</a> with the course key (most of you), or <a class="topic" href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code</a> or <a class="topic" href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener">Codex</a> with your own plan.</p>
+    <p class="after d1-su-first">Once per laptop, about 45 minutes. You need one agent: <a class="topic" href="https://opencode.ai/docs/" target="_blank" rel="noopener">OpenCode</a> with the course key (most of you), or <a class="topic" href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code</a> or <a class="topic" href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener">Codex</a> with your own plan.</p>
     <p class="after">Tested on Linux. The Mac and Windows commands follow each tool's own instructions, but nobody has run them on a real Mac or Windows laptop yet. If a step fails: <a class="jump" href="troubleshooting.html">troubleshooting</a>, or <a class="jump" href="#s-ask">ask in writing</a>.</p>
     <p class="after">Every step in detail: <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md" target="_blank" rel="noopener"><code>docs/student-setup.md</code></a></p>
     <p class="after d1-su-jump">Jump to: <a class="jump" href="#s-terminal">terminal</a> · <a class="jump" href="#s-git-node">Git and Node.js</a> · <a class="jump" href="#s-github">GitHub</a> · <a class="jump" href="#s-key">course key</a> · <a class="jump" href="#s-opencode">OpenCode</a> · <a class="jump" href="#s-claude">Claude Code</a> · <a class="jump" href="#s-codex">Codex</a> · <a class="jump" href="#s-key-tools">course key in Claude Code or Codex</a> · <a class="jump" href="#s-first-run">first run</a> · <a class="jump" href="#s-commands">commands</a> · <a class="jump" href="#s-fork">your fork</a> · <a class="jump" href="troubleshooting.html">when it fails</a> · <a class="jump" href="#s-ask">asking a question</a></p>
@@ -745,12 +745,12 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
   <p class="eyebrow">Setup · overview</p>
   <h2>What you install, and why.</h2>
   <table class="d1-wy">
-    <tr><td><a class="jump" href="#s-terminal">Terminal</a></td><td>Where you type commands. The agent runs in it too. Already on your laptop.</td></tr>
+    <tr><td><a class="jump" href="#s-terminal">Terminal</a></td><td>Where you type commands. Already on your laptop.</td></tr>
     <tr><td><a class="jump" href="#s-git-node">Git</a></td><td>Saves every step of your work. Sends it to <a class="topic" href="https://docs.github.com/en/get-started/start-your-journey/about-github-and-git" target="_blank" rel="noopener">GitHub</a>, brings your teacher's updates.</td></tr>
-    <tr><td><a class="jump" href="#s-git-node">Node.js</a></td><td>Runs JavaScript on your laptop. Its <a class="topic" href="https://docs.npmjs.com/about-npm" target="_blank" rel="noopener"><code>npm</code></a> installs the tools and the project's parts, and runs the check and your app.</td></tr>
+    <tr><td><a class="jump" href="#s-git-node">Node.js</a></td><td>Runs JavaScript on your laptop. Its <a class="topic" href="https://docs.npmjs.com/about-npm" target="_blank" rel="noopener"><code>npm</code></a> installs the tools, runs the check and your app.</td></tr>
     <tr><td><a class="jump" href="#s-github">A GitHub account</a></td><td>Your copy of the course, your <a class="topic" href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo" target="_blank" rel="noopener">fork</a>, lives there. Questions go to its <a class="topic" href="https://docs.github.com/en/discussions" target="_blank" rel="noopener">Discussions</a>.</td></tr>
-    <tr><td><a class="jump" href="#s-key">The course key</a></td><td>Pays for the AI model, $3 a day. With your own plan you don't need it.</td></tr>
-    <tr><td><a class="jump" href="#s-opencode">One agent</a></td><td>OpenCode, Claude Code or Codex: reads your files, writes the code, runs the check.</td></tr>
+    <tr><td><a class="jump" href="#s-key">The course key</a></td><td>Pays for the AI model, $3 a day. Not needed with your own plan.</td></tr>
+    <tr><td><a class="jump" href="#s-opencode">One agent</a></td><td>Reads your files, writes the code, runs the check.</td></tr>
     <tr><td><a class="jump" href="#s-fork">A browser for the check</a></td><td>Chromium, about 300 MB. The check opens your page in it, hidden, and takes a screenshot.</td></tr>
   </table>
   <p class="next">Next: <a class="jump" href="#s-terminal">your terminal</a> →</p>
@@ -912,26 +912,26 @@ git --version</pre>
   </style>
   <p class="eyebrow">Setup · once per laptop</p>
   <h2>A GitHub account, and your name in Git.</h2>
-  <div class="d1-gh-step" style="margin-bottom: 26px"><span class="d1-gh-n">1</span><p class="d1-gh-say"><a class="jump" href="https://github.com/signup" target="_blank" rel="noopener">github.com</a> → Sign up. Free. Click the link in the email GitHub sends: you can't fork before that.</p></div>
-  <div class="d1-gh-step"><span class="d1-gh-n">2</span><p class="label">In a new terminal · Mac and Windows</p></div>
+  <div class="d1-gh-step" style="margin-bottom: 26px"><span class="d1-gh-n">1</span><p class="d1-gh-say"><a class="jump" href="https://github.com/signup" target="_blank" rel="noopener">github.com</a> → Sign up (free), then click the link in GitHub's email: you can't fork before that.</p></div>
+  <div class="d1-gh-step"><span class="d1-gh-n">2</span><p class="label">Mac and Windows</p></div>
   <div class="d1-gh-row">
 <pre class="c22" data-copy="lines">git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 git config --global pull.rebase false</pre>
     <div>
-      <p class="s26">Use the email of your GitHub account. It is public in every commit you push. Want it private? Use GitHub’s noreply address: <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#git-and-github-your-own-fork" target="_blank" rel="noopener"><code>docs/student-setup.md</code></a>.</p>
-      <p class="s26">The last line makes <code>git pull</code> merge your teacher's updates into your work.</p>
+      <p class="s26">Use your GitHub email. It is public in every commit: GitHub’s noreply address hides it: <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#git-and-github-your-own-fork" target="_blank" rel="noopener"><code>docs/student-setup.md</code></a>.</p>
+      <p class="s26">Line 3 makes <code>git pull</code> merge your teacher's updates.</p>
     </div>
   </div>
   <div class="d1-gh-step"><span class="d1-gh-n">3</span><p class="label">Log in once, so <code>git push</code> works</p></div>
   <div class="d1-gh-os">
     <div>
-      <p class="s26" style="margin-top: 0"><b>Mac:</b> install the GitHub tool once: the installer from <a class="jump" href="https://cli.github.com/" target="_blank" rel="noopener">cli.github.com</a> (or <code>brew install gh</code>). Then, in a new terminal:</p>
+      <p class="s26" style="margin-top: 0"><b>Mac:</b> install the GitHub tool (<a class="jump" href="https://cli.github.com/" target="_blank" rel="noopener">cli.github.com</a> or <code>brew install gh</code>). In a new terminal:</p>
 <pre class="c22" style="margin-top: 12px" data-copy="lines">gh auth login</pre>
-      <p class="s26">Answer: GitHub.com, HTTPS, Yes, Login with a web browser. Copy the one-time code, press <b>Enter</b>, paste the code in the browser, Authorize.</p>
+      <p class="s26">Answer: GitHub.com, HTTPS, Yes, Login with a web browser. Copy the one-time code, press <b>Enter</b>, paste it in the browser, Authorize.</p>
     </div>
     <div>
-      <p class="s26" style="margin-top: 0"><b>Windows:</b> nothing to install. At your first <code>git push</code>, Git opens a GitHub login in your browser.</p>
+      <p class="s26" style="margin-top: 0"><b>Windows:</b> nothing to install; your first <code>git push</code> opens a browser login.</p>
     </div>
   </div>
   <p class="next">Next · <b>course key:</b> <a class="jump" href="#s-key">the key</a> · <b>own plan:</b> <a class="jump" href="#s-claude">Claude Code</a> or <a class="jump" href="#s-codex">Codex</a></p>
@@ -1097,6 +1097,7 @@ $p = [Environment]::GetEnvironmentVariable('Path', 'User')
 <section class="slide light" id="s-claude-signin">
   <style>
     .d1-cc .d1-tl-two { margin-top: 0; }
+    .d1-cc a.jump { white-space: nowrap; }
   </style>
   <p class="eyebrow">Setup · Claude Code · 2 of 2</p>
   <h2>Claude Code: sign in.</h2>
@@ -1104,18 +1105,16 @@ $p = [Environment]::GetEnvironmentVariable('Path', 'User')
     <div class="d1-tl-two">
       <div class="d1-tl-card">
         <p class="label">Your Claude plan · Pro or Max</p>
-        <p>The first time you run <code>claude</code>, sign in in the browser.</p>
-        <p>Team and Enterprise work too. The free plan doesn't include Claude Code.</p>
+        <p>The first time you run <code>claude</code>, sign in in the browser. Team and Enterprise work too, the free plan doesn't.</p>
         <p>Before day one: switch training off (<a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#where-your-prompts-go-who-sees-them" target="_blank" rel="noopener">how</a>). Then: <a class="jump" href="#s-first-run">first run</a>.</p>
       </div>
       <div class="d1-tl-card">
         <p class="label">Or the course key</p>
         <p>A settings file in your home folder, never in a project: <a class="jump" href="#s-key-tools">set it up</a>.</p>
-        <p>Signed in on this laptop before? At the first start: <code>/logout</code>, quit, start <code>claude</code> again. The key beats a <span class="nowrap">signed-in</span> plan.</p>
+        <p>The key beats a <span class="nowrap">signed-in</span> plan. Signed in here before? At the first start: <code>/logout</code>, quit, start <code>claude</code> again.</p>
         <p>Made for Anthropic's models: with GLM, some features may not work.</p>
       </div>
     </div>
-    <p class="d1-tl-chk"><b>Check:</b> <code>/status</code> shows your Claude account, or <code>Auth token: ANTHROPIC_AUTH_TOKEN</code> with the course key.</p>
   </div>
   <p class="next">Next · <b>your plan:</b> <a class="jump" href="#s-first-run">first run</a> · <b>the course key:</b> <a class="jump" href="#s-key-tools">the key file</a></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1149,8 +1148,8 @@ codex --version</pre>
         <p><code>~/.codex/config.toml</code> in your home folder: Codex reads providers only there: <a class="jump" href="#s-key-tools">set it up</a>.</p>
       </div>
     </div>
-    <p class="d1-tl-chk"><b>“Do you trust this folder?”</b> Yes, in your project folders. Otherwise Codex ignores the project's <code>.codex/config.toml</code>, and the check can't run in its sandbox.</p>
-    <p class="d1-tl-chk">Codex has no deny rules: it relies on <a class="topic" href="https://agents.md/" target="_blank" rel="noopener"><code>AGENTS.md</code></a>, the ignore files and its sandbox. <b>Check:</b> <code>/status</code> shows the account and model.</p>
+    <p class="d1-tl-chk"><b>“Do you trust this folder?”</b> Yes, in your project folders: otherwise Codex ignores their <code>.codex/config.toml</code> and the check can't run.</p>
+    <p class="d1-tl-chk">Codex has no deny rules: it relies on <a class="topic" href="https://agents.md/" target="_blank" rel="noopener"><code>AGENTS.md</code></a>, the ignore files and its sandbox.</p>
   </div>
   <p class="next">Next · <b>your plan:</b> <a class="jump" href="#s-first-run">first run</a> · <b>the course key:</b> <a class="jump" href="#s-key-tools">the key file</a></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1194,7 +1193,7 @@ open -e ~/.codex/config.toml</pre>
       <p class="label">Codex · Windows · Notepad: create? Yes</p>
 <pre class="c22" data-copy="lines">New-Item -ItemType Directory -Force "$HOME\.codex"
 notepad "$HOME\.codex\config.toml"</pre>
-      <p class="label">Paste and save · the key comes from your environment</p>
+      <p class="label">Paste and save · key from your environment</p>
 <pre class="c22" data-copy="all">model = "z-ai/glm-5.3-flash"
 model_provider = "openrouter"
 model_reasoning_effort = "high"
@@ -1214,40 +1213,48 @@ auto_recap = false</pre>
 <!-- S6 First run and smoke test -->
 <section class="slide light" id="s-first-run">
   <style>
-    .d1-fr { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .d1-fr .label { margin-top: 0; }
-    .d1-fr .label.d1-fr-l { margin-top: 20px; }
-    .d1-fr .prompt { margin-bottom: 14px; }
-    .d1-fr p.s26 { margin: 0 0 12px; }
-    .d1-fr-m p { margin: 0 0 14px; font-size: 26px; line-height: 1.4; color: var(--grey); }
+    .d1-fr-os { display: grid; grid-template-columns: 700px 1fr; gap: 40px; }
+    .d1-fr-two { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .d1-fr .label.d1-fr-l { margin-top: 26px; }
+    .d1-fr-m p { margin: 0 0 12px; font-size: 26px; line-height: 1.4; color: var(--grey); }
+    .d1-fr-m p:last-child { margin-bottom: 0; }
     .d1-fr-m p b { color: var(--ink); font-weight: 600; }
-    .d1-fr-m p.d1-fr-tool { padding-top: 14px; border-top: 1px solid #d3cfc6; }
-    .d1-fr-m code { font-size: 0.88em; }
-    .d1-fr-end { margin: 22px 0 0; font-size: 26px; line-height: 1.42; color: var(--grey); }
+    .d1-fr-m code { font-size: 0.88em; white-space: nowrap; }
+    .d1-fr-run { align-items: center; }
+    .d1-fr-run p.s26 { margin: 0; }
   </style>
-  <p class="eyebrow">Setup · first run · every tool</p>
+  <p class="eyebrow">Setup · every tool</p>
   <h2>First run: is it the right model?</h2>
   <div class="d1-fr">
-    <div>
-      <p class="label">1 · An empty test folder · Mac · Terminal</p>
+    <div class="d1-fr-os">
+      <div>
+        <p class="label">1 · A test folder · Mac</p>
 <pre class="c22" data-copy="lines">mkdir -p ~/hello-agent && cd ~/hello-agent</pre>
-      <p class="label d1-fr-l">Windows · PowerShell</p>
+      </div>
+      <div>
+        <p class="label">Windows · PowerShell</p>
 <pre class="c22" data-copy="lines">New-Item -ItemType Directory -Force "$HOME\hello-agent"
 cd "$HOME\hello-agent"</pre>
-      <p class="label d1-fr-l">2 · Start <code>opencode</code>, <code>claude</code> or <code>codex</code>, then type</p>
-<pre class="prompt">Create hello.js that prints "Hello from GLM", then run it with node.</pre>
-      <p class="s26">You see <b>Hello from GLM</b> (on a plan too: it's just the text)? You're set up. Some tools ask first: allow it. Quit with <code>/exit</code>.</p>
+      </div>
     </div>
-    <div class="d1-fr-m">
-      <p class="label">3 · Which model is it using?</p>
-      <p><b>OpenCode:</b> type <code>/models</code>. <b><a class="topic" href="https://openrouter.ai/z-ai/glm-5.3-flash" target="_blank" rel="noopener">GLM-5.3-Flash</a></b> (<a class="topic" href="https://openrouter.ai/docs/quickstart" target="_blank" rel="noopener">OpenRouter</a>) must be selected. Not “GLM 5.3 FlashX”, not “GLM 5.3 Prime”: they look alike, and the course key blocks them.</p>
-      <p><b><a class="topic" href="https://openrouter.ai/z-ai/glm-5.3" target="_blank" rel="noopener">GLM-5.3</a></b>, not Flash: only for a hard problem, then switch back. Up to about 10× the cost, and it can't see images.</p>
-      <p>Asks for a key? <code>/connect</code>, choose OpenRouter, paste it.</p>
-      <p class="d1-fr-tool"><b>Claude Code:</b> <code>/status</code> shows your Claude account, or the auth token with the course key.</p>
-      <p><b>Codex:</b> <code>/status</code> shows the account and model.</p>
+    <p class="label d1-fr-l">2 · Start <code>opencode</code>, <code>claude</code> or <code>codex</code></p>
+    <div class="d1-fr-two">
+      <div class="d1-fr-m">
+        <p><b>OpenCode:</b> <code>/models</code> must show <b><a class="topic" href="https://openrouter.ai/z-ai/glm-5.3-flash" target="_blank" rel="noopener">GLM-5.3-Flash</a></b> (<a class="topic" href="https://openrouter.ai/docs/quickstart" target="_blank" rel="noopener">OpenRouter</a>), not “GLM 5.3 FlashX” or “GLM 5.3 Prime”: the course key blocks them.</p>
+        <p><b><a class="topic" href="https://openrouter.ai/z-ai/glm-5.3" target="_blank" rel="noopener">GLM-5.3</a></b> (not Flash): only for a hard problem. Up to about 10× the cost; can't see images.</p>
+        <p>Asks for a key? <code>/connect</code>, choose OpenRouter, paste it.</p>
+      </div>
+      <div class="d1-fr-m">
+        <p><b>Claude Code:</b> <code>/status</code> shows your Claude account, or <code>Auth token: ANTHROPIC_AUTH_TOKEN</code> with the course key.</p>
+        <p><b>Codex:</b> <code>/status</code> shows the account and model.</p>
+      </div>
+    </div>
+    <p class="label d1-fr-l">3 · Then type</p>
+    <div class="d1-fr-two d1-fr-run">
+<pre class="prompt">Create hello.js that prints "Hello from GLM", then run it with node.</pre>
+      <p class="s26"><b>Hello from GLM</b> (on a plan too: just the text)? You're set up. If it asks first, allow it.</p>
     </div>
   </div>
-  <p class="d1-fr-end">Later, start the agent in the folder you work in, never in your home folder: the rules and deny rules are in the project folder.</p>
   <p class="next">Next: <a class="jump" href="#s-commands">the commands</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
