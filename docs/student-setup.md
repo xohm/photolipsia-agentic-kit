@@ -507,6 +507,23 @@ Then do the smoke test, [section 8](#8-smoke-test).
 
 ---
 
+### OpenCode Desktop (optional)
+
+Prefer an app to the terminal? OpenCode Desktop works with the course key: download it from
+https://opencode.ai/download (Mac, Windows, Linux). It reads the same config file and the same key as
+OpenCode in the terminal.
+
+1. **Open your project folder in the app first.** Otherwise the agent works in a folder the app
+   makes for itself, and your project's `AGENTS.md` and `opencode.json` don't apply.
+2. The model picker must show **GLM-5.3-Flash**. Then try the test prompt from section 8.
+3. The cost the app shows stayed at $0.00 in our test. `node tools/check-openrouter.mjs` shows what
+   your key really used.
+
+The app is OpenCode 2; the terminal tool stays OpenCode 1, as installed above. Tested on Linux on
+25 October 2026 with a course key: it worked. Not tested yet on a Mac or Windows, or started from the
+Dock or Start menu. Claude Code and Codex have desktop apps too (the Claude app, and Codex inside the
+ChatGPT app), for your own plan; they were not tested for this course.
+
 ## 6. Claude Code
 
 Claude Code is Anthropic's agent. If you have a Claude plan, it is an equal alternative to

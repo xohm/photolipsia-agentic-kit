@@ -730,7 +730,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
     <p class="after d1-su-first">Once per laptop, about 45 minutes. You need one agent: <a class="topic" href="https://opencode.ai/docs/" target="_blank" rel="noopener">OpenCode</a> with the course key (most of you), or <a class="topic" href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Claude Code</a> or <a class="topic" href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener">Codex</a> with your own plan.</p>
     <p class="after">Tested on Linux. The Mac and Windows commands follow each tool's own instructions, but nobody has run them on a real Mac or Windows laptop yet. If a step fails: <a class="jump" href="troubleshooting.html">troubleshooting</a>, or <a class="jump" href="#s-ask">ask in writing</a>.</p>
     <p class="after">Every step in detail: <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md" target="_blank" rel="noopener"><code>docs/student-setup.md</code></a></p>
-    <p class="after d1-su-jump">Jump to: <a class="jump" href="#s-terminal">terminal</a> · <a class="jump" href="#s-git-node">Git and Node.js</a> · <a class="jump" href="#s-github">GitHub</a> · <a class="jump" href="#s-key">course key</a> · <a class="jump" href="#s-opencode">OpenCode</a> · <a class="jump" href="#s-claude">Claude Code</a> · <a class="jump" href="#s-codex">Codex</a> · <a class="jump" href="#s-key-tools">course key in Claude Code or Codex</a> · <a class="jump" href="#s-first-run">first run</a> · <a class="jump" href="#s-commands">commands</a> · <a class="jump" href="#s-fork">your fork</a> · <a class="jump" href="troubleshooting.html">when it fails</a> · <a class="jump" href="#s-ask">asking a question</a></p>
+    <p class="after d1-su-jump">Jump to: <a class="jump" href="#s-terminal">terminal</a> · <a class="jump" href="#s-git-node">Git and Node.js</a> · <a class="jump" href="#s-github">GitHub</a> · <a class="jump" href="#s-key">course key</a> · <a class="jump" href="#s-opencode">OpenCode</a> · <a class="jump" href="#s-claude">Claude Code</a> · <a class="jump" href="#s-codex">Codex</a> · <a class="jump" href="#s-key-tools">course key in Claude Code or Codex</a> · <a class="jump" href="#s-first-run">first run</a> · <a class="jump" href="#s-app">an app</a> · <a class="jump" href="#s-commands">commands</a> · <a class="jump" href="#s-fork">your fork</a> · <a class="jump" href="troubleshooting.html">when it fails</a> · <a class="jump" href="#s-ask">asking a question</a></p>
   </div>
   <p class="next">Next: <a class="jump" href="#s-why">what you install, and why</a> →</p>
 </section>
@@ -1253,6 +1253,35 @@ cd "$HOME\hello-agent"</pre>
     <div class="d1-fr-two d1-fr-run">
 <pre class="prompt">Create hello.js that prints "Hello from GLM", then run it with node.</pre>
       <p class="s26"><b>Hello from GLM</b> (on a plan too: just the text)? You're set up. If it asks first, allow it.</p>
+    </div>
+  </div>
+  <p class="next">Next: <a class="jump" href="#s-commands">the commands</a> · <b>prefer an app?</b> <a class="jump" href="#s-app">OpenCode Desktop</a></p>
+  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
+<!-- S6b Prefer an app: OpenCode Desktop -->
+<section class="slide light" id="s-app">
+  <style>
+    .d1-ap { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 72px; align-items: start; }
+    .d1-ap-step { display: flex; gap: 20px; align-items: flex-start; margin: 0 0 28px; }
+    .d1-ap-n { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--ink); color: var(--paper); font: 600 23px var(--mono); }
+    .d1-ap-step p { margin: 2px 0 0; font-size: 30px; line-height: 1.4; color: var(--grey); }
+    .d1-ap-step b { color: var(--ink); font-weight: 600; }
+    .d1-ap-side .proof { margin: 0 0 22px; font-size: 27px; }
+    .d1-ap-side p.s26 { margin: 0 0 14px; }
+  </style>
+  <p class="eyebrow">Setup · optional · OpenCode with the course key</p>
+  <h2>Prefer an app? OpenCode Desktop.</h2>
+  <div class="d1-ap">
+    <div>
+      <div class="d1-ap-step"><span class="d1-ap-n">1</span><p>Download it: <a class="jump" href="https://opencode.ai/download" target="_blank" rel="noopener">opencode.ai/download</a>. It uses the same course config and key as the terminal.</p></div>
+      <div class="d1-ap-step"><span class="d1-ap-n">2</span><p><b>Open your project folder in the app first.</b> Otherwise it works in a folder of its own, and your project's rules don't apply.</p></div>
+      <div class="d1-ap-step"><span class="d1-ap-n">3</span><p>The model picker shows <b>GLM-5.3-Flash</b>. Then the same test prompt as on the first-run slide.</p></div>
+    </div>
+    <div class="d1-ap-side">
+      <p class="proof coral"><b>Tested on Linux, 25 Oct 2026,</b> with a course key: it worked. Not yet on a Mac or Windows.</p>
+      <p class="s26">The app is OpenCode 2; the terminal stays OpenCode 1. The cost it shows stays at $0.00: <code>node tools/check-openrouter.mjs</code> shows what your key used.</p>
+      <p class="s26">Claude and ChatGPT have desktop apps too, for your own plan. Not tested here.</p>
     </div>
   </div>
   <p class="next">Next: <a class="jump" href="#s-commands">the commands</a> →</p>
