@@ -524,6 +524,20 @@ curl -fsSL https://claude.ai/install.sh | bash
 irm https://claude.ai/install.ps1 | iex
 ```
 
+The installer puts `claude` in `.local/bin` in your home folder, a folder your terminal doesn't
+search yet. Add it to your PATH (the list of folders where the terminal looks for commands), once:
+
+**Mac**
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+```
+
+**Windows**, one line at a time
+```powershell
+$p = [Environment]::GetEnvironmentVariable('Path', 'User')
+[Environment]::SetEnvironmentVariable('Path', "$p;$HOME\.local\bin", 'User')
+```
+
 Open a new terminal, then `claude --version`.
 
 On Windows, Claude Code runs commands in PowerShell. Git for Windows is optional.
@@ -885,7 +899,7 @@ The same tables, with the Blender ones, as a web page that every slide links to:
 | Codex: `npm run check` fails with "EPERM", "listen" or browser errors | Codex doesn't use the project's `.codex/config.toml`. Start Codex inside the project folder and answer **yes** to "Do you trust this folder?". If it still fails, approve running the check outside the sandbox when Codex asks. |
 | Windows: "running scripts is disabled on this system" | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force`, then a new terminal. |
 | `node` or `npm` "not recognized" / "command not found" | Open a new terminal after installing Node. Still not found: reinstall Node LTS. |
-| `opencode`, `claude` or `codex` "not recognized" / "command not found" | Open a new terminal after installing the tool. |
+| `opencode`, `claude` or `codex` "not recognized" / "command not found" | Open a new terminal after installing the tool. `claude` still not found: add it to your PATH, see [section 6](#6-claude-code). |
 | Mac: `npm install -g` fails with "EACCES" | See section 1, [Mac only: npm says EACCES](#mac-only-npm-says-eacces). |
 | `npm run check`: "Chromium for Playwright is missing" | `npx playwright install chromium` (about 300 MB, once). |
 | `npm run check` says FAILED and npm adds many `npm error` lines | Normal: npm reports that the check failed. Read the lines that start with `check:` and `-`. |

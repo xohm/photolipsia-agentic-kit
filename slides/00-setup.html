@@ -873,7 +873,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
     <div>
       <p class="label">Mac · Terminal</p>
 <pre class="c22" data-copy="lines">xcode-select --install</pre>
-      <p class="s26">A dialog opens: Install. That gives you <a class="topic" href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>.</p>
+      <p class="s26">A dialog opens: Install. That gives you <a class="topic" href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>. “Already installed”? Fine.</p>
       <p class="s26"><a class="topic" href="https://nodejs.org/en/learn/getting-started/introduction-to-nodejs" target="_blank" rel="noopener">Node.js</a>: the LTS installer from <a class="jump" href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a>. With <a class="topic" href="https://brew.sh/" target="_blank" rel="noopener">Homebrew</a>: <code>brew install node gh</code>.</p>
     </div>
     <div>
@@ -881,7 +881,7 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
 <pre class="c22" data-copy="lines">Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
 winget install --id Git.Git -e
 winget install --id OpenJS.NodeJS.LTS -e</pre>
-      <p class="s26">The first line lets npm run. The first time, <a class="topic" href="https://learn.microsoft.com/en-us/windows/package-manager/winget/" target="_blank" rel="noopener">winget</a> asks to accept its agreements: <b>Y</b>. “winget is not recognized”? Install <a class="jump" href="https://apps.microsoft.com/detail/9NBLGGH4NNS1" target="_blank" rel="noopener">App Installer</a> from the Microsoft Store.</p>
+      <p class="s26">The first line lets npm run. <a class="topic" href="https://learn.microsoft.com/en-us/windows/package-manager/winget/" target="_blank" rel="noopener">winget</a> asks to accept its agreements: <b>Y</b>. Windows asks to allow changes: <b>Yes</b>. “winget is not recognized”? Install <a class="jump" href="https://apps.microsoft.com/detail/9NBLGGH4NNS1" target="_blank" rel="noopener">App Installer</a> from the Microsoft Store.</p>
     </div>
   </div>
   <div class="d1-in-r2">
@@ -928,7 +928,7 @@ git config --global pull.rebase false</pre>
     <div>
       <p class="s26" style="margin-top: 0"><b>Mac:</b> install the GitHub tool once: the installer from <a class="jump" href="https://cli.github.com/" target="_blank" rel="noopener">cli.github.com</a> (or <code>brew install gh</code>). Then, in a new terminal:</p>
 <pre class="c22" style="margin-top: 12px" data-copy="lines">gh auth login</pre>
-      <p class="s26">Answer: GitHub.com, HTTPS, Yes, Login with a web browser. Copy the one-time code, paste it in the browser, Authorize.</p>
+      <p class="s26">Answer: GitHub.com, HTTPS, Yes, Login with a web browser. Copy the one-time code, press <b>Enter</b>, paste the code in the browser, Authorize.</p>
     </div>
     <div>
       <p class="s26" style="margin-top: 0"><b>Windows:</b> nothing to install. At your first <code>git push</code>, Git opens a GitHub login in your browser.</p>
@@ -1011,7 +1011,7 @@ git config --global pull.rebase false</pre>
   </div>
   <p class="label">Windows · PowerShell · paste the key when asked, then open a new terminal</p>
 <pre class="c22" data-copy="lines">[Environment]::SetEnvironmentVariable('OPENROUTER_API_KEY', (Read-Host 'Paste the key'), 'User')</pre>
-  <p class="s26">Paste the export line, don't type it: TextEdit can turn typed quotes into curly ones. Claude Code: the key goes in <code>~/.claude/settings.json</code>, in your home folder, never in a project. Test it later in your fork: <code>node tools/check-openrouter.mjs</code> should end with All good. Own plan? Skip to <a class="jump" href="#s-claude">Claude Code</a> or <a class="jump" href="#s-codex">Codex</a>.</p>
+  <p class="s26">Your teacher sends you your own key privately. No key yet? Do the other steps first. Paste the export line, don't type it: TextEdit can turn typed quotes into curly ones. Test it later in your fork: <code>node tools/check-openrouter.mjs</code> should end with All good.</p>
   </div>
   <p class="next">Next · <b>OpenCode:</b> <a class="jump" href="#s-opencode">install it</a> · <b>on the key:</b> <a class="jump" href="#s-claude">Claude Code</a> or <a class="jump" href="#s-codex">Codex</a></p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -1061,7 +1061,7 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
       <div>
         <p class="s26"><code>small_model</code>: without it, OpenCode picks another model for small jobs, and the course key blocks that one.</p>
         <p class="s26"><code>"effort": "high"</code> keeps thinking shorter than the default, max.</p>
-        <p class="s26"><b>Check:</b> <code>/models</code>, on the <a class="jump" href="#s-first-run">first-run slide</a>.</p>
+        <p class="s26"><b>Windows:</b> Notepad asks to create the file: <b>Yes</b>.</p>
       </div>
     </div>
   </div>
@@ -1069,34 +1069,49 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
-<!-- S5b Claude Code -->
+<!-- S5b Claude Code: install -->
 <section class="slide light" id="s-claude">
   <style>
-    .d1-cc .s26 { margin: 12px 0 0; }
+    .d1-ci .label { margin: 30px 0 10px; }
+    .d1-ci .label:first-child { margin-top: 0; }
+    .d1-ci .s26 { margin: 22px 0 0; max-width: 1500px; }
   </style>
-  <p class="eyebrow">Setup · Claude Code</p>
-  <h2>Claude Code: install it, sign in.</h2>
+  <p class="eyebrow">Setup · Claude Code · 1 of 2</p>
+  <h2>Claude Code: install it.</h2>
+  <div class="d1-ci">
+    <p class="label">Mac · Terminal</p>
+<pre class="c22" data-copy="lines">curl -fsSL https://claude.ai/install.sh | bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc</pre>
+    <p class="label">Windows · PowerShell · one line at a time</p>
+<pre class="c22" data-copy="lines">irm https://claude.ai/install.ps1 | iex
+$p = [Environment]::GetEnvironmentVariable('Path', 'User')
+[Environment]::SetEnvironmentVariable('Path', "$p;$HOME\.local\bin", 'User')</pre>
+    <p class="s26">Why the extra lines: the installer puts <code>claude</code> in a folder your terminal doesn't search yet. They add that folder to your PATH, the list of folders where the terminal looks for commands. Once.</p>
+    <p class="s26">Then open a new terminal: <code>claude --version</code> shows a version number.</p>
+  </div>
+  <p class="next">Next: <a class="jump" href="#s-claude-signin">sign in</a> →</p>
+  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
+<!-- S5b2 Claude Code: sign in -->
+<section class="slide light" id="s-claude-signin">
+  <style>
+    .d1-cc .d1-tl-two { margin-top: 0; }
+  </style>
+  <p class="eyebrow">Setup · Claude Code · 2 of 2</p>
+  <h2>Claude Code: sign in.</h2>
   <div class="d1-cc">
-    <div class="d1-tl-os">
-      <div>
-        <p class="label">Mac · Terminal</p>
-<pre class="c22" data-copy="lines">curl -fsSL https://claude.ai/install.sh | bash</pre>
-      </div>
-      <div>
-        <p class="label">Windows · PowerShell</p>
-<pre class="c22" data-copy="lines">irm https://claude.ai/install.ps1 | iex</pre>
-      </div>
-    </div>
-    <p class="s26">Open a new terminal, then <code>claude --version</code>.</p>
     <div class="d1-tl-two">
       <div class="d1-tl-card">
         <p class="label">Your Claude plan · Pro or Max</p>
         <p>The first time you run <code>claude</code>, sign in in the browser.</p>
-        <p>Team and Enterprise work too. The free plan doesn't include Claude Code. Then: <a class="jump" href="#s-first-run">first run</a>.</p>
+        <p>Team and Enterprise work too. The free plan doesn't include Claude Code.</p>
+        <p>Before day one: switch training off (<a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#where-your-prompts-go-who-sees-them" target="_blank" rel="noopener">how</a>). Then: <a class="jump" href="#s-first-run">first run</a>.</p>
       </div>
       <div class="d1-tl-card">
         <p class="label">Or the course key</p>
-        <p>A settings file in your home folder, never in a project: <a class="jump" href="#s-key-tools">set it up</a>. Signed in before? <code>/logout</code> once: the key beats a <span class="nowrap">signed-in</span> plan.</p>
+        <p>A settings file in your home folder, never in a project: <a class="jump" href="#s-key-tools">set it up</a>.</p>
+        <p>Signed in on this laptop before? At the first start: <code>/logout</code>, quit, start <code>claude</code> again. The key beats a <span class="nowrap">signed-in</span> plan.</p>
         <p>Made for Anthropic's models: with GLM, some features may not work.</p>
       </div>
     </div>
@@ -1126,7 +1141,8 @@ codex --version</pre>
     <div class="d1-tl-two">
       <div class="d1-tl-card">
         <p class="label">Your ChatGPT plan · Plus or higher</p>
-        <p>The first time you run <code>codex</code>, choose “Sign in with ChatGPT” (or run <code>codex login</code>). Then: <a class="jump" href="#s-first-run">first run</a>.</p>
+        <p>The first time you run <code>codex</code>, choose “Sign in with ChatGPT” (or run <code>codex login</code>).</p>
+        <p>Before day one: switch training off (<a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#where-your-prompts-go-who-sees-them" target="_blank" rel="noopener">how</a>). Then: <a class="jump" href="#s-first-run">first run</a>.</p>
       </div>
       <div class="d1-tl-card">
         <p class="label">Or the course key</p>
@@ -1155,10 +1171,10 @@ codex --version</pre>
       <p class="label">Claude Code · Mac</p>
 <pre class="c22" data-copy="lines">mkdir -p ~/.claude &amp;&amp; touch ~/.claude/settings.json
 open -e ~/.claude/settings.json</pre>
-      <p class="label">Claude Code · Windows</p>
+      <p class="label">Claude Code · Windows · Notepad: create? Yes</p>
 <pre class="c22" data-copy="lines">New-Item -ItemType Directory -Force "$HOME\.claude"
 notepad "$HOME\.claude\settings.json"</pre>
-      <p class="label">Paste, put in the real key, save</p>
+      <p class="label">Paste, put in the real key, save · not empty? ask in writing</p>
 <pre class="c22" data-copy="all">{ "env": {
   "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
   "ANTHROPIC_AUTH_TOKEN": "sk-or-...",
@@ -1175,7 +1191,7 @@ notepad "$HOME\.claude\settings.json"</pre>
       <p class="label">Codex · Mac</p>
 <pre class="c22" data-copy="lines">mkdir -p ~/.codex &amp;&amp; touch ~/.codex/config.toml
 open -e ~/.codex/config.toml</pre>
-      <p class="label">Codex · Windows</p>
+      <p class="label">Codex · Windows · Notepad: create? Yes</p>
 <pre class="c22" data-copy="lines">New-Item -ItemType Directory -Force "$HOME\.codex"
 notepad "$HOME\.codex\config.toml"</pre>
       <p class="label">Paste and save · the key comes from your environment</p>
@@ -1280,7 +1296,7 @@ cd "$HOME\hello-agent"</pre>
     .d1-fk-p3 { animation-delay: 5s !important; }
     .d1-fk-p4 { animation-delay: 7.5s !important; }
     @keyframes d1-fk-go { 0% { stroke-dashoffset: 0; opacity: 0; } 2% { opacity: 1; } 15% { stroke-dashoffset: -100; opacity: 1; } 19%, 100% { stroke-dashoffset: -100; opacity: 0; } }
-    .d1-fk-grid { display: grid; grid-template-columns: 1080px 1fr; gap: 40px; margin-top: 26px; align-items: start; }
+    .d1-fk-grid { display: grid; grid-template-columns: 1080px 1fr; gap: 40px; margin-top: 16px; align-items: start; }
     .d1-fk-grid .s26 { margin: 12px 0 0; }
   </style>
   <p class="eyebrow">Setup · Git and GitHub</p>
@@ -1317,14 +1333,15 @@ cd "$HOME\hello-agent"</pre>
   </svg>
   <div class="d1-fk-grid">
     <div>
-      <p class="label">2 · Clone, once · Mac and Windows</p>
+      <p class="label">1 · Fork, once</p>
+      <p class="s26" style="margin-top: 0">On <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit" target="_blank" rel="noopener">github.com/xohm/photolipsia-agentic-kit</a>: <b>Fork</b> (top right), then <b>Create fork</b>.</p>
+      <p class="label" style="margin-top: 22px">2 · Clone, once · Mac and Windows</p>
 <pre class="c22" data-copy="lines">cd ~
 git clone https://github.com/YOUR-NAME/photolipsia-agentic-kit.git
 cd photolipsia-agentic-kit
 git remote add upstream https://github.com/xohm/photolipsia-agentic-kit.git</pre>
       <p class="s26"><code>YOUR-NAME</code> = your GitHub user name.</p>
       <p class="s26"><b>Updates:</b> commit your work first, then <code>git pull --no-edit upstream main</code>. It says “CONFLICT”? <code>git merge --abort</code>, then <a class="jump" href="#s-ask">ask in writing</a>.</p>
-      <p class="s26">The browser for the check is about 300 MB, once.</p>
     </div>
     <div>
       <p class="label">3 · First check</p>
@@ -1333,7 +1350,7 @@ cd 01-text-stats
 npm install
 npx playwright install chromium
 npm run check</pre>
-      <p class="s26">The first line tests the course key: you want All good. Own plan? Skip it. Then <b>FAILED: Nothing rendered yet</b>: correct, no app yet.</p>
+      <p class="s26">Line 1 tests the course key: <b>All good</b>. Own plan? Skip it. The check's browser: 300 MB, once. Then <b>check: FAILED</b>, <b>Nothing rendered yet</b>: right, no app yet.</p>
     </div>
   </div>
   <p class="next">Next: <a class="jump" href="#s-ask">when you are stuck</a> →</p>

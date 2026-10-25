@@ -33,7 +33,7 @@ Skipped Example 1? Run `npx playwright install chromium` once before `npm run ch
 300 MB).
 
 `npm run check` first writes a small test splat to `public/splats/test.ply`, then
-says **FAILED: Nothing rendered yet**. Correct: there is no page yet.
+says **check: FAILED** and **Nothing rendered yet**. Correct: there is no page yet.
 
 `public/splats/` is ignored by git and off limits for the agent: deny rules in OpenCode and
 Claude Code, only `AGENTS.md` in Codex (see below). Splat files are large

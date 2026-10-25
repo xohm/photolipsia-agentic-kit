@@ -45,7 +45,7 @@ npm run check
 ```
 
 `npx playwright install chromium` downloads the hidden browser for `npm run check`
-(about 300 MB, once per laptop). `npm run check` should then say **FAILED: Nothing rendered yet**,
+(about 300 MB, once per laptop). `npm run check` should then say **check: FAILED** and **Nothing rendered yet**,
 followed by a few `npm error` lines. That is correct: there is no page yet.
 
 Now open your agent terminal (a new tab) and go to the same folder (the same on Mac and Windows):
