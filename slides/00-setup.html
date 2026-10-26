@@ -698,6 +698,156 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
 .d1-anim { }
 @media (prefers-reduced-motion: reduce) { .d1-anim, .d1-anim * { animation: none !important; } }
 @media print { .d1-anim, .d1-anim * { animation: none !important; } }
+/* What goes where (teacher, 26 Oct 2026). Every box on a slide says where its text goes, in a tab
+   at its top left, and has its own look:
+     pre.prompt                 Agent prompt              coral    type or paste it into the agent
+     pre[data-copy="lines"]     Terminal                  dark     type it in your own terminal
+     pre.term                   the same, without copy buttons (a command with its output)
+     data-tab="Terminal · Mac" on a command block: the tab names the system too
+     pre.file[data-copy="all"]  Paste into <data-file>    white    paste it into that file, save
+     pre.file                   From <data-file>          white    an excerpt, to read
+     pre.out                    Output                    grey     what you see: only read it
+   An inline prompt in a sentence ("then type Go.") is <span class="say">Go.</span>.
+   build.py adds this file last to every deck; #deck makes these rules win over a slide's own. */
+
+#deck pre.prompt,
+#deck pre.term,
+#deck pre[data-copy="lines"],
+#deck pre.file,
+#deck pre.out {
+  position: relative;
+  padding-top: 32px;
+}
+
+#deck pre.prompt::before,
+#deck pre.term::before,
+#deck pre[data-copy="lines"]::before,
+#deck pre.file::before,
+#deck pre.out::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 28px;
+  padding: 0 14px 0 36px;
+  border-radius: 0 0 12px 0;
+  background-repeat: no-repeat;
+  background-position: 11px center;
+  background-size: 19px 19px;
+  font: 600 19px/28px var(--sans);
+  letter-spacing: 0.01em;
+  text-indent: 0;
+  white-space: nowrap;
+}
+
+/* Prompt for your agent: coral. */
+#deck pre.prompt {
+  border: 0;
+  border-left: 6px solid var(--coral);
+  border-image: none;
+  background: #fcefe8;
+}
+
+#deck pre.prompt::before {
+  content: "Agent prompt";
+  background-color: var(--coral);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1d1d' stroke-width='2.2' stroke-linejoin='round'%3E%3Cpath d='M4 4.5h16v11.5h-9.5l-5 4v-4h-1.5z'/%3E%3C/svg%3E");
+  color: var(--ink);
+}
+
+/* Command for your terminal: dark, like the terminal itself. */
+#deck pre.term,
+#deck pre[data-copy="lines"] {
+  background: #24221f;
+  color: #ece9e2;
+}
+
+#deck pre.term::before,
+#deck pre[data-copy="lines"]::before {
+  content: "Terminal";
+  background-color: #3d3a35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e3dfd6' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l6 6-6 6M12 18h8'/%3E%3C/svg%3E");
+  color: #e3dfd6;
+}
+
+/* data-tab="Terminal · Mac" names the system too, where a slide has no room for a label line. */
+#deck pre[data-copy="lines"][data-tab]::before {
+  content: attr(data-tab);
+}
+
+#deck pre.term .c,
+#deck pre[data-copy="lines"] .c {
+  color: #a9a59d;
+}
+
+#deck pre[data-copy="lines"] .copy:hover {
+  background: rgb(255 255 255 / 12%);
+  color: var(--paper);
+}
+
+#deck pre[data-copy="lines"] .copy.done {
+  color: #6cc17e;
+}
+
+/* Text for a file: white paper. */
+#deck pre.file {
+  border: 2px solid #d6d1c7;
+  background: #fffdf9;
+  color: #262626;
+}
+
+#deck pre.file::before {
+  content: "From " attr(data-file);
+  background-color: #d6d1c7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1d1d' stroke-width='2.2' stroke-linejoin='round'%3E%3Cpath d='M6 2.5h8.5l4.5 4.5v14.5h-13z'/%3E%3Cpath d='M14 2.5v5h5'/%3E%3C/svg%3E");
+  color: var(--ink);
+}
+
+#deck pre.file[data-copy="all"]::before {
+  content: "Paste into " attr(data-file);
+}
+
+/* Output: only read it. */
+#deck pre.out {
+  background: #e4e1d9;
+  color: #3a3a3a;
+}
+
+#deck pre.out::before {
+  content: "Output";
+  background-color: #d1cdc3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23444' stroke-width='2.2' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+  color: #3a3a3a;
+}
+
+/* An inline prompt inside a sentence: coral, like the prompt boxes. */
+#deck .say {
+  padding: 0.04em 0.35em 0.04em 1.35em;
+  border-radius: 6px;
+  background: #fcefe8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c4673d' stroke-width='2.4' stroke-linejoin='round'%3E%3Cpath d='M4 4.5h16v11.5h-9.5l-5 4v-4h-1.5z'/%3E%3C/svg%3E") no-repeat 0.3em 55% / 0.85em;
+  box-shadow: inset 0 0 0 2px var(--coral);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.86em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Print: the tabs and colours stay, so a printed slide says the same. */
+@media print {
+  #deck pre.prompt::before,
+  #deck pre.term::before,
+  #deck pre[data-copy="lines"]::before,
+  #deck pre.file::before,
+  #deck pre.out::before,
+  #deck pre.term,
+  #deck pre[data-copy="lines"],
+  #deck pre.prompt,
+  #deck pre.out,
+  #deck .say {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
 
   /* Setup slides for Claude Code and Codex: install row, two account cards, a check line. */
   .d1-tl-os { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
@@ -753,6 +903,38 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
     <tr><td><a class="jump" href="#s-opencode">One agent</a></td><td>Reads your files, writes the code, runs the check.</td></tr>
     <tr><td><a class="jump" href="#s-fork">A browser for the check</a></td><td>Chromium, about 300 MB. The check opens your page in it, hidden, and takes a screenshot.</td></tr>
   </table>
+  <p class="next">Next: <a class="jump" href="#s-boxes">how to read the slides</a> →</p>
+  <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
+<!-- How to read the slides: the four kinds of box (boxes.css) -->
+<section class="slide light" id="s-boxes">
+  <style>
+    .d0-bx { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 64px; }
+    .d0-bx p { margin: 16px 0 0; font-size: 28px; line-height: 1.4; color: var(--grey); }
+    .d0-bx p b { color: var(--ink); }
+  </style>
+  <p class="eyebrow">Setup · how to read the slides</p>
+  <h2>Every box says where its text goes.</h2>
+  <div class="d0-bx">
+    <div>
+<pre class="prompt">Go.</pre>
+      <p><b>Your agent:</b> type or paste it into OpenCode, Claude Code or Codex. Inside a sentence: <span class="say">Go.</span></p>
+    </div>
+    <div>
+<pre class="c22" data-copy="lines">node -v</pre>
+      <p><b>Your terminal:</b> type or paste it, one line at a time, and press Enter. Not into the agent.</p>
+    </div>
+    <div>
+<pre class="c22 file" data-copy="all" data-file="ai/strategy.md">## Next
+- Apply my new rule to the page.</pre>
+      <p><b>A file:</b> paste it into that file in your editor, and save. Not into the terminal. <b>From</b> a file: only an excerpt, to read.</p>
+    </div>
+    <div>
+<pre class="c22 out">check: FAILED (0.4 s)</pre>
+      <p><b>Output:</b> what your terminal or your agent shows you. Only read it.</p>
+    </div>
+  </div>
   <p class="next">Next: <a class="jump" href="#s-terminal">your terminal</a> →</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
@@ -1000,12 +1182,12 @@ git config --global pull.rebase false</pre>
       <text class="chip" x="1478" y="208" text-anchor="middle">the agent's output</text>
     </g>
   </svg>
-  <p class="label">Mac · Terminal</p>
+  <p class="label">Mac</p>
   <div class="d1-ky-mac">
     <div><p class="d1-ky-cap">1 · Open the file</p>
 <pre class="c22" data-copy="lines">touch ~/.zshrc && open -e ~/.zshrc</pre></div>
     <div><p class="d1-ky-cap">2 · Paste at the end, real key, save</p>
-<pre class="c22" data-copy="lines">export OPENROUTER_API_KEY="sk-or-..."</pre></div>
+<pre class="c22 file" data-copy="all" data-file="~/.zshrc">export OPENROUTER_API_KEY="sk-or-..."</pre></div>
     <div><p class="d1-ky-cap">3 · Reload</p>
 <pre class="c22" data-copy="lines">source ~/.zshrc</pre></div>
   </div>
@@ -1024,7 +1206,7 @@ git config --global pull.rebase false</pre>
     .d1-oc .s26 { margin: 14px 0 0; }
     .d1-oc-cfg { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; }
     .d1-oc-cfg .s26 { margin: 0 0 16px; }
-    .d1-oc .label.d1-oc-paste { margin-top: 26px; }
+    .d1-oc .d1-oc-cfg { margin-top: 22px; }
   </style>
   <p class="eyebrow">Setup · OpenCode · with the course key</p>
   <h2>OpenCode: install it, give it the course config.</h2>
@@ -1047,9 +1229,8 @@ notepad "$HOME\.config\opencode\opencode.json"</pre>
       </div>
     </div>
     <p class="s26">You want version 1.x. Not <code>brew install opencode</code>: that is OpenCode 2. Mac says “EACCES”? <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/student-setup.md#mac-only-npm-says-eacces" target="_blank" rel="noopener"><code>docs/student-setup.md</code></a>, section 1.</p>
-    <p class="label d1-oc-paste">Paste this into the file (don't type it) and save</p>
     <div class="d1-oc-cfg">
-<pre class="c22" data-copy="all">{
+<pre class="c22 file" data-copy="all" data-file="~/.config/opencode/opencode.json">{
   "$schema": "https://opencode.ai/config.json",
   "model": "openrouter/z-ai/glm-5.3-flash",
   "small_model": "openrouter/z-ai/glm-5.3-flash",
@@ -1162,19 +1343,20 @@ codex --version</pre>
     .d1-kt .label { margin: 8px 0 6px; }
     .d1-kt .label:first-child { margin-top: 0; }
     .d1-kt pre { margin: 0; padding: 14px 26px; }
+    .d1-kt pre.c22 { padding-bottom: 12px; line-height: 1.4; }
+    .d1-kt pre + pre { margin-top: 12px; }
   </style>
   <p class="eyebrow">Setup · the course key · Claude Code or Codex</p>
   <h2>Claude Code or Codex with the course key.</h2>
   <div class="d1-kt">
     <div>
-      <p class="label">Claude Code · Mac</p>
-<pre class="c22" data-copy="lines">mkdir -p ~/.claude &amp;&amp; touch ~/.claude/settings.json
+      <p class="label">Claude Code</p>
+<pre class="c22" data-copy="lines" data-tab="Terminal · Mac">mkdir -p ~/.claude &amp;&amp; touch ~/.claude/settings.json
 open -e ~/.claude/settings.json</pre>
-      <p class="label">Claude Code · Windows · Notepad: create? Yes</p>
-<pre class="c22" data-copy="lines">New-Item -ItemType Directory -Force "$HOME\.claude"
+<pre class="c22" data-copy="lines" data-tab="Terminal · Windows · Notepad: create? Yes">New-Item -ItemType Directory -Force "$HOME\.claude"
 notepad "$HOME\.claude\settings.json"</pre>
-      <p class="label">Paste, put in the real key, save · not empty? ask in writing</p>
-<pre class="c22" data-copy="all">{ "env": {
+      <p class="label">Put in the real key, save · not empty? ask in writing</p>
+<pre class="c22 file" data-copy="all" data-file="~/.claude/settings.json">{ "env": {
   "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
   "ANTHROPIC_AUTH_TOKEN": "sk-or-...",
   "ANTHROPIC_API_KEY": "",
@@ -1187,14 +1369,13 @@ notepad "$HOME\.claude\settings.json"</pre>
 } }</pre>
     </div>
     <div>
-      <p class="label">Codex · Mac</p>
-<pre class="c22" data-copy="lines">mkdir -p ~/.codex &amp;&amp; touch ~/.codex/config.toml
+      <p class="label">Codex</p>
+<pre class="c22" data-copy="lines" data-tab="Terminal · Mac">mkdir -p ~/.codex &amp;&amp; touch ~/.codex/config.toml
 open -e ~/.codex/config.toml</pre>
-      <p class="label">Codex · Windows · Notepad: create? Yes</p>
-<pre class="c22" data-copy="lines">New-Item -ItemType Directory -Force "$HOME\.codex"
+<pre class="c22" data-copy="lines" data-tab="Terminal · Windows · Notepad: create? Yes">New-Item -ItemType Directory -Force "$HOME\.codex"
 notepad "$HOME\.codex\config.toml"</pre>
-      <p class="label">Paste and save · key from your environment</p>
-<pre class="c22" data-copy="all">model = "z-ai/glm-5.3-flash"
+      <p class="label">Save · the key comes from your environment</p>
+<pre class="c22 file" data-copy="all" data-file="~/.codex/config.toml">model = "z-ai/glm-5.3-flash"
 model_provider = "openrouter"
 model_reasoning_effort = "high"
 [model_providers.openrouter]
@@ -1371,12 +1552,11 @@ cd "$HOME\hello-agent"</pre>
     <div>
       <p class="label">1 · Fork, once</p>
       <p class="s26" style="margin-top: 0">On <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit" target="_blank" rel="noopener">github.com/xohm/photolipsia-agentic-kit</a>: <b>Fork</b> (top right), then <b>Create fork</b>.</p>
-      <p class="label" style="margin-top: 22px">2 · Clone, once · Mac and Windows</p>
-<pre class="c22" data-copy="lines">cd ~
+      <p class="label" style="margin-top: 22px">2 · Clone, once · YOUR-NAME: your GitHub name</p>
+<pre class="c22" data-copy="lines" data-tab="Terminal · Mac and Windows">cd ~
 git clone https://github.com/YOUR-NAME/photolipsia-agentic-kit.git
 cd photolipsia-agentic-kit
 git remote add upstream https://github.com/xohm/photolipsia-agentic-kit.git</pre>
-      <p class="s26"><code>YOUR-NAME</code> = your GitHub user name.</p>
       <p class="s26"><b>Updates:</b> commit your work first, then <code>git pull --no-edit upstream main</code>. It says “CONFLICT”? <code>git merge --abort</code>, then <a class="jump" href="#s-ask">ask in writing</a>.</p>
     </div>
     <div>
@@ -1386,7 +1566,7 @@ cd 01-text-stats
 npm install
 npx playwright install chromium
 npm run check</pre>
-      <p class="s26">Line 1 tests the course key: <b>All good</b>. Own plan? Skip it. The check's browser: 300 MB, once. Then <b>check: FAILED</b>, <b>Nothing rendered yet</b>: right, no app yet.</p>
+      <p class="s26">Line 1 tests the key: <b>All good</b> (own plan: skip it). Then <b>check: FAILED, Nothing rendered yet</b>: no app yet.</p>
     </div>
   </div>
   <p class="next">Next: <a class="jump" href="#s-ask">when you are stuck</a> →</p>

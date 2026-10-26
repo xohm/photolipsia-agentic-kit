@@ -698,6 +698,156 @@ mark.dd { background: none; color: inherit; text-decoration-line: underline; tex
 .d1-anim { }
 @media (prefers-reduced-motion: reduce) { .d1-anim, .d1-anim * { animation: none !important; } }
 @media print { .d1-anim, .d1-anim * { animation: none !important; } }
+/* What goes where (teacher, 26 Oct 2026). Every box on a slide says where its text goes, in a tab
+   at its top left, and has its own look:
+     pre.prompt                 Agent prompt              coral    type or paste it into the agent
+     pre[data-copy="lines"]     Terminal                  dark     type it in your own terminal
+     pre.term                   the same, without copy buttons (a command with its output)
+     data-tab="Terminal · Mac" on a command block: the tab names the system too
+     pre.file[data-copy="all"]  Paste into <data-file>    white    paste it into that file, save
+     pre.file                   From <data-file>          white    an excerpt, to read
+     pre.out                    Output                    grey     what you see: only read it
+   An inline prompt in a sentence ("then type Go.") is <span class="say">Go.</span>.
+   build.py adds this file last to every deck; #deck makes these rules win over a slide's own. */
+
+#deck pre.prompt,
+#deck pre.term,
+#deck pre[data-copy="lines"],
+#deck pre.file,
+#deck pre.out {
+  position: relative;
+  padding-top: 32px;
+}
+
+#deck pre.prompt::before,
+#deck pre.term::before,
+#deck pre[data-copy="lines"]::before,
+#deck pre.file::before,
+#deck pre.out::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 28px;
+  padding: 0 14px 0 36px;
+  border-radius: 0 0 12px 0;
+  background-repeat: no-repeat;
+  background-position: 11px center;
+  background-size: 19px 19px;
+  font: 600 19px/28px var(--sans);
+  letter-spacing: 0.01em;
+  text-indent: 0;
+  white-space: nowrap;
+}
+
+/* Prompt for your agent: coral. */
+#deck pre.prompt {
+  border: 0;
+  border-left: 6px solid var(--coral);
+  border-image: none;
+  background: #fcefe8;
+}
+
+#deck pre.prompt::before {
+  content: "Agent prompt";
+  background-color: var(--coral);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1d1d' stroke-width='2.2' stroke-linejoin='round'%3E%3Cpath d='M4 4.5h16v11.5h-9.5l-5 4v-4h-1.5z'/%3E%3C/svg%3E");
+  color: var(--ink);
+}
+
+/* Command for your terminal: dark, like the terminal itself. */
+#deck pre.term,
+#deck pre[data-copy="lines"] {
+  background: #24221f;
+  color: #ece9e2;
+}
+
+#deck pre.term::before,
+#deck pre[data-copy="lines"]::before {
+  content: "Terminal";
+  background-color: #3d3a35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e3dfd6' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l6 6-6 6M12 18h8'/%3E%3C/svg%3E");
+  color: #e3dfd6;
+}
+
+/* data-tab="Terminal · Mac" names the system too, where a slide has no room for a label line. */
+#deck pre[data-copy="lines"][data-tab]::before {
+  content: attr(data-tab);
+}
+
+#deck pre.term .c,
+#deck pre[data-copy="lines"] .c {
+  color: #a9a59d;
+}
+
+#deck pre[data-copy="lines"] .copy:hover {
+  background: rgb(255 255 255 / 12%);
+  color: var(--paper);
+}
+
+#deck pre[data-copy="lines"] .copy.done {
+  color: #6cc17e;
+}
+
+/* Text for a file: white paper. */
+#deck pre.file {
+  border: 2px solid #d6d1c7;
+  background: #fffdf9;
+  color: #262626;
+}
+
+#deck pre.file::before {
+  content: "From " attr(data-file);
+  background-color: #d6d1c7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1d1d' stroke-width='2.2' stroke-linejoin='round'%3E%3Cpath d='M6 2.5h8.5l4.5 4.5v14.5h-13z'/%3E%3Cpath d='M14 2.5v5h5'/%3E%3C/svg%3E");
+  color: var(--ink);
+}
+
+#deck pre.file[data-copy="all"]::before {
+  content: "Paste into " attr(data-file);
+}
+
+/* Output: only read it. */
+#deck pre.out {
+  background: #e4e1d9;
+  color: #3a3a3a;
+}
+
+#deck pre.out::before {
+  content: "Output";
+  background-color: #d1cdc3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23444' stroke-width='2.2' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+  color: #3a3a3a;
+}
+
+/* An inline prompt inside a sentence: coral, like the prompt boxes. */
+#deck .say {
+  padding: 0.04em 0.35em 0.04em 1.35em;
+  border-radius: 6px;
+  background: #fcefe8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c4673d' stroke-width='2.4' stroke-linejoin='round'%3E%3Cpath d='M4 4.5h16v11.5h-9.5l-5 4v-4h-1.5z'/%3E%3C/svg%3E") no-repeat 0.3em 55% / 0.85em;
+  box-shadow: inset 0 0 0 2px var(--coral);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.86em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Print: the tabs and colours stay, so a printed slide says the same. */
+@media print {
+  #deck pre.prompt::before,
+  #deck pre.term::before,
+  #deck pre[data-copy="lines"]::before,
+  #deck pre.file::before,
+  #deck pre.out::before,
+  #deck pre.term,
+  #deck pre[data-copy="lines"],
+  #deck pre.prompt,
+  #deck pre.out,
+  #deck .say {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
 
   /* Cover ring: the loop. Only the introspect arc carries the spectrum. */
   .ring-wrap { position: relative; width: 760px; height: 760px; }
@@ -1698,7 +1848,7 @@ A page where you paste text and see live counts.
 <pre class="prompt p24">Go with step 1. Write the tests in tests/stats.test.js first, run npm test and show me that they fail. Then write src/stats.js until they pass. npm run check will still say "Nothing rendered yet": that is fine until the page exists. Tick off the step in ai/strategy.md and stop.</pre>
       <p class="s26">Tests that fail first prove that they test something.</p>
       <p class="s26">When <code>npm test</code> passes, commit: <code>git add -A</code>, <code>git commit -m "…"</code>, <code>git push</code>. After every prompt that works.</p>
-      <p class="s26">It stops with a plan? Read it, then type <code>Go.</code></p>
+      <p class="s26">It stops with a plan? Read it, then type <span class="say">Go.</span></p>
     </div>
     <div>
       <p class="label">Then</p>
@@ -1726,8 +1876,7 @@ A page where you paste text and see live counts.
       <p class="d1-p3-note">The agent writes its own check here. Prompt 4 tests whether that check can fail.</p>
     </div>
     <div>
-<pre class="c22"><span class="c">// .check/report.json, an excerpt</span>
-{
+<pre class="c22 file" data-file=".check/report.json, an excerpt">{
   "ok": true,
   "summary":
     "OK: app ready, 4 app checks passed, 0 warnings",
@@ -1764,10 +1913,10 @@ A page where you paste text and see live counts.
       <p>4. Fixed? Run <code>git diff</code>: only your change undone? Good. Anything else? Ask why.</p>
     </div>
     <div class="stack">
-<pre class="tight">$ npm test
+<pre class="tight out">$ npm test
 ℹ pass 7
 ℹ fail 0           <span class="ok">logic is fine</span></pre>
-<pre class="tight">$ npm run check
+<pre class="tight out">$ npm run check
 check: <span class="bad">FAILED</span> (0.4 s)
   - check "page shows sentences" failed:
     expected 3, page shows undefined</pre>

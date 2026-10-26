@@ -673,7 +673,158 @@ td:first-child {
 }
 
 /* Slides in this deck */
-/* Deck 2 conventions (DECISIONS 11–14).
+/* What goes where (teacher, 26 Oct 2026). Every box on a slide says where its text goes, in a tab
+   at its top left, and has its own look:
+     pre.prompt                 Agent prompt              coral    type or paste it into the agent
+     pre[data-copy="lines"]     Terminal                  dark     type it in your own terminal
+     pre.term                   the same, without copy buttons (a command with its output)
+     data-tab="Terminal · Mac" on a command block: the tab names the system too
+     pre.file[data-copy="all"]  Paste into <data-file>    white    paste it into that file, save
+     pre.file                   From <data-file>          white    an excerpt, to read
+     pre.out                    Output                    grey     what you see: only read it
+   An inline prompt in a sentence ("then type Go.") is <span class="say">Go.</span>.
+   build.py adds this file last to every deck; #deck makes these rules win over a slide's own. */
+
+#deck pre.prompt,
+#deck pre.term,
+#deck pre[data-copy="lines"],
+#deck pre.file,
+#deck pre.out {
+  position: relative;
+  padding-top: 32px;
+}
+
+#deck pre.prompt::before,
+#deck pre.term::before,
+#deck pre[data-copy="lines"]::before,
+#deck pre.file::before,
+#deck pre.out::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 28px;
+  padding: 0 14px 0 36px;
+  border-radius: 0 0 12px 0;
+  background-repeat: no-repeat;
+  background-position: 11px center;
+  background-size: 19px 19px;
+  font: 600 19px/28px var(--sans);
+  letter-spacing: 0.01em;
+  text-indent: 0;
+  white-space: nowrap;
+}
+
+/* Prompt for your agent: coral. */
+#deck pre.prompt {
+  border: 0;
+  border-left: 6px solid var(--coral);
+  border-image: none;
+  background: #fcefe8;
+}
+
+#deck pre.prompt::before {
+  content: "Agent prompt";
+  background-color: var(--coral);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1d1d' stroke-width='2.2' stroke-linejoin='round'%3E%3Cpath d='M4 4.5h16v11.5h-9.5l-5 4v-4h-1.5z'/%3E%3C/svg%3E");
+  color: var(--ink);
+}
+
+/* Command for your terminal: dark, like the terminal itself. */
+#deck pre.term,
+#deck pre[data-copy="lines"] {
+  background: #24221f;
+  color: #ece9e2;
+}
+
+#deck pre.term::before,
+#deck pre[data-copy="lines"]::before {
+  content: "Terminal";
+  background-color: #3d3a35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e3dfd6' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l6 6-6 6M12 18h8'/%3E%3C/svg%3E");
+  color: #e3dfd6;
+}
+
+/* data-tab="Terminal · Mac" names the system too, where a slide has no room for a label line. */
+#deck pre[data-copy="lines"][data-tab]::before {
+  content: attr(data-tab);
+}
+
+#deck pre.term .c,
+#deck pre[data-copy="lines"] .c {
+  color: #a9a59d;
+}
+
+#deck pre[data-copy="lines"] .copy:hover {
+  background: rgb(255 255 255 / 12%);
+  color: var(--paper);
+}
+
+#deck pre[data-copy="lines"] .copy.done {
+  color: #6cc17e;
+}
+
+/* Text for a file: white paper. */
+#deck pre.file {
+  border: 2px solid #d6d1c7;
+  background: #fffdf9;
+  color: #262626;
+}
+
+#deck pre.file::before {
+  content: "From " attr(data-file);
+  background-color: #d6d1c7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1d1d' stroke-width='2.2' stroke-linejoin='round'%3E%3Cpath d='M6 2.5h8.5l4.5 4.5v14.5h-13z'/%3E%3Cpath d='M14 2.5v5h5'/%3E%3C/svg%3E");
+  color: var(--ink);
+}
+
+#deck pre.file[data-copy="all"]::before {
+  content: "Paste into " attr(data-file);
+}
+
+/* Output: only read it. */
+#deck pre.out {
+  background: #e4e1d9;
+  color: #3a3a3a;
+}
+
+#deck pre.out::before {
+  content: "Output";
+  background-color: #d1cdc3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23444' stroke-width='2.2' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+  color: #3a3a3a;
+}
+
+/* An inline prompt inside a sentence: coral, like the prompt boxes. */
+#deck .say {
+  padding: 0.04em 0.35em 0.04em 1.35em;
+  border-radius: 6px;
+  background: #fcefe8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c4673d' stroke-width='2.4' stroke-linejoin='round'%3E%3Cpath d='M4 4.5h16v11.5h-9.5l-5 4v-4h-1.5z'/%3E%3C/svg%3E") no-repeat 0.3em 55% / 0.85em;
+  box-shadow: inset 0 0 0 2px var(--coral);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.86em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Print: the tabs and colours stay, so a printed slide says the same. */
+@media print {
+  #deck pre.prompt::before,
+  #deck pre.term::before,
+  #deck pre[data-copy="lines"]::before,
+  #deck pre.file::before,
+  #deck pre.out::before,
+  #deck pre.term,
+  #deck pre[data-copy="lines"],
+  #deck pre.prompt,
+  #deck pre.out,
+  #deck .say {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+  /* Deck 2 conventions (DECISIONS 11–14).
      The spectrum gradient means one thing: the check (introspection). Everything else uses coral. */
   .prompt { border-image: none; border-left: 6px solid var(--coral); }
   .cover .rule { background: var(--coral); }
@@ -1028,7 +1179,7 @@ check: <span class="bad">FAILED</span> (0.4 s)
     </div>
     <div class="pcol">
 <pre class="prompt">Read AGENTS.md, ai/strategy.md and <span class="nw">ai/spark-facts.md</span>. We are building a <mark class="dd">full-window viewer</mark> for Gaussian splat files with Vite, three.js and Spark. The packages are already in package.json. Write a plan of 5 to 7 small steps into ai/strategy.md: scaffold, load the test splat in <span class="nw">public/splats/test.ply</span>, then my own file, then <mark class="dd">camera controls and an orientation toggle</mark>. Never open files in public/splats/. Don't write code yet.</pre>
-      <p class="note" style="margin-top: 22px">The agent writes its plan into <code>ai/strategy.md</code> and stops. Read it, change what you disagree with, then type “Go.”</p>
+      <p class="note" style="margin-top: 22px">The agent writes its plan into <code>ai/strategy.md</code> and stops. Read it, change what you disagree with, then type <span class="say">Go.</span></p>
       <p class="legend"><mark class="dd">Marked</mark>: design decisions. Make them yours.</p>
     </div>
   </div>
@@ -1046,7 +1197,7 @@ check: <span class="bad">FAILED</span> (0.4 s)
     </div>
     <div>
       <p class="label">ai/spark-facts.md · your agent reads this</p>
-<pre class="tight"><span class="c">// Create the WebGLRenderer with</span>
+<pre class="tight file" data-file="ai/spark-facts.md"><span class="c">// Create the WebGLRenderer with</span>
 <span class="c">// { antialias: false }.</span>
 <span class="c">// Spark 2 needs a SparkRenderer in the</span>
 <span class="c">// scene, or nothing is drawn:</span>
@@ -1159,11 +1310,11 @@ scene.add(spark);
   <div class="d2-dv d2-anim">
     <div class="d2-dv-term">
       <p class="label">Your terminal · Mac and Windows</p>
-<pre class="tight">npm run dev
-
+<pre class="tight term">npm run dev
+<span class="c">
   VITE v7.3.7  ready in 312 ms
 
-  ➜  Local:   http://localhost:5173/</pre>
+  ➜  Local:   http://localhost:5173/</span></pre>
       <div class="d2-dv-save"><code>src/main.js</code> changes</div>
     </div>
     <div class="d2-dv-link"><svg viewBox="0 0 384 300" width="384" height="300" role="img" aria-label="The browser asks the dev server, the server sends files; when a file changes, the page reloads">
@@ -1209,7 +1360,7 @@ scene.add(spark);
     </div>
     <div class="side">
       <p class="label">ai/spark-facts.md · your agent reads this</p>
-<pre class="tight"><span class="c">// Flips a capture that loads upside down.</span>
+<pre class="tight file" data-file="ai/spark-facts.md"><span class="c">// Flips a capture that loads upside down.</span>
 <span class="c">// The test splat needs it.</span>
 splat.quaternion.set(1, 0, 0, 0);</pre>
       <p class="note">Floaters (stray splats far away) make the box huge and the splat tiny. Then ask:</p>
@@ -1645,14 +1796,14 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   <p class="eyebrow">Exercise · Splat viewer · your design</p>
   <h2>Prompt 9: extensions</h2>
   <p class="d2-ex-lead">What should a visitor do first in your scan? Guided views, annotations, a before&nbsp;and&nbsp;after?</p>
-  <p class="d2-ex-sub">Your own idea: “Plan, then build: …”, one step at a time. Or start with one of these:</p>
+  <p class="d2-ex-sub">Your own idea: <span class="say">Plan, then build: …</span>, one step at a time. Or start with one of these:</p>
   <div class="d2-ex-grid">
 <pre class="prompt">Plan, then build: a <mark class="dd">background colour</mark> setting in src/config.js.</pre>
 <pre class="prompt">Plan, then build: <mark class="dd">auto-rotate, toggled with the A key</mark>.</pre>
 <pre class="prompt">Plan, then build: a list of the files I name in src/config.js that <mark class="dd">switches between them without reloading the page</mark>.</pre>
 <pre class="prompt">Plan, then build: a <mark class="dd">"Save image" button</mark> that downloads the current view as PNG.</pre>
   </div>
-  <p class="note is-check" style="margin-top: 30px">The agent stops after its plan: read it, then type “Go.” <strong>Every feature gets a check:</strong> is there one for it in <code>scripts/app-checks.mjs</code>? Then look at it in the browser.</p>
+  <p class="note is-check" style="margin-top: 30px">The agent stops after its plan: read it, then type <span class="say">Go.</span> <strong>Every feature gets a check:</strong> is there one for it in <code>scripts/app-checks.mjs</code>? Then look at it in the browser.</p>
   <footer><b>Photolipsia</b><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
@@ -1730,7 +1881,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   <div class="d2-mc">
     <div class="side">
       <p class="label">4 · OpenCode · in <code>~/.config/opencode/opencode.json</code>, after <code>"provider": {…}</code></p>
-<pre data-copy="all">"mcp": {
+<pre class="file" data-copy="all" data-file="~/.config/opencode/opencode.json">"mcp": {
   "blender": {
     "type": "local",
     "command": ["uvx", "mcp-for-blender@2.2.4"],
@@ -1810,7 +1961,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
       <div class="d2-mcp-try">
         <p class="label">Try it · in 02-splat-viewer</p>
 <pre class="prompt">Use the Blender tools. Call get_scene_info and tell me what is in the scene. Then plan a <mark class="dd">ring of 12 cubes</mark> around the origin. Don't change anything yet.</pre>
-        <p class="note">Then “Go.” Then “Use look and tell me what you see.” And look yourself, in Blender.</p>
+        <p class="note">Then <span class="say">Go.</span> Then <span class="say">Use look and tell me what you see.</span> And look yourself, in Blender.</p>
       </div>
     </div>
   </div>
@@ -1870,9 +2021,9 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
 <pre class="prompt">Use the Blender tools. In Blender, import ../tools/blender/splats.py and load public/splats/scan.ply with splats.load(). Use absolute paths. Tell me how many splats it has and how big it is. Then plan how to remove <mark class="dd">the floaters far away from the scan</mark>. Don't change anything yet.</pre>
     </div>
     <div class="d2-cl-steps">
-      <p><b>Go:</b> “Go.” It picks the splats to keep.</p>
-      <p><b>Check:</b> “Use look in rendered mode. Is the scan still whole, and are the floaters gone?”</p>
-      <p><b>Save:</b> “Save it with splats.save() as <span class="nw">public/splats/scan-clean.ply</span>.”</p>
+      <p><b>Go:</b> <span class="say">Go.</span> It picks the splats to keep.</p>
+      <p><b>Check:</b> <span class="say">Use look in rendered mode. Is the scan still whole, and are the floaters gone?</span></p>
+      <p><b>Save:</b> <span class="say">Save it with splats.save() as <span class="nw">public/splats/scan-clean.ply</span>.</span></p>
       <p class="d2-cl-test">Our test: a generated 500,000-splat file with planted floaters, not a phone scan. It cut 2,545 splats for $0.03–0.04 (GLM-5.3 Flash).</p>
     </div>
   </div>
@@ -1938,9 +2089,9 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
     <div class="side">
       <p class="label">Plan · scene open and saved · your agent in 02-splat-viewer</p>
 <pre class="prompt">Use the Blender tools. Plan a training set for Spirula from the open scene: render it from <mark class="dd">48 cameras on a sphere</mark> around the objects, with a transparent background, into <span class="nw">public/splats/training/images/</span>. Write <span class="nw">public/splats/training/transforms.json</span> with w, h, fl_x, fl_y, cx, cy and one frame per image: file_path with .png, and transform_matrix = the camera's matrix_world turned <span class="nw">y-down</span> like a scan (rotate +90 degrees about X). Use absolute paths. Don't change anything yet.</pre>
-      <p class="label">Then “Go.” Then</p>
+      <p class="label">Then <span class="say">Go.</span> Then</p>
 <pre class="prompt">Check: count the images, check transforms.json, and use look on one of the images.</pre>
-      <p class="note"><a class="topic" href="https://github.com/harry7557558/spirula-studio" target="_blank" rel="noopener">Spirula</a> gets the pictures <strong>and</strong> the exact cameras, so it doesn’t have to guess where each picture was taken.</p>
+      <p class="note"><a class="topic" href="https://github.com/harry7557558/spirula-studio" target="_blank" rel="noopener">Spirula</a> gets the pictures <strong>and</strong> the exact cameras: nothing to guess.</p>
     </div>
   </div>
   <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux with OpenCode, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
