@@ -11,6 +11,10 @@ the Blender MCP, clean up a scan in Blender, and train splats from your own Blen
 scene.** It was not tried on a Mac or Windows when this page was written. If something breaks
 there, [ask in the course Discussions](student-setup.md#ask-a-question). For Claude Code and Codex, see "Connect your agent" in section 1.
 
+**Given:** `tools/blender/splats.py` (load, read, keep and save splats in Blender). **You install:**
+`uv`, the Blender add-on "MCP for Blender" and Spirula Studio (both free, not ours). **You write
+no code here:** you prompt, and the agent writes and runs Python inside Blender.
+
 Every step works the same way: **plan first, then go, then check.** Commands are shown for
 **Mac** (Terminal) and **Windows** (PowerShell). Where they are the same, there is one block.
 Your setup must work first: [student-setup.md](student-setup.md). For sections 2 and 3 you also
@@ -269,6 +273,10 @@ https://github.com/harry7557558/spirula-studio/releases/tag/v2026.10.16:
 - **Linux:** `spirula-2026.10.16-ubuntu-vulkan-x86_64.zip`.
 
 ### Step 1: the agent renders the training set
+
+**Which scene?** Your own Blender scene: objects you modelled or imported, with materials and
+light. Not a splat scan: Spirula learns from pictures, and here Blender renders them. A small scene
+is enough; ours was a Suzanne head, a ring, a cube and a sphere.
 
 Open your scene in Blender, **save your .blend**, check the MCP, start your agent in
 `02-splat-viewer`.

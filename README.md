@@ -13,8 +13,9 @@ public: anyone can see it.
 
 ## Start here
 
-1. **Setup:** [docs/student-setup.md](docs/student-setup.md): your fork, picking your tool and
-   account, installing it.
+1. **Setup:** [docs/student-setup.md](docs/student-setup.md): Git and Node.js, picking your tool
+   and account, installing your agent, then your fork. The same order as the
+   [setup slides](https://xohm.github.io/photolipsia-agentic-kit/slides/00-setup.html).
 2. **Example 1, your first agent loop:** [guides/01-text-stats.md](guides/01-text-stats.md)
 3. **Example 2, a viewer for your own 3D scans:**
    - in class: [guides/02-splat-viewer.md](guides/02-splat-viewer.md)
@@ -43,14 +44,22 @@ They are also in `slides/` in your fork: double-click to open them without GitHu
 ## What's here
 
 ```
-01-text-stats/      skeleton for example 1
-02-splat-viewer/    skeleton for example 2
+01-text-stats/      skeleton for example 1: you build the app here
+02-splat-viewer/    skeleton for example 2: you build the app here
 guides/             what to type into your agent, step by step
 docs/               setup and background
 slides/             the setup, the two decks, the troubleshooting page
 tools/              check-openrouter.mjs: tests the course key
                     blender/splats.py: Gaussian splats in Blender 5.3, for the agent
 ```
+
+## What is given, what you build
+
+| | Given in the kit | You build, with your agent |
+|---|---|---|
+| Example 1 | `AGENTS.md` and `CLAUDE.md` (rules), an empty `ai/strategy.md` (memory), the settings for the three tools, `package.json`, `scripts/check.mjs` (the check) | the page `index.html`, `src/`, `tests/`, `scripts/app-checks.mjs`, and the plan and decisions in `ai/strategy.md` |
+| Example 2 | the same, plus `ai/spark-facts.md` (how Spark works now), `scripts/make-test-splat.mjs` (a small test splat), `vite.config.js` | the same, plus `src/config.js`. You bring your own scans |
+| Blender and Spirula | `tools/blender/splats.py`. You install the Blender add-on (MCP for Blender) and Spirula Studio yourself: [the doc](docs/blender-and-splats.md) | nothing to code: your prompts, and the agent writes and runs the Python inside Blender |
 
 Each skeleton has the same few files:
 

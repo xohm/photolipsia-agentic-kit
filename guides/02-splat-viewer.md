@@ -8,6 +8,11 @@ $0.26, with a copy of the generated test splat as "my scan". Two things needed a
 blamed the browser for a check it had written wrong, and it built the VR scale the wrong way round (see
 prompt 7). Example 2 has not been run with Claude Code or Codex yet.
 
+**Given:** the skeleton `02-splat-viewer`: the same rules, memory and check as Example 1, plus
+`ai/spark-facts.md`, a test splat (`scripts/make-test-splat.mjs`) and `vite.config.js`. **You
+build**, with your agent: `index.html`, `src/` (with `src/config.js`), `tests/`,
+`scripts/app-checks.mjs`. You bring your own scans.
+
 Same loop as Example 1: **plan → build → introspect → fix → log**. Every prompt ends the same
 way: the agent runs `npm test` and `npm run check`, reads `.check/report.json`, looks at
 `.check/screenshot.png` and tells you what it sees.

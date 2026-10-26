@@ -1859,50 +1859,68 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
       </div>
       <div class="side">
         <p class="note"><strong>Before you try:</strong> save your <code>.blend</code>. In our test, OpenCode ran the Blender tools without asking. <code>look</code> sends a picture of your viewport to the model. More: <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/blender-and-splats.md#the-loop-in-blender" target="_blank" rel="noopener">the doc</a>.</p>
-        <p class="note d2-ms-next">4 · Connect your agent: next slide.</p>
+        <p class="note d2-ms-next">4 · Connect your agent: OpenCode on the next slide, Claude Code and Codex on the one after.</p>
       </div>
     </div>
   </div>
   <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
-<!-- s21b-mcpconnect.html -->
+<!-- s21b-mcp-opencode.html: OpenCode, the whole config file -->
 <section class="slide light">
 <style>
-  .d2-mc { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
-  .d2-mc pre { font-size: 22px; }
-  .d2-mc pre.d2-mc-cmd { white-space: pre-wrap; padding-left: calc(32px + 2ch); text-indent: -2ch; }
-  .d2-mc .note { font-size: 28px; }
-  .d2-mc .side > .label:not(:first-child) { margin-top: 40px; }
-  .d2-mc .d2-mc-t { color: var(--ink); }
+  .d2-mo { display: grid; grid-template-columns: max-content 1fr; gap: 48px; align-items: start; }
+  .d2-mo pre { font-size: 22px; }
+  .d2-mo .note { font-size: 28px; }
+  .d2-mo .note + .note { margin-top: 20px; }
+  .d2-mo .d2-mo-t { color: var(--ink); }
 </style>
-  <p class="eyebrow">Extension · Blender MCP · connect your agent</p>
-  <h2>Connect your agent to Blender.</h2>
-  <div class="d2-mc">
-    <div class="side">
-      <p class="label">4 · OpenCode · in <code>~/.config/opencode/opencode.json</code>, after <code>"provider": {…}</code></p>
-<pre class="file" data-copy="all" data-file="~/.config/opencode/opencode.json">"mcp": {
-  "blender": {
+  <p class="eyebrow">Extension · Blender MCP · connect OpenCode</p>
+  <h2>OpenCode: the Blender tools in your config.</h2>
+  <div class="d2-mo">
+<pre class="file" data-copy="all" data-file="~/.config/opencode/opencode.json">{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "openrouter/z-ai/glm-5.3-flash",
+  "small_model": "openrouter/z-ai/glm-5.3-flash",
+  "provider": { "openrouter": { "models": {
+    "z-ai/glm-5.3-flash": { "options": { "reasoning": { "effort": "high" } } },
+    "z-ai/glm-5.3": { "options": { "reasoning": { "effort": "high" } } }
+  } } },
+  "mcp": { "blender": {
     "type": "local",
     "command": ["uvx", "mcp-for-blender@2.2.4"],
     "environment": { "DISABLE_TELEMETRY": "true" }
-  }
+  } }
 }</pre>
-      <p class="note">Put a comma after the <code>}</code> that closes <code>provider</code>, or paste the whole file from <a class="jump" href="https://github.com/xohm/photolipsia-agentic-kit/blob/main/docs/blender-and-splats.md#opencode" target="_blank" rel="noopener"><code>docs/blender-and-splats.md</code></a>. Save. Restart OpenCode: <code>/exit</code>, then <code>opencode</code>.</p>
-      <p class="note d2-mc-t">Tested on Linux, Oct 2026.</p>
-    </div>
     <div class="side">
-      <p class="label">4 · Claude Code · your terminal · one line</p>
-<pre class="d2-mc-cmd" data-copy="lines"><span class="nw">claude mcp add</span> <span class="nw">--env DISABLE_TELEMETRY=true</span> <span class="nw">--scope user</span> <span class="nw">blender</span> <span class="nw">-- uvx mcp-for-blender@2.2.4</span></pre>
-      <p class="note">Check: start <code>claude</code>, type <code>/mcp</code>.</p>
-      <p class="note d2-mc-t">Tested: adding it. Not yet with Blender.</p>
-      <p class="label">4 · Codex · your terminal · one line</p>
-<pre class="d2-mc-cmd" data-copy="lines"><span class="nw">codex mcp add</span> <span class="nw">blender</span> <span class="nw">--env DISABLE_TELEMETRY=true</span> <span class="nw">-- uvx mcp-for-blender@2.2.4</span></pre>
-      <p class="note">Check: start <code>codex</code>, type <code>/mcp</code>.</p>
-      <p class="note d2-mc-t">Not tested yet.</p>
+      <p class="note">Open your OpenCode config file in a text editor, as in the setup.</p>
+      <p class="note"><strong>Replace everything</strong> in it with this, and save. It is the course config plus the <code>"mcp"</code> part.</p>
+      <p class="note">Restart OpenCode: <code>/exit</code>, then <code>opencode</code>.</p>
+      <p class="note d2-mo-t">Tested on Linux, Oct 2026.</p>
     </div>
   </div>
   <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux with OpenCode, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
+<!-- s21c-mcp-claude-codex.html: Claude Code and Codex, one command each -->
+<section class="slide light">
+<style>
+  .d2-mc pre { font-size: 22px; }
+  .d2-mc .note { font-size: 28px; margin-top: 16px; }
+  .d2-mc .label:not(:first-child) { margin-top: 48px; }
+  .d2-mc .d2-mc-t { color: var(--ink); }
+</style>
+  <p class="eyebrow">Extension · Blender MCP · connect Claude Code or Codex</p>
+  <h2>Claude Code or Codex: one command.</h2>
+  <div class="d2-mc">
+    <p class="label">Claude Code · Mac and Windows · one line</p>
+<pre data-copy="lines">claude mcp add --env DISABLE_TELEMETRY=true --scope user blender -- uvx mcp-for-blender@2.2.4</pre>
+    <p class="note">Check: start <code>claude</code>, type <code>/mcp</code>: <code>blender</code> is listed. <span class="d2-mc-t">Tested: adding it. Not yet with Blender.</span></p>
+    <p class="label">Codex · Mac and Windows · one line</p>
+<pre data-copy="lines">codex mcp add blender --env DISABLE_TELEMETRY=true -- uvx mcp-for-blender@2.2.4</pre>
+    <p class="note">Check: start <code>codex</code>, type <code>/mcp</code>: <code>blender</code> is listed. <span class="d2-mc-t">Not tested yet.</span></p>
+  </div>
+  <footer><span><b>Photolipsia</b><span class="tested">Not tested with Blender yet.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
 <!-- s22-mcp.html -->
@@ -2030,6 +2048,39 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux with OpenCode, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
 </section>
 
+<!-- s23b-spirula-install.html -->
+<section class="slide light">
+<style>
+  .d2-si-lead { margin: -20px 0 30px; font-size: 29px; line-height: 1.4; color: var(--grey); }
+  .d2-si { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; align-items: start; }
+  .d2-si .note { font-size: 27px; }
+  .d2-si .note + .note { margin-top: 18px; }
+  .d2-si .note code { white-space: normal; overflow-wrap: anywhere; }
+</style>
+  <p class="eyebrow">Extension · Spirula Studio · once</p>
+  <h2>Install Spirula Studio once.</h2>
+  <p class="d2-si-lead">It trains Gaussian splats from pictures, on your laptop. Free (GPL-3.0), any GPU. Download version 2026.10.16 from <a class="jump" href="https://github.com/harry7557558/spirula-studio/releases/tag/v2026.10.16" target="_blank" rel="noopener">its release page</a>.</p>
+  <div class="d2-si">
+    <div>
+      <p class="label">Mac · Apple Silicon only</p>
+      <p class="note"><code>spirula-2026.10.16-macos-vulkan-arm64.dmg</code>: open it, drag <strong><a class="topic" href="https://github.com/harry7557558/spirula-studio" target="_blank" rel="noopener">Spirula</a> Studio</strong> into <strong>Applications</strong>.</p>
+      <p class="note">Blocked when it starts? <strong>System Settings → Privacy &amp; Security</strong>, scroll down, <strong>Open Anyway</strong>, start it again.</p>
+      <p class="note">Intel Macs: not supported.</p>
+    </div>
+    <div>
+      <p class="label">Windows</p>
+      <p class="note"><code>spirula-2026.10.16-windows-vulkan-x86_64.zip</code>: unzip it.</p>
+      <p class="note">The program is <code>spirula.exe</code> in the unzipped folder. You need its path in step 2.</p>
+    </div>
+    <div>
+      <p class="label">Linux</p>
+      <p class="note"><code>spirula-2026.10.16-ubuntu-vulkan-x86_64.zip</code>: unzip it.</p>
+      <p class="note">Tested here, Oct 2026. The Mac and Windows files are from the release page, not tried.</p>
+    </div>
+  </div>
+  <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
+</section>
+
 <!-- s24-spirula1.html -->
 <section class="slide light">
 <style>
@@ -2087,11 +2138,11 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
 </svg>
     </div>
     <div class="side">
-      <p class="label">Plan · scene open and saved · your agent in 02-splat-viewer</p>
+      <p class="label">Plan · your own Blender scene, saved · your agent in 02-splat-viewer</p>
 <pre class="prompt">Use the Blender tools. Plan a training set for Spirula from the open scene: render it from <mark class="dd">48 cameras on a sphere</mark> around the objects, with a transparent background, into <span class="nw">public/splats/training/images/</span>. Write <span class="nw">public/splats/training/transforms.json</span> with w, h, fl_x, fl_y, cx, cy and one frame per image: file_path with .png, and transform_matrix = the camera's matrix_world turned <span class="nw">y-down</span> like a scan (rotate +90 degrees about X). Use absolute paths. Don't change anything yet.</pre>
       <p class="label">Then <span class="say">Go.</span> Then</p>
 <pre class="prompt">Check: count the images, check transforms.json, and use look on one of the images.</pre>
-      <p class="note"><a class="topic" href="https://github.com/harry7557558/spirula-studio" target="_blank" rel="noopener">Spirula</a> gets the pictures <strong>and</strong> the exact cameras: nothing to guess.</p>
+      <p class="note">Spirula gets the pictures <strong>and</strong> the exact cameras: nothing to guess.</p>
     </div>
   </div>
   <footer><span><b>Photolipsia</b><span class="tested">Tested on Linux with OpenCode, Oct 2026.</span></span><span>ZHdK · MA Interaction Design · HS 2026</span></footer>
@@ -2109,7 +2160,7 @@ npx --package gaussian-splat-lite@1.4.2 gsl-build-lod my-scan.ply</pre>
   .d2-sp2 .pair figcaption { display: flex; justify-content: space-around; margin-top: 10px; font-size: 24px; color: var(--grey); }
   .d2-sp2 .pair p { margin: 14px 0 0; font-size: 25px; line-height: 1.4; color: var(--grey); }
 </style>
-  <p class="eyebrow">Extension · <a class="jump" href="https://github.com/harry7557558/spirula-studio/releases/tag/v2026.10.16" target="_blank" rel="noopener">Spirula Studio v2026.10.16</a> · free · Mac (Apple Silicon), Windows, Linux</p>
+  <p class="eyebrow">Extension · Blender → Spirula Studio · step 2</p>
   <h2>Train splats: Spirula learns, you look.</h2>
   <div class="d2-sp2">
     <p class="label">Mac · your terminal, in 02-splat-viewer · blocked? Privacy &amp; Security → Open Anyway</p>

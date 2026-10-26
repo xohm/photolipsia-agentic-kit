@@ -31,7 +31,7 @@ Contents
 5. [OpenCode](#5-opencode)
 6. [Claude Code](#6-claude-code)
 7. [Codex CLI](#7-codex-cli)
-8. [Smoke test](#8-smoke-test)
+8. [Smoke test and your fork](#8-smoke-test-and-your-fork)
 9. [The project skeleton, explained](#9-the-project-skeleton-explained)
 10. [Troubleshooting](#10-troubleshooting)
 
@@ -112,7 +112,7 @@ git config --global pull.rebase false
 ```
 
 Use the email of your GitHub account. It is public in every commit you push: to keep it private,
-see step 1 under "Git and GitHub" below. The third line makes `git pull` merge your teacher's
+see step 1 under [A GitHub account](#a-github-account) below. The third line makes `git pull` merge your teacher's
 updates into your work.
 
 ### Mac only: npm says EACCES
@@ -135,30 +135,17 @@ opens `.html` files as a page, not as text. In VS Code, **File → Open Folder**
 **Mac:** download from https://code.visualstudio.com.
 **Windows:** `winget install --id Microsoft.VisualStudioCode -e`
 
-### Git and GitHub: your own fork
+### A GitHub account
 
-You keep your work on GitHub, in your own copy of the course repository: a **fork**.
-Every `git push` saves your progress there, and your teacher can follow it.
+Your work goes to GitHub, into your own copy of the course: your fork (section 8). Your
+questions go to GitHub too, into the course [Discussions](#ask-a-question).
 
 1. Make a free account on https://github.com, then click the link in the email GitHub sends you.
    You can't fork until your email is verified.
    To keep your email private: on GitHub, **Settings → Emails**, turn on **Keep my email addresses
    private** and copy the address that ends in `@users.noreply.github.com`. Then run the
    `git config --global user.email` line from above again, with that address.
-2. **Fork:** open https://github.com/xohm/photolipsia-agentic-kit, press **Fork** (top right), then
-   **Create fork**. Now GitHub has your own copy: `https://github.com/YOUR-NAME/photolipsia-agentic-kit`,
-   where `YOUR-NAME` is your GitHub user name.
-   Your fork is **public**: anyone can see your code, your `ai/strategy.md` and your commit
-   messages. Never commit a key or anything private.
-3. **Clone** your fork into your home folder, and connect it to the course repository, so you can
-   get updates later. Same on both:
-   ```bash
-   cd ~
-   git clone https://github.com/YOUR-NAME/photolipsia-agentic-kit.git
-   cd photolipsia-agentic-kit
-   git remote add upstream https://github.com/xohm/photolipsia-agentic-kit.git
-   ```
-4. **Log in, so `git push` works.** Once.
+2. **Log in, so `git push` works.** Once.
    - **Windows:** nothing to install. At your first `git push`, Git opens a GitHub login in your
      browser.
    - **Mac:** Git on a Mac can't log in through the browser, so install the GitHub tool once: the
@@ -170,27 +157,6 @@ Every `git push` saves your progress there, and your teacher can follow it.
      Answer: GitHub.com, HTTPS, Yes, Login with a web browser. It shows a one-time code like
      `ABCD-1234`: copy it, press Enter, paste it in the browser and click **Authorize**. From then
      on, `git push` works. You don't need `gh` for anything else.
-
-You now have the folder `photolipsia-agentic-kit`: the skeletons `01-text-stats` and
-`02-splat-viewer`, the guides in `guides/` and these docs in `docs/`. The skeletons have no app
-in them: you build the apps with your agent.
-
-`npm run check` also needs a hidden browser. `npx playwright install chromium` downloads it once,
-about 300 MB, during the Example 1 setup.
-
-### Get your teacher's updates
-
-When your teacher updates the course repository, **commit your own work first**
-(`git add -A`, then `git commit -m "My work"`). Then, same on both:
-
-```bash
-cd ~/photolipsia-agentic-kit
-git pull --no-edit upstream main
-git push
-```
-
-If Git prints `CONFLICT`, type `git merge --abort` and [ask in the Discussions](#ask-a-question). That puts everything
-back as it was before the pull.
 
 ---
 
@@ -390,15 +356,8 @@ source ~/.zshrc
 ```
 Then **open a new terminal**: old ones don't see it.
 
-Then test it, in your fork:
-
-```bash
-cd ~/photolipsia-agentic-kit
-node tools/check-openrouter.mjs
-```
-
-You want: the course model answers (`200 OK`), another model is blocked (`404 OK`), and the last
-line says `All good.`
+You test the key in [section 8](#first-check), once your fork is on your laptop. No key yet?
+Do the other steps first.
 
 > **If the key changes** (your teacher hands out a new one), update it everywhere you put it:
 > the line in `~/.zshrc` (Mac) or the command above again (Windows), `/connect` in OpenCode if
@@ -503,7 +462,7 @@ In the course projects, `opencode.json` makes OpenCode ask before shell commands
 commands (`npm test`, `npm run check`, `node`, `git status`, `git diff`, `git log`, `ls`). Read
 what it wants to run before you allow it.
 
-Then do the smoke test, [section 8](#8-smoke-test).
+Then do the smoke test, [section 8](#8-smoke-test-and-your-fork).
 
 ---
 
@@ -649,7 +608,7 @@ In the course projects, `.claude/settings.json` lets Claude Code run the loop co
 asking: `npm test`, `npm run check`, `git status`, `git diff`, `git log` and `ls`. For anything
 else it asks first: read what it wants to run before you allow it.
 
-Then do the smoke test, [section 8](#8-smoke-test).
+Then do the smoke test, [section 8](#8-smoke-test-and-your-fork).
 
 ---
 
@@ -754,11 +713,13 @@ lets commands use the internet (for `npm install`). Without it, every check cras
 ("listen EPERM") and the agent never saw a screenshot. When Codex asks to run something outside the
 sandbox, read what it wants to run before you allow it.
 
-Then do the smoke test, [section 8](#8-smoke-test).
+Then do the smoke test, [section 8](#8-smoke-test-and-your-fork).
 
 ---
 
-## 8. Smoke test
+## 8. Smoke test and your fork
+
+### Smoke test
 
 Start your agent in the empty test folder from its first run. These commands also make the
 folder if it is missing.
@@ -781,7 +742,66 @@ Create hello.js that prints "Hello from GLM", then run it with node.
 
 The agent creates the file and runs `node hello.js`. Some tools ask first: allow it.
 You should see `Hello from GLM` (also on a plan, where the model is not GLM: it is only the text
-you asked for). If that works, you're set up.
+you asked for). If that works, your agent is set up. Quit it (`/exit`).
+
+### Git and GitHub: your own fork
+
+Now the course itself. You keep your work on GitHub, in your own copy of the course repository:
+a **fork**. Every `git push` saves your progress there, and your teacher can follow it. You need
+the GitHub account from [section 1](#a-github-account).
+
+1. **Fork:** open https://github.com/xohm/photolipsia-agentic-kit, press **Fork** (top right), then
+   **Create fork**. Now GitHub has your own copy: `https://github.com/YOUR-NAME/photolipsia-agentic-kit`,
+   where `YOUR-NAME` is your GitHub user name.
+   Your fork is **public**: anyone can see your code, your `ai/strategy.md` and your commit
+   messages. Never commit a key or anything private.
+2. **Clone** your fork into your home folder, and connect it to the course repository, so you can
+   get updates later. Same on both:
+   ```bash
+   cd ~
+   git clone https://github.com/YOUR-NAME/photolipsia-agentic-kit.git
+   cd photolipsia-agentic-kit
+   git remote add upstream https://github.com/xohm/photolipsia-agentic-kit.git
+   ```
+
+You now have the folder `photolipsia-agentic-kit`: the skeletons `01-text-stats` and
+`02-splat-viewer`, the guides in `guides/` and these docs in `docs/`. The skeletons have no app
+in them: you build the apps with your agent.
+
+### First check
+
+Still in `~/photolipsia-agentic-kit`, same on both. With your own plan, skip the first line: it tests
+the course key.
+
+```bash
+node tools/check-openrouter.mjs
+cd 01-text-stats
+npm install
+npx playwright install chromium
+npm run check
+```
+
+- The key test: the course model answers (`200 OK`), another model is blocked (`404 OK`), and the
+  last line says `All good.`
+- `npx playwright install chromium` downloads the hidden browser for `npm run check`, about 300 MB,
+  once.
+- `npm run check` says **check: FAILED** and **Nothing rendered yet**. Right: there is no app yet.
+
+Setup done. Next: [Example 1](../guides/01-text-stats.md).
+
+### Get your teacher's updates
+
+When your teacher updates the course repository, **commit your own work first**
+(`git add -A`, then `git commit -m "My work"`). Then, same on both:
+
+```bash
+cd ~/photolipsia-agentic-kit
+git pull --no-edit upstream main
+git push
+```
+
+If Git prints `CONFLICT`, type `git merge --abort` and [ask in the Discussions](#ask-a-question). That puts everything
+back as it was before the pull.
 
 ---
 
@@ -926,7 +946,7 @@ The same tables, with the Blender ones, as a web page that every slide links to:
 | A big scan is slow or jerky | Convert it to `.rad` and/or lower the detail with `?detail=0.5`. See [big-scans.md](big-scans.md). |
 | No **Enter VR** button in the splat viewer | The browser can't do VR. Mac browsers never can: use the Quest browser with `npm run dev:vr`. On Windows, Quest Link plus Chrome also works. See Example 2, prompt 7. |
 | The Quest can't open the `https://…` address from `npm run dev:vr` | Same Wi-Fi? University Wi-Fi often isolates devices: try a phone hotspot. Allow `node` through the firewall (Mac), or private networks (Windows). |
-| Mac: `git push` asks for a username and password | Git isn't logged in yet: `gh auth login` (section 1, [Git and GitHub](#git-and-github-your-own-fork)). A GitHub password never works here. |
+| Mac: `git push` asks for a username and password | Git isn't logged in yet: `gh auth login` (section 1, [A GitHub account](#a-github-account)). A GitHub password never works here. |
 | Windows: `git add` prints "LF will be replaced by CRLF" | Harmless. Git stores the file correctly. |
 | `git pull`: "Need to specify how to reconcile divergent branches" | Run `git config --global pull.rebase false`, then `git pull --no-edit upstream main` again. |
 | `git pull`: "Your local changes … would be overwritten" | Commit your work first (`git add -A`, `git commit -m "My work"`), then pull again. |

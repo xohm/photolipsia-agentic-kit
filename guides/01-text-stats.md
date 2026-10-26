@@ -8,6 +8,10 @@ $0.05. Its first tests expected the wrong numbers; `npm test` caught that before
 Same prompts on our own plans: Claude Code with Claude Opus 5.5 took 12.5 minutes, Codex with
 GPT-6 Astra 5.8 minutes; both ended with passing checks.
 
+**Given:** the skeleton `01-text-stats`: rules (`AGENTS.md`), an empty memory (`ai/strategy.md`),
+the check (`scripts/check.mjs`). **You build**, with your agent: `index.html`, `src/`, `tests/`,
+`scripts/app-checks.mjs`.
+
 Every prompt ends the same way: the agent runs `npm test` and `npm run check`,
 reads `.check/report.json`, looks at `.check/screenshot.png` and tells you what it sees.
 
@@ -45,7 +49,8 @@ npm run check
 ```
 
 `npx playwright install chromium` downloads the hidden browser for `npm run check`
-(about 300 MB, once per laptop). `npm run check` should then say **check: FAILED** and **Nothing rendered yet**,
+(about 300 MB, once per laptop). Did the first check at the end of the setup? Then these four
+lines are done. `npm run check` should then say **check: FAILED** and **Nothing rendered yet**,
 followed by a few `npm error` lines. That is correct: there is no page yet.
 
 Now open your agent terminal (a new tab) and go to the same folder (the same on Mac and Windows):
