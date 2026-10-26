@@ -13,7 +13,8 @@ there, [ask in the course Discussions](student-setup.md#ask-a-question). For Cla
 
 **Given:** `tools/blender/splats.py` (load, read, keep and save splats in Blender). **You install:**
 `uv`, the Blender add-on "MCP for Blender" and Spirula Studio (both free, not ours). **You write
-no code here:** you prompt, and the agent writes and runs Python inside Blender.
+no code here:** you prompt, and the agent writes and runs Python inside Blender. There are no
+results for this part in `results/`: what the agent does lives in your Blender scene.
 
 Every step works the same way: **plan first, then go, then check.** Commands are shown for
 **Mac** (Terminal) and **Windows** (PowerShell). Where they are the same, there is one block.

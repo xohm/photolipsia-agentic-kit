@@ -383,8 +383,9 @@ npm install -g opencode-ai@1
 opencode --version
 ```
 
-You want version 1.x: `@1` makes sure of that. The course was tested with OpenCode 1.14; `@1`
-installs the newest 1.x.
+You want version 1.x: `@1` makes sure of that. The course was tested with OpenCode 1.14 and 1.19;
+`@1` installs the newest 1.x. OpenCode can also update itself: on our laptop it went from 1.14.39
+to 1.19.4 on 26 October.
 
 Mac: "EACCES" or "permission denied"? Use the fix in [section 1](#mac-only-npm-says-eacces), then
 the install line again.

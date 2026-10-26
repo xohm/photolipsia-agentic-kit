@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Text stats</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #2b2f36;
+        --muted: #6b7280;
+        --paper: #f6f5f1;
+        --card: #ffffff;
+        --line: #e3e1da;
+        --accent: #3f6f5f;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: ui-serif, Georgia, 'Times New Roman', serif;
+        font-size: 17px;
+        line-height: 1.6;
+        display: flex;
+        justify-content: center;
+        padding: 3rem 1.5rem;
+      }
+      main {
+        width: 100%;
+        max-width: 42rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0 0 1.25rem;
+        letter-spacing: 0.01em;
+      }
+      textarea {
+        width: 100%;
+        min-height: 11rem;
+        padding: 1rem 1.1rem;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        color: var(--ink);
+        font: inherit;
+        line-height: 1.7;
+        resize: vertical;
+      }
+      textarea:focus {
+        outline: 2px solid var(--accent);
+        outline-offset: 1px;
+      }
+      .stats {
+        margin-top: 1.5rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+        gap: 0.75rem;
+      }
+      .stat {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0.9rem 1.1rem;
+      }
+      .stat dt {
+        color: var(--muted);
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 0.85rem;
+        letter-spacing: 0.02em;
+        margin: 0;
+      }
+      .stat dd {
+        margin: 0.15rem 0 0;
+        font-size: 2.2rem;
+        font-weight: 650;
+        font-variant-numeric: tabular-nums;
+        color: var(--ink);
+      }
+      .actions {
+        margin-top: 0.75rem;
+        display: flex;
+        justify-content: flex-end;
+      }
+      button {
+        padding: 0.5rem 1.1rem;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: var(--muted);
+        font: inherit;
+        font-size: 0.95rem;
+        cursor: pointer;
+      }
+      button:hover {
+        color: var(--ink);
+        border-color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Text stats</h1>
+      <textarea
+        id="text"
+        placeholder="Paste or type your text here&hellip;"
+        aria-label="Text to analyse"
+      ></textarea>
+      <div class="actions">
+        <button type="button" id="clear">Clear</button>
+      </div>
+      <dl class="stats">
+        <div class="stat">
+          <dt>Words</dt>
+          <dd data-stat="words">0</dd>
+        </div>
+        <div class="stat">
+          <dt>Characters</dt>
+          <dd data-stat="characters">0</dd>
+        </div>
+        <div class="stat">
+          <dt>Sentences</dt>
+          <dd data-stat="sentences">0</dd>
+        </div>
+        <div class="stat">
+          <dt>Reading time</dt>
+          <dd data-stat="readingMinutes">0</dd>
+        </div>
+      </dl>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+
+  </body>
+</html>

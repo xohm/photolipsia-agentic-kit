@@ -11,7 +11,9 @@ prompt 7). Example 2 has not been run with Claude Code or Codex yet.
 **Given:** the skeleton `02-splat-viewer`: the same rules, memory and check as Example 1, plus
 `ai/spark-facts.md`, a test splat (`scripts/make-test-splat.mjs`) and `vite.config.js`. **You
 build**, with your agent: `index.html`, `src/` (with `src/config.js`), `tests/`,
-`scripts/app-checks.mjs`. You bring your own scans.
+`scripts/app-checks.mjs`. You bring your own scans. **Stuck?**
+[`results/02-splat-viewer`](../results/02-splat-viewer/RUN.md) is what GLM built with these prompts
+in a later run (26 October 2026), step by step: compare, don't copy.
 
 Same loop as Example 1: **plan → build → introspect → fix → log**. Every prompt ends the same
 way: the agent runs `npm test` and `npm run check`, reads `.check/report.json`, looks at

@@ -297,6 +297,7 @@ Known differences
 ## 7. Distribute the key and the kit
 
 **One public kit.** This repository is the whole course for students: the two skeletons, the
+results of a GLM run (`results/`, see [When a student is stuck](#when-a-student-is-stuck)), the
 guides, the setup docs, the slides and this guide. Students fork it and build the apps with their
 own agent ([student-setup.md](student-setup.md#git-and-github-your-own-fork)). They use the
 Fork button on github.com, then plain git:
@@ -318,8 +319,9 @@ cd photolipsia-solutions
 node tools/check-kit.mjs
 ```
 
-It refuses if app code, the single-file viewer, a hint at the solutions or something that looks
-like a real API key would land in the kit, and it checks that the skeleton files (rules, ignores,
+It refuses if app code in a skeleton, the single-file viewer, a hint at the solutions, a result
+without its `RUN.md` (or with installed packages, splat files or `.env` files) or something that
+looks like a real API key would land in the kit, and it checks that the skeleton files (rules, ignores,
 check script) match the finished apps.
 
 **Updates during the course.** Students commit their own work, then run
@@ -457,6 +459,44 @@ Free and Go don't list the Codex CLI. These students don't get the key.
    "If the key changes" in [student-setup.md](student-setup.md#4-the-course-key).
 4. If the key was committed, deleting the file is not enough: it stays in the history. Treat
    the old key as public. Disabling it (step 1) is what protects the budget.
+
+### When a student is stuck
+
+**What is given, what they build.** The kit gives the skeletons (rules, an empty memory, the
+check), `ai/spark-facts.md`, the test splat and `tools/blender/splats.py`. Students build
+`index.html`, `src/`, `tests/` and `scripts/app-checks.mjs` with their agent. The README has the
+table.
+
+**`results/`** holds both apps exactly as GLM-5.3 Flash built them in OpenCode 1.19.4 on
+26 October 2026, from the guides' prompts, unpolished: Example 1 in 8.3 min of agent time for
+$0.11, Example 2 (prompts 1 to 8) in 23.9 min for $0.30, both green. Each `RUN.md` lists every
+prompt with its time, cost, test and check result, the agent's answer and what went wrong. Students
+may look ("compare, don't copy"). Before class, read both `RUN.md`: they are the likeliest places
+students get stuck.
+
+What GLM got wrong in that run, and the sentence that helps:
+
+| What happens | Say or do |
+|---|---|
+| It does several plan steps in one go, despite "one step at a time" | Fine if the check passes; otherwise `git restore .` and "Only step N, then stop." |
+| Its own test expectations are wrong (it miscounts) | Nothing: `npm test` catches it. Check that it changes a test only when the test is the wrong one |
+| A feature without an app check (the Clear button) | "Add an app check that clicks the button." `AGENTS.md` asks for one per visible feature |
+| Its last message is about another step | Read the files and the screenshot, not only the message |
+| It stops with a plan, or after one step | `Go.` |
+
+From the run of 24 October (older kit), still worth knowing: it blamed the browser for a check it
+had written wrong ("Look at .check/screenshot.png and find out why the orientation check fails."
+fixed it), it
+built the VR scale the wrong way round (now caught by the unit test that `ai/spark-facts.md` asks
+for), and with an empty `## Next` a fresh session did nothing.
+
+**A project that went wrong:** in the student's terminal, `git status` and `git diff` show what
+changed; `git restore .` goes back to the last commit; `git log --oneline` lists the commits. As a
+last resort a student can take one file from `results/` and commit it with a message that says
+so ("from results/: src/stats.js").
+
+**OpenCode can update itself:** on our laptop it went from 1.14.39 to 1.19.4 on 26 October. Both
+versions ran the examples.
 
 ### After
 

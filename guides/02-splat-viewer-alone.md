@@ -19,6 +19,8 @@ Your setup must work first, including your own fork of the course repository:
 
 The folder `02-splat-viewer` in your fork is a **skeleton**: rules for the agent, a memory file,
 the check, the build steps. There is no app in it. You and your agent build the app.
+Stuck? [`results/02-splat-viewer`](../results/02-splat-viewer/RUN.md) is what GLM built with the
+prompts of the class guide (not these eight steps): compare, don't copy.
 
 Open two terminals:
 

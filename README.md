@@ -46,6 +46,7 @@ They are also in `slides/` in your fork: double-click to open them without GitHu
 ```
 01-text-stats/      skeleton for example 1: you build the app here
 02-splat-viewer/    skeleton for example 2: you build the app here
+results/            what GLM-5.3 Flash built with the same prompts: to compare when you are stuck
 guides/             what to type into your agent, step by step
 docs/               setup and background
 slides/             the setup, the two decks, the troubleshooting page
@@ -60,6 +61,11 @@ tools/              check-openrouter.mjs: tests the course key
 | Example 1 | `AGENTS.md` and `CLAUDE.md` (rules), an empty `ai/strategy.md` (memory), the settings for the three tools, `package.json`, `scripts/check.mjs` (the check) | the page `index.html`, `src/`, `tests/`, `scripts/app-checks.mjs`, and the plan and decisions in `ai/strategy.md` |
 | Example 2 | the same, plus `ai/spark-facts.md` (how Spark works now), `scripts/make-test-splat.mjs` (a small test splat), `vite.config.js` | the same, plus `src/config.js`. You bring your own scans |
 | Blender and Spirula | `tools/blender/splats.py`. You install the Blender add-on (MCP for Blender) and Spirula Studio yourself: [the doc](docs/blender-and-splats.md) | nothing to code: your prompts, and the agent writes and runs the Python inside Blender |
+
+**Stuck?** [`results/`](results/README.md) holds the two apps as GLM-5.3 Flash built them in
+OpenCode, with the prompts from the guides, and a step-by-step report of that run. Compare your
+files with them, read how GLM went wrong. Don't copy them into your project: then you learn
+nothing about the loop, and your fork shows it.
 
 Each skeleton has the same few files:
 

@@ -10,7 +10,9 @@ GPT-6 Astra 5.8 minutes; both ended with passing checks.
 
 **Given:** the skeleton `01-text-stats`: rules (`AGENTS.md`), an empty memory (`ai/strategy.md`),
 the check (`scripts/check.mjs`). **You build**, with your agent: `index.html`, `src/`, `tests/`,
-`scripts/app-checks.mjs`.
+`scripts/app-checks.mjs`. **Stuck?** [`results/01-text-stats`](../results/01-text-stats/RUN.md) is
+what GLM built with these prompts in a later run (26 October 2026), step by step: compare, don't
+copy.
 
 Every prompt ends the same way: the agent runs `npm test` and `npm run check`,
 reads `.check/report.json`, looks at `.check/screenshot.png` and tells you what it sees.

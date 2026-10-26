@@ -1,0 +1,67 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #101418;
+}
+
+#stage {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+.message {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 80vw;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  background: #2a1518;
+  border: 1px solid #7a3040;
+  color: #ffd9de;
+  font: 16px/1.5 system-ui, sans-serif;
+  white-space: pre-wrap;
+}
+
+#open-file {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: #1d2733;
+  border: 1px solid #3a4a5c;
+  color: #e8eef4;
+  font: 14px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+#open-file:hover {
+  background: #26313f;
+}
+
+/* SparkXr removes this class from the button when the browser can do VR. */
+.hidden {
+  display: none;
+}
+
+#enter-vr {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: #1d2733;
+  border: 1px solid #3a4a5c;
+  color: #e8eef4;
+  font: 14px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+#enter-vr:hover {
+  background: #26313f;
+}
